@@ -84,64 +84,6 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
         }
     }
 
-    /**
-     * Use this method to find views.
-     *
-     * The view existence will be assert before being returned
-     */
-    inline fun <reified T> Activity.findViewByString(idString: String): T {
-        val id = this.resources.getIdentifier(idString, "id", this.packageName)
-        val view: View? = this.findViewById(id)
-
-        val idNotFoundMessage = "View with id \"$idString\" was not found"
-        val wrongClassMessage = "View with id \"$idString\" is not from expected class. " +
-                "Expected ${T::class.java.simpleName} found ${view?.javaClass?.simpleName}"
-
-        assertNotNull(idNotFoundMessage, view)
-        assertTrue(wrongClassMessage, view is T)
-
-        return view as T
-    }
-
-    /**
-     * Use this method to find views.
-     *
-     * The view existence will be assert before being returned
-     */
-    inline fun <reified T> View.findViewByString(idString: String): T {
-        val id = this.resources.getIdentifier(idString, "id", context.packageName)
-        val view: View? = this.findViewById(id)
-
-        val idNotFoundMessage = "View with id \"$idString\" was not found"
-        val wrongClassMessage = "View with id \"$idString\" is not from expected class. " +
-                "Expected ${T::class.java.simpleName} found ${view?.javaClass?.simpleName}"
-
-        assertNotNull(idNotFoundMessage, view)
-        assertTrue(wrongClassMessage, view is T)
-
-        return view as T
-    }
-
-    /**
-     * Use this method to perform clicks. It will also advance the clock millis milliseconds and run
-     * enqueued Runnable scheduled to run on main looper in that timeframe.
-     * Default value for millis is 500
-     *
-     * Internally it calls performClick() and shadowLooper.idleFor(millis)
-     */
-    fun View.clickAndRun(millis: Long = 500){
-        this.performClick()
-        shadowLooper.idleFor(Duration.ofMillis(millis))
-    }
-
-    /**
-     * Asserts that the last message toasted is the expectedMessage.
-     * Assertion fails if no toast is shown with null actualLastMessage value.
-     */
-    fun assertLastToastMessageEquals(errorMessage: String, expectedMessage: String,) {
-        val actualLastMessage: String? = ShadowToast.getTextOfLatestToast()
-        assertEquals(errorMessage, expectedMessage, actualLastMessage)
-    }
 
     /**
      * Use this method to retrieve the latest AlertDialog.
@@ -163,5 +105,66 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
         )
 
         return latestAlertDialog!!
+    }
+
+    /**
+     * Use this method to perform clicks. It will also advance the clock millis milliseconds and run
+     * enqueued Runnable scheduled to run on main looper in that timeframe.
+     * Default value for millis is 500
+     *
+     * Internally it calls performClick() and shadowLooper.idleFor(millis)
+     */
+    fun View.clickAndRun(millis: Long = 500){
+        this.performClick()
+        shadowLooper.idleFor(Duration.ofMillis(millis))
+    }
+
+    companion object {
+        /**
+         * Use this method to find views.
+         *
+         * The view existence will be assert before being returned
+         */
+        inline fun <reified T> Activity.findViewByString(idString: String): T {
+            val id = this.resources.getIdentifier(idString, "id", this.packageName)
+            val view: View? = this.findViewById(id)
+
+            val idNotFoundMessage = "View with id \"$idString\" was not found"
+            val wrongClassMessage = "View with id \"$idString\" is not from expected class. " +
+                    "Expected ${T::class.java.simpleName} found ${view?.javaClass?.simpleName}"
+
+            assertNotNull(idNotFoundMessage, view)
+            assertTrue(wrongClassMessage, view is T)
+
+            return view as T
+        }
+
+        /**
+         * Use this method to find views.
+         *
+         * The view existence will be assert before being returned
+         */
+        inline fun <reified T> View.findViewByString(idString: String): T {
+            val id = this.resources.getIdentifier(idString, "id", context.packageName)
+            val view: View? = this.findViewById(id)
+
+            val idNotFoundMessage = "View with id \"$idString\" was not found"
+            val wrongClassMessage = "View with id \"$idString\" is not from expected class. " +
+                    "Expected ${T::class.java.simpleName} found ${view?.javaClass?.simpleName}"
+
+            assertNotNull(idNotFoundMessage, view)
+            assertTrue(wrongClassMessage, view is T)
+
+            return view as T
+        }
+
+        /**
+         * Asserts that the last message toasted is the expectedMessage.
+         * Assertion fails if no toast is shown with null actualLastMessage value.
+         */
+        fun assertLastToastMessageEquals(errorMessage: String, expectedMessage: String,) {
+            val actualLastMessage: String? = ShadowToast.getTextOfLatestToast()
+            assertEquals(errorMessage, expectedMessage, actualLastMessage)
+        }
     }
 }
