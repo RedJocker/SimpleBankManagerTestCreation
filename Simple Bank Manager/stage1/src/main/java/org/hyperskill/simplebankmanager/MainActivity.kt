@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.hyperskill.simplebankmanager.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), LoginValidator {
+class MainActivity : AppCompatActivity(), LoginFragment.LoginValidator {
 
     lateinit var mainBinding: ActivityMainBinding
     lateinit var username: String
