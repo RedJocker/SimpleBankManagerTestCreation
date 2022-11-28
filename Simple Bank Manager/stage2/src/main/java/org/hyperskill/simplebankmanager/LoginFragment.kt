@@ -29,6 +29,11 @@ class LoginFragment : Fragment() {
 
             if(loginValidator?.isValidLogin(username, password) == true) {
                 showToast("logged in")
+                val args = Bundle().apply {
+                    putString("username", username)
+                }
+                findNavController()
+                    .navigate(R.id.action_loginFragment_to_userMenuFragment, args)
             } else {
                 showToast("invalid credentials")
             }
@@ -40,7 +45,6 @@ class LoginFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         loginValidator = context as? LoginValidator
-
     }
 
     override fun onDetach() {
