@@ -36,3 +36,7 @@ files:
   visible: true
 - name: src/main/java/org/hyperskill/simplebankmanager/Extensions.kt
   visible: true
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/screen/LoginScreen.kt
+  visible: true
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/screen/UserMenuScreen.kt
+  visible: true

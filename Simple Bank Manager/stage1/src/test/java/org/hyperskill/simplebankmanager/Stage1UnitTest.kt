@@ -1,5 +1,6 @@
 package org.hyperskill.simplebankmanager
 
+import android.content.Intent
 import android.os.Bundle
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.hyperskill.simplebankmanager.internals.screen.LoginScreen
@@ -60,12 +61,12 @@ class Stage1UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
         val username = "Stella"
         val password = "0000"
 
-        val args = Bundle().apply {
-            putString("username", username)
-            putString("password", password)
+        val args = Intent().apply {
+            putExtra("username", username)
+            putExtra("password", password)
         }
 
-        testActivity(savedInstanceState = args) {
+        testActivity(arguments = args) {
             val loginScreen = LoginScreen(this)
             loginScreen.assertLogin(
                 caseDescription = "custom values",
@@ -80,12 +81,12 @@ class Stage1UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
         val username = "Stella"
         val password = "0000"
 
-        val args = Bundle().apply {
-            putString("username", username)
-            putString("password", password)
+        val args = Intent().apply {
+            putExtra("username", username)
+            putExtra("password", password)
         }
 
-        testActivity(savedInstanceState = args) {
+        testActivity(arguments = args) {
             val loginScreen = LoginScreen(this)
             loginScreen.assertLogin(
                 caseDescription = "wrong username for custom values",
@@ -101,12 +102,12 @@ class Stage1UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
         val username = "Stella"
         val password = "0000"
 
-        val args = Bundle().apply {
-            putString("username", username)
-            putString("password", password)
+        val args = Intent().apply {
+                putExtra("username", username)
+                putExtra("password", password)
         }
 
-        testActivity(savedInstanceState = args) {
+        testActivity(arguments = args) {
             val loginScreen = LoginScreen(this)
             loginScreen.assertLogin(
                 caseDescription = "wrong password for custom values",

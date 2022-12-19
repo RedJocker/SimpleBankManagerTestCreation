@@ -12,8 +12,8 @@ class MainActivity : AppCompatActivity(), LoginFragment.LoginValidator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        username = savedInstanceState?.getString("username") ?: "Lara"
-        password = savedInstanceState?.getString("password") ?: "1234"
+        username = intent.extras?.getString("username") ?: "Lara"
+        password = intent.extras?.getString("password") ?: "1234"
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
     }

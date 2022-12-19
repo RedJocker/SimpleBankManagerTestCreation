@@ -38,3 +38,9 @@ files:
   visible: true
 - name: src/main/java/org/hyperskill/simplebankmanager/UserMenuFragment.kt
   visible: true
+- name: src/main/res/layout/fragment_user_menu.xml
+  visible: true
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/screen/UserMenuScreen.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/screen/LoginScreen.kt
+  visible: true
