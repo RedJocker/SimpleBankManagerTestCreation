@@ -1,19 +1,17 @@
 package org.hyperskill.simplebankmanager.internals.screen
 
 
+import android.app.Activity
 import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import org.hyperskill.simplebankmanager.MainActivity
-import org.hyperskill.simplebankmanager.internals.AbstractUnitTest.Companion.assertLastToastMessageEquals
-import org.hyperskill.simplebankmanager.internals.AbstractUnitTest.Companion.findViewByString
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.robolectric.shadows.ShadowToast
 
-class LoginScreen(private val test: SimpleBankManagerUnitTest<MainActivity>) {
+class LoginScreen<T: Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
     val loginUsername : EditText = with(test) {
         val id = "loginUsername"

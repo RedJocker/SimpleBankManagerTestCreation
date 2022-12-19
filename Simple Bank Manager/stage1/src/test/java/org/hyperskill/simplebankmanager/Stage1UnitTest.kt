@@ -1,7 +1,6 @@
 package org.hyperskill.simplebankmanager
 
 import android.content.Intent
-import android.os.Bundle
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.hyperskill.simplebankmanager.internals.screen.LoginScreen
 import org.junit.FixMethodOrder
@@ -25,34 +24,38 @@ class Stage1UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
     @Test
     fun test01_checkLoginWithDefaultValuesSucceed() {
         testActivity {
-            val loginScreen = LoginScreen(this)
-            loginScreen.assertLogin(
-                caseDescription = "default values"
-            )
+            LoginScreen(this).apply {
+                assertLogin(
+                    caseDescription = "default values"
+                )
+            }
         }
     }
 
     @Test
     fun test02_checkLoginWithDefaultValuesFailWithWrongName() {
         testActivity {
-            val loginScreen = LoginScreen(this)
-            loginScreen.assertLogin(
-                caseDescription = "wrong username for default values",
-                username = "John",
-                isSucceeded = false
-            )
+            LoginScreen(this).apply {
+                assertLogin(
+                    caseDescription = "wrong username for default values",
+                    username = "John",
+                    isSucceeded = false
+                )
+            }
         }
     }
 
     @Test
     fun test03_checkLoginWithDefaultValuesFailWithWrongPass() {
         testActivity {
-            val loginScreen = LoginScreen(this)
-            loginScreen.assertLogin(
-                caseDescription = "wrong password for default values",
-                password = "1111",
-                isSucceeded = false
-            )
+            LoginScreen(this).apply {
+                assertLogin(
+                    caseDescription = "wrong password for default values",
+                    password = "1111",
+                    isSucceeded = false
+                )
+            }
+
         }
     }
 
@@ -67,12 +70,13 @@ class Stage1UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
         }
 
         testActivity(arguments = args) {
-            val loginScreen = LoginScreen(this)
-            loginScreen.assertLogin(
-                caseDescription = "custom values",
-                username = username,
-                password = password
-            )
+            LoginScreen(this).apply {
+                assertLogin(
+                    caseDescription = "custom values",
+                    username = username,
+                    password = password
+                )
+            }
         }
     }
 
@@ -87,13 +91,14 @@ class Stage1UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
         }
 
         testActivity(arguments = args) {
-            val loginScreen = LoginScreen(this)
-            loginScreen.assertLogin(
-                caseDescription = "wrong username for custom values",
-                username = "John",
-                password = password,
-                isSucceeded = false
-            )
+            LoginScreen(this).apply {
+                assertLogin(
+                    caseDescription = "wrong username for custom values",
+                    username = "John",
+                    password = password,
+                    isSucceeded = false
+                )
+            }
         }
     }
 
@@ -103,18 +108,19 @@ class Stage1UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
         val password = "0000"
 
         val args = Intent().apply {
-                putExtra("username", username)
-                putExtra("password", password)
+            putExtra("username", username)
+            putExtra("password", password)
         }
 
         testActivity(arguments = args) {
-            val loginScreen = LoginScreen(this)
-            loginScreen.assertLogin(
-                caseDescription = "wrong password for custom values",
-                username = username,
-                password = "9876",
-                isSucceeded = false
-            )
+            LoginScreen(this).apply {
+                assertLogin(
+                    caseDescription = "wrong password for custom values",
+                    username = username,
+                    password = "9876",
+                    isSucceeded = false
+                )
+            }
         }
     }
 }

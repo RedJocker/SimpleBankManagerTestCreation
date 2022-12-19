@@ -119,52 +119,51 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
         shadowLooper.idleFor(Duration.ofMillis(millis))
     }
 
-    companion object {
-        /**
-         * Use this method to find views.
-         *
-         * The view existence will be assert before being returned
-         */
-        inline fun <reified T> Activity.findViewByString(idString: String): T {
-            val id = this.resources.getIdentifier(idString, "id", this.packageName)
-            val view: View? = this.findViewById(id)
 
-            val idNotFoundMessage = "View with id \"$idString\" was not found"
-            val wrongClassMessage = "View with id \"$idString\" is not from expected class. " +
-                    "Expected ${T::class.java.simpleName} found ${view?.javaClass?.simpleName}"
+    /**
+     * Use this method to find views.
+     *
+     * The view existence will be assert before being returned
+     */
+    inline fun <reified T> Activity.findViewByString(idString: String): T {
+        val id = this.resources.getIdentifier(idString, "id", this.packageName)
+        val view: View? = this.findViewById(id)
 
-            assertNotNull(idNotFoundMessage, view)
-            assertTrue(wrongClassMessage, view is T)
+        val idNotFoundMessage = "View with id \"$idString\" was not found"
+        val wrongClassMessage = "View with id \"$idString\" is not from expected class. " +
+                "Expected ${T::class.java.simpleName} found ${view?.javaClass?.simpleName}"
 
-            return view as T
-        }
+        assertNotNull(idNotFoundMessage, view)
+        assertTrue(wrongClassMessage, view is T)
 
-        /**
-         * Use this method to find views.
-         *
-         * The view existence will be assert before being returned
-         */
-        inline fun <reified T> View.findViewByString(idString: String): T {
-            val id = this.resources.getIdentifier(idString, "id", context.packageName)
-            val view: View? = this.findViewById(id)
+        return view as T
+    }
 
-            val idNotFoundMessage = "View with id \"$idString\" was not found"
-            val wrongClassMessage = "View with id \"$idString\" is not from expected class. " +
-                    "Expected ${T::class.java.simpleName} found ${view?.javaClass?.simpleName}"
+    /**
+     * Use this method to find views.
+     *
+     * The view existence will be assert before being returned
+     */
+    inline fun <reified T> View.findViewByString(idString: String): T {
+        val id = this.resources.getIdentifier(idString, "id", context.packageName)
+        val view: View? = this.findViewById(id)
 
-            assertNotNull(idNotFoundMessage, view)
-            assertTrue(wrongClassMessage, view is T)
+        val idNotFoundMessage = "View with id \"$idString\" was not found"
+        val wrongClassMessage = "View with id \"$idString\" is not from expected class. " +
+                "Expected ${T::class.java.simpleName} found ${view?.javaClass?.simpleName}"
 
-            return view as T
-        }
+        assertNotNull(idNotFoundMessage, view)
+        assertTrue(wrongClassMessage, view is T)
 
-        /**
-         * Asserts that the last message toasted is the expectedMessage.
-         * Assertion fails if no toast is shown with null actualLastMessage value.
-         */
-        fun assertLastToastMessageEquals(errorMessage: String, expectedMessage: String,) {
-            val actualLastMessage: String? = ShadowToast.getTextOfLatestToast()
-            assertEquals(errorMessage, expectedMessage, actualLastMessage)
-        }
+        return view as T
+    }
+
+    /**
+     * Asserts that the last message toasted is the expectedMessage.
+     * Assertion fails if no toast is shown with null actualLastMessage value.
+     */
+    fun assertLastToastMessageEquals(errorMessage: String, expectedMessage: String,) {
+        val actualLastMessage: String? = ShadowToast.getTextOfLatestToast()
+        assertEquals(errorMessage, expectedMessage, actualLastMessage)
     }
 }
