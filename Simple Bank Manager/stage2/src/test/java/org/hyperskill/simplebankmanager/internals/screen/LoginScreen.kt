@@ -39,12 +39,10 @@ class LoginScreen<T: Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
     val loginButton : Button = with(test) {
         val idString = "loginButton"
-        val button = activity.findViewByString<Button>(idString)
-
         val expectedText = "log in"
-        val actualText = button.text.toString().lowercase()
-        assertEquals("$idString has wrong text", expectedText, actualText)
-        button
+        activity.findViewByString<Button>(idString).apply {
+            assertButtonText(idString, expectedText)
+        }
     }
 
     private fun EditText.assertEditText(id: String, expectedHint: String, expectedType: Int, typeString: String): EditText {
