@@ -96,14 +96,15 @@
     </li>
     <li>
         Test may pass a username to <code>MainActivity</code> through the
-        <code>savedInstanceState</code> Bundle argument in <code>OnCreate</code> method.
-        Retrieve that username and use it to validate login.
+        extras <code>Bundle</code> in the <code>Intent</code>, which ca be retrieved with
+        <code>intent.extras?.getString("username")</code>.
+        Retrieve that username, using the key <code>username</code>, and use it to validate login.
         In case no username is passed use <code>"Lara"</code> as default value for username.
     </li>
     <li>
-        Test may pass a password to <code>MainActivity</code> through the
-        <code>savedInstanceState</code> Bundle argument in <code>OnCreate</code> method.
-        Retrieve that password and use it to validate login.
+        Test may pass a password to <code>MainActivity</code> through the same extras
+        <code>Bundle</code>.
+        Retrieve that password, using the key <code>password</code> and use it to validate login.
         In case no password is passed use <code>"1234"</code> as default value for password.
     </li>
     <li>
