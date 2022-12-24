@@ -1,0 +1,63 @@
+<h2>Description</h2>
+
+<p>
+    On last stage we handled the login.
+    Now, on this stage, we want that after a successful login users get redirected
+    to a menu screen in which they reach the main features offered by our app
+</p>
+
+<p>
+    The navigation graph will help us to implement the navigation between the screen of our app.
+</p>
+
+<h2>Objectives</h2>
+
+<ol>
+    <li>
+        Add a Fragment named <code>UserMenuFragment</code> to the navigation graph
+    </li>
+    <li>
+        Add an <code>TextView</code> to <code>UserMenuFragment</code> with
+        <code>id</code> <code>userMenuWelcomeTextView</code>,
+        the text should be <code>"Welcome $username"</code>
+        in which $username is the same username used to login
+    </li>
+    <li>
+        Add a <code>Button</code> to <code>UserMenuFragment</code> with
+        <code>id</code> <code>userMenuViewBalanceButton</code> and
+        <code>text</code> <code>view balance</code>
+    </li>
+    <li>
+        Add a <code>Button</code> to <code>UserMenuFragment</code> with
+        <code>id</code> <code>userMenuTransferFundsButton</code> and
+        <code>text</code> <code>transfer funds</code>
+    </li>
+    <li>
+        Add a <code>Button</code> to <code>UserMenuFragment</code> with
+        <code>id</code> <code>userMenuExchangeCalculatorButton</code> and
+        <code>text</code> <code>calculate exchange</code>
+    </li>
+    <li>
+        Add a <code>Button</code> to <code>UserMenuFragment</code> with
+        <code>id</code> <code>userMenuPayBillsButton</code> and
+        <code>text</code> <code>pay bills</code>
+    </li>
+    <li>
+        On the design tab of <code>nav_graph</code> make a connection from <code>LoginFragment</code>
+        to <code>UserMenuFragment</code>.
+        The code generated after making the connection should contain an action with id
+        <code>action_loginFragment_to_userMenuFragment</code> and destination
+        <code>userMenuFragment</code>
+    </li>
+    <li>
+        After a successful login users should be redirected to UserLoginFragment.
+        To make the navigation you can use
+        <code>findNavController().navigate(R.id.action_loginFragment_to_userMenuFragment)</code>.
+        It is also possible to pass a Bundle as second argument of navigate method
+        to pass arguments to userMenuFragment,
+        which you can later retrieve with <code>arguments?.getString(...)</code>
+    </li>
+    <li>
+        All requirements from stage1 are still valid, including toast messages
+    </li>
+</ol>
