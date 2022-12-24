@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Simple Bank Manager</string>
+    <string name="balance">Balance:</string>
+    <string name="_0_0">0.0$</string>
+</resources>
