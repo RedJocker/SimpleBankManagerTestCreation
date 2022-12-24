@@ -1,9 +1,8 @@
 <h2>Description</h2>
 
 <p>
-    After successful login user should be able to transfer money to or from account and view current balance at the
-    balance view.
-
+    After successful login, user should be able to go to Transfer funds screen and transfer money to or from account,
+    and check current balance at the View Balance screen.
 </p>
 
 <p>
@@ -31,10 +30,11 @@
         to <code>ViewBalanceFragment</code>.
         The code generated after making the connection should contain an action with id
         <code>action_userMenuFragment_to_viewBalanceFragment</code> and destination
-        <code>userMenuFragment</code>
+        <code>viewBalanceFragment</code>
     </li>
     <li>
-        After a successful login users should be redirected to UserLoginFragment.
+        After successful login, user with a click on a button named View Balance will
+        navigate user to View balance screen.
         To make the navigation you can use
         <code>findNavController().navigate(R.id.action_userMenuFragment_to_viewBalanceFragment)</code>.
         It is also possible to pass a Bundle as second argument of navigate method
