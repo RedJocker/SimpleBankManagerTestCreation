@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_userMenuFragment_to_viewBalanceFragment"
             app:destination="@id/viewBalanceFragment" />
+        <action
+            android:id="@+id/action_userMenuFragment_to_transferFundsFragment"
+            app:destination="@id/transferFundsFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewBalanceFragment"
@@ -32,6 +35,19 @@
         <action
             android:id="@+id/action_viewBalanceFragment_to_userMenuFragment"
             app:destination="@id/userMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transferFundsFragment"
+        android:name="org.hyperskill.simplebankmanager.TransferFundsFragment"
+        android:label="fragment_transfer_funds"
+        tools:layout="@layout/fragment_transfer_funds" >
+        <action
+            android:id="@+id/action_transferFundsFragment_to_userMenuFragment"
+            app:destination="@id/userMenuFragment" />
+        <argument
+            android:name="balance"
+            app:argType="string"
+            android:defaultValue="0" />
     </fragment>
 
 </navigation>
