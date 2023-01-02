@@ -45,7 +45,7 @@ class TransferFundsFragment : Fragment() {
         topCardView = fragmentTransferFundsBinding.TransferFundsOtherAccountCardView
         bottomCardView = fragmentTransferFundsBinding.TransferFundsUserAccountCardView
         switch = fragmentTransferFundsBinding.transferFundsSwitch
-        val transferFundsAmount = fragmentTransferFundsBinding.transferFundsToAccountEditText
+        val transferFundsAmount = fragmentTransferFundsBinding.transferFundsEnterAmountEditText
         val buttonTransferFunds = fragmentTransferFundsBinding.transferFundsButton
 
         val bankCardAccountName = fragmentTransferFundsBinding.transferFundsCardNameTextView
@@ -130,7 +130,7 @@ class TransferFundsFragment : Fragment() {
                 otherAccountBalance.add(inputAmountToTransfer.toBigDecimal())
             Toast.makeText(
                 context,
-                "$inputAmountToTransfer transferred from account successfully",
+                "$inputAmountToTransfer$ transferred from account successfully",
                 Toast.LENGTH_SHORT
             ).show()
         } else {
@@ -152,7 +152,7 @@ class TransferFundsFragment : Fragment() {
             balance = balance.add(inputAmountToTransfer.toBigDecimal())
             Toast.makeText(
                 context,
-                "$inputAmountToTransfer transferred to account successfully",
+                "$inputAmountToTransfer$ transferred to account successfully",
                 Toast.LENGTH_SHORT
             ).show()
         } else {

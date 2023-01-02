@@ -12,6 +12,7 @@
         android:id="@+id/frameLayoutTop"
         android:layout_width="217dp"
         android:layout_height="128dp"
+        android:layout_marginEnd="4dp"
         android:layout_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.963"
@@ -66,10 +67,10 @@
         android:id="@+id/frameLayoutBottom"
         android:layout_width="215dp"
         android:layout_height="142dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="84dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/transferFundsToAccountEditText"
+        app:layout_constraintBottom_toTopOf="@+id/transferFundsEnterAmountEditText"
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.cardview.widget.CardView
@@ -119,16 +120,16 @@
         android:id="@+id/transferFundsToAccountTextView"
         android:layout_width="99dp"
         android:layout_height="47dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginStart="40dp"
         android:text="@string/transfer_to"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayoutBottom"
         app:layout_constraintEnd_toStartOf="@+id/frameLayoutBottom"
-        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintHorizontal_bias="0.632"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transferFundsFromAccountTextView">
+        app:layout_constraintTop_toTopOf="@+id/frameLayoutBottom">
 
     </TextView>
 
@@ -137,15 +138,15 @@
         android:layout_width="99dp"
         android:layout_height="47dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="52dp"
         android:text="@string/transfer_from"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayoutTop"
         app:layout_constraintEnd_toStartOf="@+id/frameLayoutTop"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/frameLayoutTop">
 
     </TextView>
 
@@ -153,6 +154,7 @@
         android:id="@+id/transferFundsSwitch"
         android:layout_width="78dp"
         android:layout_height="57dp"
+        android:layout_marginEnd="4dp"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/frameLayoutBottom"
         app:layout_constraintEnd_toEndOf="@+id/frameLayoutTop"
@@ -162,17 +164,17 @@
         app:layout_constraintVertical_bias="0.571" />
 
     <EditText
-        android:id="@+id/transferFundsToAccountEditText"
+        android:id="@+id/transferFundsEnterAmountEditText"
         android:layout_width="242dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="72dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
         android:hint="@string/enter_amount"
         android:inputType="numberDecimal"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transferFundsToAccountTextView">
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutBottom">
 
     </EditText>
 
@@ -180,12 +182,14 @@
         android:id="@+id/transferFundsButton"
         android:layout_width="132dp"
         android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="56dp"
         android:text="@string/transfer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transferFundsToAccountEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/transferFundsEnterAmountEditText"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
