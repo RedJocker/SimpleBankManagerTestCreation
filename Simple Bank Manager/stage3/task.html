@@ -1,3 +1,4 @@
+
 <h2>Description</h2>
 
 <p>
@@ -6,7 +7,7 @@
 </p>
 
 <p>
-    The navigation graph will help us to implement the navigation between the screen of our app.
+    The navigation graph will help us to implement the navigation between the screens of our app.
 </p>
 
 <h2>Objectives</h2>
@@ -33,14 +34,56 @@
         <code>viewBalanceFragment</code>
     </li>
     <li>
+        Add a Fragment named <code>TransferFundsFragment</code> to the navigation graph.
+    </li>
+    <li>
+        On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
+        to <code>TransferFundsFragment</code>. Code generated after making connection should have action with id
+        <code>action_userMenuFragment_to_transferFundsFragment</code> and destination id 					   <code>transferFundsFragment</code>
+    </li>
+    <li>
+        Add to FragmentLayout <code>TransferFundsFragment </code> at the left upper side of the Fragment layout  <code>TextView</code> with name <code>transferFundsFromAccountTextView</code> with text <code>Transfer from</code>.
+    </li>
+    <li>
+        add to FragmentLayout <code>TransferFundsFragment</code> to the right upper side of FragmentLayout this component:
+        <code>FrameLayout</code> with name <code>frameLayoutTop</code>
+        inside of frame of <code>frameLayoutTop</code> should be <code>CardView</code> with name
+        <code>TransferFundsOtherAccountCardView</code>
+    <li>
+        Inside of a CardView <code>TransferFundsOtherAccountCardView</code> add   <code>TextView</code> with name <code> transferFundsCardNameOtherAccountTextView </code>. This TextView will contain hint <code>"Card account name"
+    </code>. Below TextView and also inside of a CardView <code>TransferFundsOtherAccountCardView</code> put <code>TextView</code> with name <code>transferFundsCardAccountNumberOtherAccountTextView</code> with <code>hint <code>SI65463646432</code></code>.
+    </li>
+    <li>
+        Next component is of type <code>SwitchCompat</code>, with name <code>transferFundsSwitch</code>. You can add it below the FrameLayout <code>frameLayoutTop</code> in the <code>fragmentTransferFunds</code>. This switch we will later use for switching beetwen transfer accounts.
+    <li>
+        Next add at the left middle side of the <code>fragmentTransferFunds</code> below  textview Transfer from,  <code>TextView</code> with name <code>transferFundsToAccountTextView</code> with text <code>Transfer to</code>
+    </li>
+    <li>
+        On the right side of this Transfer to textview and bellow transferFundsSwitch add second <code>FrameLayout</code> named <code>frameLayoutBottom</code>.
+    </li>
+    <li>
+        Then create second <code>CardView</code> with name <code>TransferFundsUserAccountCardView</code> and inside it add <code>TextView</code> with name <code>transferFundsCardNameTextView</code> including <code>hint:<code>Card account name user</code></code>. Below it and also inside of this cardView add <code>TextView</code>  named <code>transferFundsCardAccountNumberTextView</code>  with <code>hint <code>SI45757699497</code></code>
+    </li>
+    <li>
+        Next add to <code>fragmentTransferFunds</code> below second TransferFundsUserAccountCardView, <code>EditText</code> with name <code>transferFundsEnterAmountEditText</code> and <code>hint <code> Enter amount</code></code>.
+    <li>
+        And last component to add to <code>fragmentTransferFunds</code> is of type <code>Button</code> with name <code>transferFundsButton</code>. Add it below transferFundsEnterAmountEditText.
+    </li>
+    <li>
         After successful login, user with a click on a button named View Balance will
         navigate user to View balance screen.
         To make the navigation you can use
         <code>findNavController().navigate(R.id.action_userMenuFragment_to_viewBalanceFragment)</code>.
         It is also possible to pass a Bundle as second argument of navigate method
-        to pass arguments to userMenuFragment,
+        to pass arguments to viewBalanceFragment,
         which you can later retrieve with <code>arguments?.getString(...)</code>
     </li>
+    After successful login, user with a click on a button Transfer funds will navigate user to Transfer funds screen.
+    To make the navigation you can use
+    <code>findNavController().navigate(R.id.action_userMenuFragment_to_transferFundsFragment)</code>.
+    It is also possible to pass a Bundle as second argument of navigate method
+    to pass arguments to transferFundsFragment,
+    which you can later retrieve with <code>arguments?.getString(...)</code>
     <li>
         All requirements from stage1 and stage2 are still valid, including toast messages
     </li>
