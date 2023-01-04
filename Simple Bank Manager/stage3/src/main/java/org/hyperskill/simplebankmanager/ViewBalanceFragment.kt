@@ -12,8 +12,8 @@ import org.hyperskill.simplebankmanager.databinding.FragmentViewBalanceBinding
 class ViewBalanceFragment : Fragment() {
 
 
-    lateinit var fragmentViewBalanceBinding: FragmentViewBalanceBinding
-    var balanceSupplier: BalanceSupplier? = null
+    private lateinit var fragmentViewBalanceBinding: FragmentViewBalanceBinding
+    private var balanceSupplier: BalanceSupplier? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,7 +22,7 @@ class ViewBalanceFragment : Fragment() {
         fragmentViewBalanceBinding = FragmentViewBalanceBinding.inflate(layoutInflater, container, false)
 
         val balance = balanceSupplier!!.currentBalance()
-        fragmentViewBalanceBinding.viewBalanceShowBalanceTextView.text = "%.2f$".format(balance)
+        fragmentViewBalanceBinding.viewBalanceAmountTextView.text = "%.2f$".format(balance)
 
         return fragmentViewBalanceBinding.root
     }
