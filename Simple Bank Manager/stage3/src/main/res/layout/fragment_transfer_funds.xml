@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".TransferFundsFragment">
+
+
+    <FrameLayout
+        android:id="@+id/frameLayoutTop"
+        android:layout_width="217dp"
+        android:layout_height="128dp"
+        android:layout_marginEnd="4dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.963"
+        app:layout_constraintStart_toEndOf="@+id/transferFundsFromAccountTextView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/TransferFundsOtherAccountCardView"
+            android:layout_width="206dp"
+            android:layout_height="92dp"
+
+            android:layout_gravity="center"
+            app:cardCornerRadius="11dp"
+            app:cardElevation="11dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/transferFundsFromAccountTextView"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/transferFundsCardNameOtherAccountTextView"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/card_account_name"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/transferFundsCardAccountNumberOtherAccountTextView"
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="40dp"
+                android:hint="@string/card_account_number"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayoutBottom"
+        android:layout_width="215dp"
+        android:layout_height="142dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="84dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/transferFundsEnterAmountEditText"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/TransferFundsUserAccountCardView"
+            android:layout_width="206dp"
+            android:layout_height="92dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="11dp"
+            app:cardElevation="11dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/transferFundsToAccountTextView"
+            app:layout_constraintTop_toBottomOf="@+id/TransferFundsOtherAccountCardView">
+
+
+            <TextView
+                android:id="@+id/transferFundsCardNameTextView"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/card_account_name_user"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/transferFundsCardAccountNumberTextView"
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="40dp"
+                android:hint="@string/card_account_number2"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/transferFundsToAccountTextView"
+        android:layout_width="99dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="40dp"
+        android:text="@string/transfer_to"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayoutBottom"
+        app:layout_constraintEnd_toStartOf="@+id/frameLayoutBottom"
+        app:layout_constraintHorizontal_bias="0.632"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/frameLayoutBottom">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/transferFundsFromAccountTextView"
+        android:layout_width="99dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="40dp"
+        android:text="@string/transfer_from"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayoutTop"
+        app:layout_constraintEnd_toStartOf="@+id/frameLayoutTop"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/frameLayoutTop">
+
+    </TextView>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/transferFundsSwitch"
+        android:layout_width="78dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="4dp"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayoutBottom"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayoutTop"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/frameLayoutTop"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutTop"
+        app:layout_constraintVertical_bias="0.571" />
+
+    <EditText
+        android:id="@+id/transferFundsEnterAmountEditText"
+        android:layout_width="242dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:hint="@string/enter_amount"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutBottom">
+
+    </EditText>
+
+    <Button
+        android:id="@+id/transferFundsButton"
+        android:layout_width="132dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/transfer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/transferFundsEnterAmountEditText"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
