@@ -46,3 +46,5 @@ files:
   visible: true
 - name: src/test/java/org/hyperskill/simplebankmanager/Stage2UnitTest.kt
   visible: true
+- name: src/main/java/org/hyperskill/simplebankmanager/BankManager.kt
+  visible: true
