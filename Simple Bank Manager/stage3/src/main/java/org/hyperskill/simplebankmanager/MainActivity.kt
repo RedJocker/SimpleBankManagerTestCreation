@@ -30,4 +30,16 @@ class MainActivity : AppCompatActivity(), BankManager {
     override fun currentBalance(): Double {
         return balance
     }
+
+    override fun hasFunds(amount: Double): Boolean {
+        return balance >= amount
+    }
+
+    override fun subtractBalance(amount: Double) {
+        balance -= amount
+    }
+
+    override fun isValidAccount(account: String): Boolean {
+        return "^[sc]a\\d{4}$".toRegex().matches(account)
+    }
 }
