@@ -32,9 +32,6 @@
         android:name="org.hyperskill.simplebankmanager.ViewBalanceFragment"
         android:label="fragment_view_balance"
         tools:layout="@layout/fragment_view_balance" >
-        <action
-            android:id="@+id/action_viewBalanceFragment_to_userMenuFragment"
-            app:destination="@id/userMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/transferFundsFragment"
