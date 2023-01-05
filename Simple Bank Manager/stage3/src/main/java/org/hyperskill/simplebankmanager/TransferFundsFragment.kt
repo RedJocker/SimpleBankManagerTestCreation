@@ -29,16 +29,16 @@ class TransferFundsFragment : Fragment() {
     }
 
     private fun onTransferClick(v: View) {
-        val account = binding.transferFundsToAccountTextView.text.toString()
+        val account = binding.transferFundsAccountEditText.text.toString()
         val amount = binding.transferFundsAmountEditText.text.toString().toDoubleOrNull()
 
         val isValidInput = run {
             var valid = true
             if(accountNumberValidator?.isValidAccount(account) != true) {
                 valid = false
-                binding.transferFundsToAccountTextView.error = "Invalid account number"
+                binding.transferFundsAccountEditText.error = "Invalid account number"
             }
-            if(amount == null || amount < 0) {
+            if(amount == null || amount <= 0) {
                 valid = false
                 binding.transferFundsAmountEditText.error = "Invalid amount"
             }

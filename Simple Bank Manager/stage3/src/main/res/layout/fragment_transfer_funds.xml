@@ -10,7 +10,8 @@
 
 
     <EditText
-        android:id="@+id/transferFundsToAccountTextView"
+        android:id="@+id/transferFundsAccountEditText"
+        android:inputType="text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Account number"

@@ -22,11 +22,21 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         assertEquals("Wrong text on $idString", expectedText, actualText)
     }
 
+    fun TextView.assertTextWithCustomErrorMessage(errorMessage: String, expectedText: String, ignoreCase: Boolean = true) {
+        val actualText = if(ignoreCase) this.text.toString().lowercase() else this.text.toString()
+        assertEquals(errorMessage, expectedText, actualText)
+    }
+
     fun EditText.assertEditText(idString: String, expectedHint: String, expectedType: Int, typeString: String) {
         val actualHint = this.hint.toString()
         assertEquals("Wrong hint on $idString", expectedHint, actualHint)
 
         val actualInputType = this.inputType
         assertEquals("Wrong inputType on $idString should be $typeString", expectedType, actualInputType)
+    }
+
+    fun EditText.assertErrorText(errorMessage: String, expectedErrorText: String) {
+        val actualErrorText = this.error?.toString()
+        assertEquals(errorMessage, expectedErrorText, actualErrorText)
     }
 }

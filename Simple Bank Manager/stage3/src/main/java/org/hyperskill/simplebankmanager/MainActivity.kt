@@ -42,4 +42,9 @@ class MainActivity : AppCompatActivity(), BankManager {
     override fun isValidAccount(account: String): Boolean {
         return "^[sc]a\\d{4}$".toRegex().matches(account)
     }
+
+//    override fun onBackPressed() {
+//        //comment next line to test incorrect back button behaviour
+//        //super.onBackPressed()
+//    }
 }
