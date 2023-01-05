@@ -22,15 +22,12 @@ class LoginFragment : Fragment() {
         fragmentLoginBinding.loginButton.setOnClickListener {
             val username = fragmentLoginBinding.loginUsername.text.toString()
             val password = fragmentLoginBinding.loginPassword.text.toString()
-            val balance = "0.0"
-            val otherAccountBalance = "1000"
+
 
             if(loginValidator?.isValidLogin(username, password) == true) {
                 showToast("logged in")
                 val args = Bundle().apply {
                     putString("username", username)
-                    putString("balance", balance)
-                    putString("otherAccountBalance", otherAccountBalance)
                 }
                 findNavController()
                     .navigate(R.id.action_loginFragment_to_userMenuFragment, args)

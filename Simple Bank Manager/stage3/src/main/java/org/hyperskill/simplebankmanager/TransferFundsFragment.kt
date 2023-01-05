@@ -38,7 +38,7 @@ class TransferFundsFragment : Fragment() {
                 valid = false
                 binding.transferFundsAccountEditText.error = "Invalid account number"
             }
-            if(amount == null || amount <= 0) {
+            if(amount == null || amount <= 0.0) {
                 valid = false
                 binding.transferFundsAmountEditText.error = "Invalid amount"
             }
