@@ -119,6 +119,17 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
         shadowLooper.idleFor(Duration.ofMillis(millis))
     }
 
+    /**
+     * Use this method to click on BackButton. It will also advance the clock millis milliseconds and run
+     * enqueued Runnable scheduled to run on main looper in that timeframe.
+     * Default value for millis is 500
+     *
+     * Internally it calls activity.onBackPressed() and shadowLooper.idleFor(millis)
+     */
+    fun Activity.clickBackAndRun(millis: Long = 500) {
+        this.onBackPressed()
+        shadowLooper.idleFor(Duration.ofMillis(millis))
+    }
 
     /**
      * Use this method to find views.
