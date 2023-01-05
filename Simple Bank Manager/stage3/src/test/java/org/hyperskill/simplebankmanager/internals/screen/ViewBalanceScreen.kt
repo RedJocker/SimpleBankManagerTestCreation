@@ -3,29 +3,25 @@ package org.hyperskill.simplebankmanager.internals.screen
 import android.app.Activity
 import android.widget.TextView
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 
 
 class ViewBalanceScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
-    val viewBalanceTextBalanceTextView: TextView = with(test) {
-        activity.findViewByString("viewBalanceTextBalanceTextView")
+    val viewBalanceLabelTextView: TextView = with(test) {
+        val idString = "viewBalanceLabelTextView"
+        activity.findViewByString<TextView>(idString).apply {
+            assertText(idString, "balance:")
+        }
     }
 
     val viewBalanceShowBalanceTextView: TextView = with(test) {
-        activity.findViewByString("viewBalanceShowBalanceTextView")
+        activity.findViewByString("viewBalanceAmountTextView")
     }
 
-    fun assertEqualViewBalanceShowBalanceTextViewHint() {
-        val expectedHint = "0.0$"
-        val actualHint = viewBalanceShowBalanceTextView.hint
-        Assert.assertEquals(expectedHint, actualHint)
 
-    }
-    fun assertEqualCurrentBalanceCheck(expectedBalance : String) {
+    fun assertBalanceAmountDisplay(expectedBalance : String, caseDescription: String = "") {
         val actualBalance = viewBalanceShowBalanceTextView.text.toString()
-        Assert.assertEquals("Wrong balance at the ViewBalance screen"
-            ,expectedBalance,actualBalance)
+        assertEquals("Wrong balance on viewBalanceAmountTextView, ${caseDescription}",expectedBalance,actualBalance)
     }
-
 }
