@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.robolectric.shadows.ShadowToast
 
@@ -15,26 +14,27 @@ class LoginScreen<T: Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
     val loginUsername : EditText = with(test) {
         val id = "loginUsername"
-        val loginUsernameEt = activity.findViewByString<EditText>(id)
 
-        loginUsernameEt.assertEditText(
-            id = id,
-            expectedHint = "username",
-            expectedType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME,
-            typeString = "textPersonName"
-        )
+        activity.findViewByString<EditText>(id).apply {
+            assertEditText(
+                idString = id,
+                expectedHint = "username",
+                expectedType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME,
+                typeString = "textPersonName"
+            )
+        }
     }
 
     val loginPassword : EditText = with(test) {
         val id = "loginPassword"
-        val view = activity.findViewByString<EditText>(id)
-
-        view.assertEditText(
-            id = id,
-            expectedHint = "password",
-            expectedType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD,
-            typeString = "numberPassword"
-        )
+        activity.findViewByString<EditText>(id).apply {
+            assertEditText(
+                idString = id,
+                expectedHint = "password",
+                expectedType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD,
+                typeString = "numberPassword"
+            )
+        }
     }
 
     val loginButton : Button = with(test) {
@@ -45,15 +45,7 @@ class LoginScreen<T: Activity>(private val test: SimpleBankManagerUnitTest<T>) {
         }
     }
 
-    private fun EditText.assertEditText(id: String, expectedHint: String, expectedType: Int, typeString: String): EditText {
-        val actualHint = this.hint.toString()
-        assertEquals("$id has wrong hint value", expectedHint, actualHint)
 
-        val actualInputType = this.inputType
-        assertEquals("$id inputType should be $typeString", expectedType, actualInputType)
-
-        return this
-    }
 
     fun assertLogin(
         caseDescription: String,
