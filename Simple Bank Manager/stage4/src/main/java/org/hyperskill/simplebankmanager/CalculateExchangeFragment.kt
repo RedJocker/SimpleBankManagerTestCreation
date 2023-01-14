@@ -1,5 +1,7 @@
 package org.hyperskill.simplebankmanager
+import android.media.MediaDrm.LogMessage
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import java.math.BigDecimal
 class CalculateExchangeFragment : Fragment() {
 
     lateinit var fragmentCalculateExchangeFragment: FragmentCalculateExchangeBinding
+    var balanceSetter: BalanceSetter? = null
 
     var spinnerConvertFrom: Spinner? = null
     var spinnerConvertTo: Spinner? = null
@@ -19,7 +22,7 @@ class CalculateExchangeFragment : Fragment() {
     var fundsToConvertEt: EditText? = null
     var buttonConvertFundsView: Button? = null
     var convertedAmount = 0.0
-    private val balance: BigDecimal? = null
+    private val balance: Double? = null
     var fundsToConvert = 0.0
     var showConvertedAmountTextView : TextView? = null
 
@@ -30,7 +33,7 @@ class CalculateExchangeFragment : Fragment() {
 
         spinnerConvertFrom = fragmentCalculateExchangeFragment.spinnerConvertFrom
         spinnerConvertTo = fragmentCalculateExchangeFragment.spinnerConvertTo
-        fundsToConvertEt = fragmentCalculateExchangeFragment.inputFundsToConvert
+        fundsToConvertEt = fragmentCalculateExchangeFragment.inputFundsToConvertEditText
         buttonConvertFundsView = fragmentCalculateExchangeFragment.buttonConvertFunds
         showConvertedAmountTextView = fragmentCalculateExchangeFragment.calculateExchangeShowConvertedAmountTextView
         setSpinner()
@@ -43,7 +46,7 @@ class CalculateExchangeFragment : Fragment() {
     }
 
 
-    fun setSpinner() {
+    private fun setSpinner() {
         currenciesArray = arrayOf(
             "USD", "EUR", "GBP"
         )
@@ -76,11 +79,18 @@ class CalculateExchangeFragment : Fragment() {
                 "USD" -> convertedAmount = fundsToConvertEt!!.text.toString().toDouble() * 1.00
             }
         }
-        if (fundsToConvertEt!!.text.toString().isEmpty()) {
+
+        if (fundsToConvertEt!!.text.toString().isBlank() ) {
             Toast.makeText(context, "Enter amount", Toast.LENGTH_SHORT).show()
+        } else  if (convertFrom == convertTo) {
+           return Toast.makeText(context, "Cannot convert to same currency",Toast.LENGTH_SHORT).show()
         } else {
             fundsToConvert = fundsToConvertEt!!.text.toString().toDouble()
-            showConvertedAmountTextView?.text = "$fundsToConvert $convertFrom = $convertedAmount $convertTo"
+
+            val convertedAmountFormatted = String.format("%.2f",convertedAmount)
+            showConvertedAmountTextView?.setText("$fundsToConvert $convertFrom = ${convertedAmountFormatted} $convertTo")
+                Log.d("amount",showConvertedAmountTextView?.text.toString())
+
             }
         }
     }

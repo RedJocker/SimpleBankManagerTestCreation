@@ -36,7 +36,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="56dp"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/inputFundsToConvert"
+        app:layout_constraintBottom_toTopOf="@+id/inputFundsToConvertEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerConvertTo"
@@ -52,10 +52,10 @@
         android:text="@string/calculate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputFundsToConvert" />
+        app:layout_constraintTop_toBottomOf="@+id/inputFundsToConvertEditText" />
 
     <TextView
-        android:id="@+id/convertFromText"
+        android:id="@+id/convertFromTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/convert_from"
@@ -67,7 +67,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/convertFromText2"
+        android:id="@+id/convertToTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -78,7 +78,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/inputFundsToConvert"
+        android:id="@+id/inputFundsToConvertEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
