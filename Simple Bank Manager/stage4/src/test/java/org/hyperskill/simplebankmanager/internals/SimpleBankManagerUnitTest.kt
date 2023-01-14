@@ -3,7 +3,9 @@ package org.hyperskill.simplebankmanager.internals
 import android.app.Activity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
+import androidx.core.view.iterator
 import org.junit.Assert.assertEquals
 
 open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUnitTest<T>(clazz) {
@@ -38,5 +40,15 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
     fun EditText.assertErrorText(errorMessage: String, expectedErrorText: String) {
         val actualErrorText = this.error?.toString()
         assertEquals(errorMessage, expectedErrorText, actualErrorText)
+    }
+
+    fun Spinner.assertSpinnerText(idString: String, expectedDropdownText: ArrayList<String>, ignoreCase: Boolean = true) {
+        val items = ArrayList<String>()
+        for (i in 0 until this.adapter.count) {
+            items.add(this.adapter.getItem(i).toString())
+        }
+        val actualText = if(ignoreCase) items.toString().lowercase() else items.toString()
+        assertEquals("Wrong text on $idString",  expectedDropdownText.toString(), actualText)
+
     }
 }
