@@ -2,89 +2,132 @@
 <h2>Description</h2>
 
 <p>
-    After successful login, user should be able to go to Transfer funds screen and transfer money to or from account,
+    It is time to start implementing some of the main features of our Bank application.
+    On this stage we will implement viewing account balance and making transfers.
+    After successful login, user should be able to go to Transfer funds screen and transfer money to account,
     and check current balance at the View Balance screen.
 </p>
 
-<p>
-    The navigation graph will help us to implement the navigation between the screens of our app.
-</p>
+<br>
 
 <h2>Objectives</h2>
 
 <ol>
     <li>
-        Add a Fragment named <code>ViewBalanceFragment</code> to the navigation graph
+        Test may pass the user balance as a <code>Double</code> to <code>MainActivity</code>
+        through <code>intent.extras</code>.
+        Retrieve that balance, using the key <code>"balance"</code>.
+        In case no balance is passed use <code>100.0</code> as default value for balance;
     </li>
+
     <li>
-        Add an <code>TextView</code> to <code>ViewBalanceFragment</code> with
-        <code>id</code> <code>viewBalanceTextBalanceTextView</code>,
-        the text should be <code>"Balance:"</code>
+        Add a Fragment named <code>ViewBalanceFragment</code> to the navigation graph;
+        <ul>
+            <li>
+                Add an <code>TextView</code> to <code>ViewBalanceFragment</code> with
+                <code>id</code> <code>viewBalanceLabelTextView</code>,
+                the text should be <code>"Balance:"</code>;
+            </li>
+            <li>
+                Add an <code>TextView</code> to <code>ViewBalanceFragment</code> with
+                <code>id</code> <code>viewBalanceAmountTextView</code>.
+                This view will be used to show account balance;
+            </li>
+            <li>
+                On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
+                to <code>ViewBalanceFragment</code>.
+                The code generated after making the connection should contain an action with id
+                <code>action_userMenuFragment_to_viewBalanceFragment</code> and destination
+                <code>viewBalanceFragment</code>;
+            </li>
+
+            <li>
+                After click on <code>userMenuViewBalanceButton</code> display <code>ViewBalanceFragment</code>.
+                Display on <code>viewBalanceAmountTextView</code> text the current balance state.
+                The balance should be displayed always with two decimal places and a $ at the end. (ex: "100,00$");
+            </li>
+            <li>
+                While at <code>ViewBalanceFragment</code> clicking on back button should redirect users back to
+                <code>UserMenuFragment</code>;
+            </li>
+        </ul>
     </li>
+
+
+
     <li>
-        Add an <code>TextView</code> to <code>ViewBalanceFragment</code> with
-        <code>id</code> <code>viewBalanceShowBalanceTextView</code>,
-        with hint <code>"0.0$"</code>. This TextView will be used to show account balance.
-    </li>
-    <li>
-        On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
-        to <code>ViewBalanceFragment</code>.
-        The code generated after making the connection should contain an action with id
-        <code>action_userMenuFragment_to_viewBalanceFragment</code> and destination
-        <code>viewBalanceFragment</code>
-    </li>
-    <li>
-        Add a Fragment named <code>TransferFundsFragment</code> to the navigation graph.
-    </li>
-    <li>
-        On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
-        to <code>TransferFundsFragment</code>. Code generated after making connection should have action with id
-        <code>action_userMenuFragment_to_transferFundsFragment</code> and destination id 					   <code>transferFundsFragment</code>
-    </li>
-    <li>
-        Add to FragmentLayout <code>TransferFundsFragment </code> at the left upper side of the Fragment layout  <code>TextView</code> with name <code>transferFundsFromAccountTextView</code> with text <code>Transfer from</code>.
-    </li>
-    <li>
-        add to FragmentLayout <code>TransferFundsFragment</code> to the right upper side of FragmentLayout this component:
-        <code>FrameLayout</code> with name <code>frameLayoutTop</code>
-        inside of frame of <code>frameLayoutTop</code> should be <code>CardView</code> with name
-        <code>TransferFundsOtherAccountCardView</code>
-    <li>
-        Inside of a CardView <code>TransferFundsOtherAccountCardView</code> add   <code>TextView</code> with name <code> transferFundsCardNameOtherAccountTextView </code>. This TextView will contain hint <code>"Card account name"
-    </code>. Below TextView and also inside of a CardView <code>TransferFundsOtherAccountCardView</code> put <code>TextView</code> with name <code>transferFundsCardAccountNumberOtherAccountTextView</code> with <code>hint <code>SI65463646432</code></code>.
-    </li>
-    <li>
-        Next component is of type <code>SwitchCompat</code>, with name <code>transferFundsSwitch</code>. You can add it below the FrameLayout <code>frameLayoutTop</code> in the <code>fragmentTransferFunds</code>. This switch we will later use for switching beetwen transfer accounts.
-    <li>
-        Next add at the left middle side of the <code>fragmentTransferFunds</code> below  textview Transfer from,  <code>TextView</code> with name <code>transferFundsToAccountTextView</code> with text <code>Transfer to</code>
-    </li>
-    <li>
-        On the right side of this Transfer to textview and bellow transferFundsSwitch add second <code>FrameLayout</code> named <code>frameLayoutBottom</code>.
-    </li>
-    <li>
-        Then create second <code>CardView</code> with name <code>TransferFundsUserAccountCardView</code> and inside it add <code>TextView</code> with name <code>transferFundsCardNameTextView</code> including <code>hint:<code>Card account name user</code></code>. Below it and also inside of this cardView add <code>TextView</code>  named <code>transferFundsCardAccountNumberTextView</code>  with <code>hint <code>SI45757699497</code></code>
-    </li>
-    <li>
-        Next add to <code>fragmentTransferFunds</code> below second TransferFundsUserAccountCardView, <code>EditText</code> with name <code>transferFundsEnterAmountEditText</code> and <code>hint <code> Enter amount</code></code>.
-    <li>
-        And last component to add to <code>fragmentTransferFunds</code> is of type <code>Button</code> with name <code>transferFundsButton</code>. Add it below transferFundsEnterAmountEditText.
-    </li>
-    <li>
-        After successful login, user with a click on a button named View Balance will
-        navigate user to View balance screen.
-        To make the navigation you can use
-        <code>findNavController().navigate(R.id.action_userMenuFragment_to_viewBalanceFragment)</code>.
-        It is also possible to pass a Bundle as second argument of navigate method
-        to pass arguments to viewBalanceFragment,
-        which you can later retrieve with <code>arguments?.getString(...)</code>
-    </li>
-    After successful login, user with a click on a button Transfer funds will navigate user to Transfer funds screen.
-    To make the navigation you can use
-    <code>findNavController().navigate(R.id.action_userMenuFragment_to_transferFundsFragment)</code>.
-    It is also possible to pass a Bundle as second argument of navigate method
-    to pass arguments to transferFundsFragment,
-    which you can later retrieve with <code>arguments?.getString(...)</code>
-    <li>
-        All requirements from stage1 and stage2 are still valid, including toast messages
+        Add a Fragment named <code>TransferFundsFragment</code> to the navigation graph;
+        <ul>
+            <li>
+                On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
+                to <code>TransferFundsFragment</code>. Code generated after making connection should have action with id
+                <code>action_userMenuFragment_to_transferFundsFragment</code> and destination id <code>transferFundsFragment</code>
+            </li>
+            <li>
+                Add an <code>EditText</code> to <code>TransferFundsFragment</code> with
+                <code>id</code> <code>transferFundsAccountEditText</code>.
+                This view will be used to input the account to transfer funds to;
+            </li>
+            <li>
+                Add an <code>EditText</code> to <code>TransferFundsFragment</code> with
+                <code>id</code> <code>transferFundsAmountEditText</code>.
+                This view will be used to input the amount of funds to transfer;
+            </li>
+            <li>
+                Add an <code>Button</code> to <code>TransferFundsFragment</code> with
+                <code>id</code> <code>transferFundsButton</code>.
+                On click, first validate the input
+                <ul>
+                    <li>
+                        Consider valid accounts only those that start with either "sa" or "ca"
+                        followed with exactly four digits. "sa" standing for `savings account` and
+                        "ca" for `checking account`
+                    </li>
+                    <li>
+                        If the account input is not valid set the <code>error</code> property of
+                        <code>transferFundsAccountEditText</code> to <code>"Invalid account number"</code>
+                    </li>
+                    <li>
+                        Consider valid amount a number greater than zero
+                    </li>
+                    <li>
+                        If the amount is not valid set the <code>error</code> property of
+                        <code>transferFundsAmountEditText</code> to <code>"Invalid amount"</code>
+                    </li>
+                    <li>
+                        If both inputs are not valid set the error property for both EditTexts
+                    </li>
+                </ul>
+                If both inputs are valid then try to make the transfer
+                <ul>
+                    <li>
+                        If the amount on <code>transferFundsAmountEditText</code> is greater than
+                        the current balance show a toast message "Not enough funds to transfer &lt;amount&gt;$"
+                        where amount is the amount on <code>transferFundsAmountEditText</code>
+                        formatted always with two decimals.
+                        Keep the current balance state and remain on <code>TransferFundsFragment</code>
+                    </li>
+                    <li>
+                        If the amount on <code>transferFundsAmountEditText</code> is less or equal than
+                        the current balance show a toast message "Transferred &lt;amount&gt;$ to account &lt;account&gt;"
+                        where amount is the amount on <code>transferFundsAmountEditText</code>
+                        formatted always with two decimals, and account is the account on
+                        <code>transferFundsAccountEditText</code>.
+                        Debt the current balance with the given amount
+                        and automatically go back to <code>UserMenuFragment</code>;
+                    </li>
+                    <li>
+                        For simplification purposes there is no need to credit any account.
+                        An actual application would have a backend managing account state and the app
+                        would just make network requests with transfer data without the need to manage
+                        the state itself, so this simplification makes sense
+                    </li>
+                </ul>
+            </li>
+            <li>
+                While at <code>TransferFundsFragment</code> clicking on back button should redirect users back to
+                <code>UserMenuFragment</code>;
+            </li>
+        </ul>
     </li>
 </ol>
