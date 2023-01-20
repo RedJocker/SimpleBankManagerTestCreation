@@ -1,4 +1,5 @@
 package org.hyperskill.simplebankmanager
+
 import android.media.MediaDrm.LogMessage
 import android.os.Bundle
 import android.util.Log
@@ -24,18 +25,21 @@ class CalculateExchangeFragment : Fragment() {
     var convertedAmount = 0.0
     private val balance: Double? = null
     var fundsToConvert = 0.0
-    var showConvertedAmountTextView : TextView? = null
+    var showConvertedAmountTextView: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        fragmentCalculateExchangeFragment = FragmentCalculateExchangeBinding.inflate(layoutInflater, container, false)
+        savedInstanceState: Bundle?
+    ): View? {
+        fragmentCalculateExchangeFragment =
+            FragmentCalculateExchangeBinding.inflate(layoutInflater, container, false)
 
         spinnerConvertFrom = fragmentCalculateExchangeFragment.spinnerConvertFrom
         spinnerConvertTo = fragmentCalculateExchangeFragment.spinnerConvertTo
         fundsToConvertEt = fragmentCalculateExchangeFragment.inputFundsToConvertEditText
         buttonConvertFundsView = fragmentCalculateExchangeFragment.buttonConvertFunds
-        showConvertedAmountTextView = fragmentCalculateExchangeFragment.calculateExchangeShowConvertedAmountTextView
+        showConvertedAmountTextView =
+            fragmentCalculateExchangeFragment.calculateExchangeShowConvertedAmountTextView
         setSpinner()
 
         buttonConvertFundsView!!.setOnClickListener {
@@ -58,9 +62,62 @@ class CalculateExchangeFragment : Fragment() {
         sadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerConvertFrom!!.adapter = sadapter
         spinnerConvertTo!!.adapter = sadapter
+        spinnerConvertFrom?.setSelection(0, true)
+
+        spinnerConvertTo?.setSelection(1, true)
+
+        spinnerConvertFrom!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (spinnerConvertFrom?.selectedItem == spinnerConvertTo?.selectedItem) {
+                    if (spinnerConvertFrom?.selectedItem == "USD") {
+                        spinnerConvertTo!!.setSelection(1)
+                    } else if (spinnerConvertFrom?.selectedItem == "EUR") {
+                        spinnerConvertTo!!.setSelection(2)
+                    } else {
+                        spinnerConvertTo!!.setSelection(0)
+                    }
+                }
+
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
+
+        spinnerConvertTo!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (spinnerConvertTo?.selectedItem == spinnerConvertFrom?.selectedItem) {
+                    if (spinnerConvertTo?.selectedItem == "USD") {
+                        spinnerConvertFrom!!.setSelection(1)
+                    } else if (spinnerConvertTo?.selectedItem == "EUR") {
+                        spinnerConvertFrom!!.setSelection(2)
+                    } else {
+                        spinnerConvertFrom!!.setSelection(0)
+                    }
+                }
+
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
+
+
     }
 
+
     private fun convert() {
+        val fundsToConvertEtValue = fundsToConvertEt!!.text.toString().trim()
+        if (fundsToConvertEtValue.isBlank()) {
+            Toast.makeText(context, "Enter amount", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+
         val convertFrom = currenciesArray[spinnerConvertFrom!!.selectedItemPosition]
         val convertTo = currenciesArray[spinnerConvertTo!!.selectedItemPosition]
         if (convertFrom == "USD") {
@@ -80,17 +137,14 @@ class CalculateExchangeFragment : Fragment() {
             }
         }
 
-        if (fundsToConvertEt!!.text.toString().isBlank() ) {
-            Toast.makeText(context, "Enter amount", Toast.LENGTH_SHORT).show()
-        } else  if (convertFrom == convertTo) {
-           return Toast.makeText(context, "Cannot convert to same currency",Toast.LENGTH_SHORT).show()
-        } else {
-            fundsToConvert = fundsToConvertEt!!.text.toString().toDouble()
 
-            val convertedAmountFormatted = String.format("%.2f",convertedAmount)
-            showConvertedAmountTextView?.setText("$fundsToConvert $convertFrom = ${convertedAmountFormatted} $convertTo")
-                Log.d("amount",showConvertedAmountTextView?.text.toString())
+        fundsToConvert = fundsToConvertEt!!.text.toString().toDouble()
 
-            }
-        }
+        val convertedAmountFormatted = String.format("%.2f", convertedAmount)
+        showConvertedAmountTextView?.setText("$fundsToConvert $convertFrom = ${convertedAmountFormatted} $convertTo")
+        Log.d("amount", showConvertedAmountTextView?.text.toString())
+
     }
+
+
+}
