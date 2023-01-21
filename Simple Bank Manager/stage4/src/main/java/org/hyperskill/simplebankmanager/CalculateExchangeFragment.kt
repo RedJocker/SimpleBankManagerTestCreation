@@ -69,6 +69,8 @@ class CalculateExchangeFragment : Fragment() {
         spinnerConvertFrom!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if (spinnerConvertFrom?.selectedItem == spinnerConvertTo?.selectedItem) {
+                    Toast.makeText(context, "Cannot convert to same currency", Toast.LENGTH_SHORT)
+                        .show()
                     if (spinnerConvertFrom?.selectedItem == "USD") {
                         spinnerConvertTo!!.setSelection(1)
                     } else if (spinnerConvertFrom?.selectedItem == "EUR") {
@@ -89,6 +91,8 @@ class CalculateExchangeFragment : Fragment() {
         spinnerConvertTo!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if (spinnerConvertTo?.selectedItem == spinnerConvertFrom?.selectedItem) {
+                    Toast.makeText(context, "Cannot convert to same currency", Toast.LENGTH_SHORT)
+                        .show()
                     if (spinnerConvertTo?.selectedItem == "USD") {
                         spinnerConvertFrom!!.setSelection(1)
                     } else if (spinnerConvertTo?.selectedItem == "EUR") {
