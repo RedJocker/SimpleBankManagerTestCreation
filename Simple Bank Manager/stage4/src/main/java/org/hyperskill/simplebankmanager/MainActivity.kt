@@ -43,6 +43,35 @@ class MainActivity : AppCompatActivity(), BankManager {
         return "^[sc]a\\d{4}$".toRegex().matches(account)
     }
 
+    override fun calculateExchange(from: String, to: String, amount: Double): Double {
+        return when (from) {
+            "USD" -> {
+                when (to) {
+                    "EUR" -> amount * 1.00
+                    "GBP" -> amount * 0.877
+                    else -> 0.0
+                }
+            }
+            "GBP" -> {
+                when (to) {
+                    "EUR" -> amount * 1.14
+                    "USD" -> amount * 1.14
+                    else -> 0.0
+                }
+            }
+            "EUR" -> {
+                when (to) {
+                    "GBP" -> amount * 0.87
+                    "USD" -> amount * 1.00
+                    else -> 0.0
+                }
+            }
+            else -> {
+                0.0
+            }
+        }
+    }
+
 //    override fun onBackPressed() {
 //        //comment next line to test incorrect back button behaviour
 //        //super.onBackPressed()

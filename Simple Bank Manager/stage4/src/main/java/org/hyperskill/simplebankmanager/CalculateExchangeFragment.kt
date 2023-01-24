@@ -1,5 +1,6 @@
 package org.hyperskill.simplebankmanager
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ class CalculateExchangeFragment : Fragment() {
     private lateinit var fundsToConvertEt: EditText
     private lateinit var buttonConvertFundsView: Button
     private lateinit var showConvertedAmountTextView: TextView
+    private var exchangeCalculator: ExchangeCalculator? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +37,7 @@ class CalculateExchangeFragment : Fragment() {
         binding.also {
             convertFromSpinner = it.calculateExchangeFromSpinner
             convertToSpinner = it.calculateExchangeToSpinner
-            fundsToConvertEt = it.calculateExchangeEditText
+            fundsToConvertEt = it.calculateExchangeAmountEditText
             buttonConvertFundsView = it.calculateExchangeButton
             showConvertedAmountTextView = it.calculateExchangeDisplayTextView
         }
@@ -59,46 +61,27 @@ class CalculateExchangeFragment : Fragment() {
 
 
     private fun setSpinner() {
+        val itemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (convertFromSpinner.selectedItem == convertToSpinner.selectedItem) {
+                    showToast("Cannot convert to same currency")
+                    when (convertFromSpinner.selectedItem) {
+                        "USD" -> convertToSpinner.setSelection(0)
+                        "EUR" -> convertToSpinner.setSelection(1)
+                        else -> convertToSpinner.setSelection(2)
+                    }
+                }
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+        }
         convertFromSpinner.adapter = spinnerAdapter
         convertToSpinner.adapter = spinnerAdapter
         convertFromSpinner.setSelection(0, true)
-
         convertToSpinner.setSelection(1, true)
 
-        convertFromSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if (convertFromSpinner.selectedItem == convertToSpinner.selectedItem) {
-                    showToast("Cannot convert to same currency")
-                    when (convertFromSpinner.selectedItem) {
-                        "USD" -> convertToSpinner.setSelection(0)
-                        "EUR" -> convertToSpinner.setSelection(1)
-                        else -> convertToSpinner.setSelection(2)
-                    }
-                }
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-        }
-
-        convertToSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if (convertFromSpinner.selectedItem == convertToSpinner.selectedItem) {
-                    showToast("Cannot convert to same currency")
-                    when (convertFromSpinner.selectedItem) {
-                        "USD" -> convertToSpinner.setSelection(0)
-                        "EUR" -> convertToSpinner.setSelection(1)
-                        else -> convertToSpinner.setSelection(2)
-                    }
-                }
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-        }
+        convertFromSpinner.onItemSelectedListener = itemSelectedListener
+        convertToSpinner.onItemSelectedListener = itemSelectedListener
     }
 
 
@@ -109,41 +92,31 @@ class CalculateExchangeFragment : Fragment() {
             return
         }
 
-
         val convertFrom = currenciesArray[convertFromSpinner.selectedItemPosition]
         val convertTo = currenciesArray[convertToSpinner.selectedItemPosition]
-        val convertedAmount = when (convertFrom) {
-            "USD" -> {
-                when (convertTo) {
-                    "EUR" -> fundsToConvertEt.text.toString().toDouble() * 1.00
-                    "GBP" -> fundsToConvertEt.text.toString().toDouble() * 0.877
-                    else -> 0.0
-                }
-            }
-            "GBP" -> {
-                when (convertTo) {
-                    "EUR" -> fundsToConvertEt.text.toString().toDouble() * 1.14
-                    "USD" -> fundsToConvertEt.text.toString().toDouble() * 1.14
-                    else -> 0.0
-                }
-            }
-            "EUR" -> {
-                when (convertTo) {
-                    "GBP" -> fundsToConvertEt.text.toString().toDouble() * 0.87
-                    "USD" -> fundsToConvertEt.text.toString().toDouble() * 1.00
-                    else -> 0.0
-                }
-            }
-            else -> {
-                0.0
-            }
-        }
+        val toConvertAmount = fundsToConvertEt.text.toString().toDouble()
 
+        val convertedAmount = exchangeCalculator!!.calculateExchange(
+            from = convertFrom,
+            to = convertTo,
+            amount = toConvertAmount
+        )
 
-        val fundsToConvert = fundsToConvertEt.text.toString().toDouble()
-
-        val convertedAmountFormatted = String.format("%.2f", convertedAmount)
-        showConvertedAmountTextView.text = "$fundsToConvert $convertFrom = $convertedAmountFormatted $convertTo"
+        showConvertedAmountTextView.text =
+            "%.2f $convertFrom = %.2f $convertTo".format(toConvertAmount, convertedAmount)
         Log.d("amount", showConvertedAmountTextView.text.toString())
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        exchangeCalculator = context as? ExchangeCalculator
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        exchangeCalculator = null
+        convertFromSpinner.onItemSelectedListener = null
+        convertToSpinner.onItemSelectedListener = null
     }
 }
