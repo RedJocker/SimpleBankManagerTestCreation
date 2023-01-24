@@ -1,11 +1,12 @@
 package org.hyperskill.simplebankmanager
 
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
-import org.hyperskill.simplebankmanager.internals.screen.*
+import org.hyperskill.simplebankmanager.internals.screen.CalculateExchangeScreen
+import org.hyperskill.simplebankmanager.internals.screen.LoginScreen
+import org.hyperskill.simplebankmanager.internals.screen.UserMenuScreen
 import org.junit.Assert
 import org.junit.FixMethodOrder
 import org.junit.Test
-import org.junit.internal.runners.statements.Fail
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.robolectric.RobolectricTestRunner
@@ -44,7 +45,7 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                calculateExchangeShowConvertedAmount(
+                assertDisplayConvertedAmount(
                     "5067.0",
                     "eur",
                     "gbp",
@@ -66,7 +67,7 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                calculateExchangeShowConvertedAmount(
+                assertDisplayConvertedAmount(
                     "3424.0",
                     "usd",
                     "eur",
@@ -88,7 +89,7 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                calculateExchangeShowConvertedAmount(
+                assertDisplayConvertedAmount(
                     "345.0",
                     "gbp",
                     "eur",
@@ -110,7 +111,7 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                checkForErrorMessages(isEmptyAmount = true, isSameCurrencySelected = false)
+                checkForErrorMessages(isEmptyAmount = true)
             }
         }
     }
@@ -127,7 +128,7 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                checkForErrorMessages(isEmptyAmount = false, isSameCurrencySelected = true)
+                checkForErrorMessages(isSameCurrencySelected = true)
             }
         }
     }
@@ -145,8 +146,8 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
             CalculateExchangeScreen(this).apply {
                 setSpinnerCurrencySelection("USD", "USD")
-                val convertFrom = calculateExchangeDropdownConvertFromSpinner.selectedItem
-                val convertTo = calculateExchangeDropdownConvertToSpinner.selectedItem
+                val convertFrom = calculateExchangeConvertFromSpinner.selectedItem
+                val convertTo = calculateExchangeConvertToSpinner.selectedItem
                     Assert.assertNotEquals("Currencies for" + "\"convert from\"" + " and " +"\"convert to\""
                     + "should not be selected as equal"
                         ,convertFrom,convertTo)

@@ -5,7 +5,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.core.view.iterator
 import org.junit.Assert.assertEquals
 
 open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUnitTest<T>(clazz) {
@@ -49,6 +48,5 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         }
         val actualText = if(ignoreCase) items.toString().lowercase() else items.toString()
         assertEquals("Wrong text on $idString",  expectedDropdownText.toString(), actualText)
-
     }
 }
