@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity(), BankManager {
     lateinit var mainBinding: ActivityMainBinding
     lateinit var username: String
     lateinit var password: String
+    lateinit var exchangeMap: Map<String, Map<String, Double>>
     var balance: Double = 100.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +19,26 @@ class MainActivity : AppCompatActivity(), BankManager {
         username = intent.extras?.getString("username") ?: "Lara"
         password = intent.extras?.getString("password") ?: "1234"
         balance = intent.extras?.getDouble("balance") ?: 100.0
+
+        val defaultMap = mapOf(
+            "EUR" to mapOf(
+                "GBP" to 0.87,
+                "USD" to 1.075
+            ),
+            "GBP" to mapOf(
+                "EUR" to 1.14,
+                "USD" to 1.14
+            ),
+            "USD" to mapOf(
+                "EUR" to 1.00,
+                "GBP" to 0.877
+            )
+        )
+
+        exchangeMap = intent.extras
+            ?.getSerializable("exchangeMap") as? Map<String, Map<String, Double>>
+            ?: defaultMap
+
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
     }
@@ -44,32 +65,7 @@ class MainActivity : AppCompatActivity(), BankManager {
     }
 
     override fun calculateExchange(from: String, to: String, amount: Double): Double {
-        return when (from) {
-            "USD" -> {
-                when (to) {
-                    "EUR" -> amount * 1.00
-                    "GBP" -> amount * 0.877
-                    else -> 0.0
-                }
-            }
-            "GBP" -> {
-                when (to) {
-                    "EUR" -> amount * 1.14
-                    "USD" -> amount * 1.14
-                    else -> 0.0
-                }
-            }
-            "EUR" -> {
-                when (to) {
-                    "GBP" -> amount * 0.87
-                    "USD" -> amount * 1.00
-                    else -> 0.0
-                }
-            }
-            else -> {
-                0.0
-            }
-        }
+        return amount * exchangeMap[from]!![to]!!
     }
 
 //    override fun onBackPressed() {

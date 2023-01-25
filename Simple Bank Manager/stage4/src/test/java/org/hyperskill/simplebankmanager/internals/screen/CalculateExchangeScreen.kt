@@ -69,21 +69,23 @@ class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerU
 
 
     fun assertDisplayConvertedAmount(
-        amountToConvert: String,
+        amountToConvert: Double,
         convertFromText: String,
         convertToText: String,
-        expectedConvertedAmount: String
+        expectedConvertedAmount: Double
     ) = with(test) {
 
         setSpinnerCurrencySelection(convertFromText,convertToText)
-        calculateExchangeAmountEditText.append(amountToConvert)
+        calculateExchangeAmountEditText.setText(amountToConvert.toString())
 
         calculateExchangeButton.clickAndRun()
 
         calculateExchangeDisplayTextView.apply {
             val expectedText =
-                "$amountToConvert $convertFromText" + " = " + "$expectedConvertedAmount $convertToText"
-            val actualText = this.text.toString().lowercase()
+                "%.2f ${convertFromText.uppercase()} = %.2f ${convertToText.uppercase()}"
+                    .format(amountToConvert, expectedConvertedAmount)
+
+            val actualText = this.text.toString().uppercase()
             val messageDisplayError = "calculateExchangeDisplayTextView has wrong text " +
                     "on conversion from $convertFromText to $convertToText,"
             assertEquals(messageDisplayError, expectedText, actualText)
