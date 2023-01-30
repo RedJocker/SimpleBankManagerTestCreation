@@ -2,89 +2,99 @@
 <h2>Description</h2>
 
 <p>
-    After successful login, user should be able to go to Transfer funds screen and transfer money to or from account,
-    and check current balance at the View Balance screen.
+    At this stage we will implement a feature to calculate one currency to another.
+    When user successfully login, user should be able to go to Calculate exchange screen,
+    user can select the currencies to convert from and to, enter an amount to convert and trigger the conversion by clicking a button.
+    The converted amount will be displayed in a text view.
 </p>
 
-<p>
-    The navigation graph will help us to implement the navigation between the screens of our app.
-</p>
+<br>
 
 <h2>Objectives</h2>
 
 <ol>
+
     <li>
-        Add a Fragment named <code>ViewBalanceFragment</code> to the navigation graph
+        Add a Fragment named <code>CalculateExchangeFragment</code> to the navigation graph;
+        <ul>
+            <li>
+                Add an <code>TextView</code> to <code>CalculateExchangeFragment</code> with
+                <code>id</code> <code>calculateExchangeLabelFromTextView</code>,
+                the text should be <code>convert from</code>;
+            </li>
+            <li>
+                Add an <code>TextView</code> to <code>CalculateExchangeFragment</code> with
+                <code>id</code> <code>calculateExchangeLabelToTextView</code>,
+               the text should be <code>convert to</code>
+            </li>
+            <li>
+                Add an <code>Spinner</code> to <code>CalculateExchangeFragment</code> with
+                <code>id</code> <code>calculateExchangeFromSpinner</code>,
+               the spinner should contain this text in dropdown <code>eur</code>, <code>gbp</code>, <code>usd</code>.
+            </li>
+            <li>
+                Add an <code>Spinner</code> to <code>CalculateExchangeFragment</code> with
+                <code>id</code> <code>calculateExchangeToSpinner</code>,
+                the spinner should contain this text in dropdown <code>eur</code>, <code>gbp</code>, <code>usd</code>.
+            </li>
+            <li>
+                Add an <code>TextView</code> to <code>CalculateExchangeFragment</code> with
+                <code>id</code> <code>calculateExchangeDisplayTextView</code>,
+                this textView will be used to show calculated amount to 2 decimal points.
+            </li>
+            <li>
+                Add an <code>EditText</code> to <code>CalculateExchangeFragment</code> with
+                <code>id</code> <code>calculateExchangeAmountEditText</code>.
+                It should accept input type <code>numberDecimal</code> and have a hint <code>Enter amount</code>.
+            </li>
+            <li>
+                Add an <code>Button</code> to <code>CalculateExchangeFragment</code> with
+                <code>id</code> <code>calculateExchangeButton</code> and with a text <code>calculate</code>.
+            </li>
+            <li>
+                On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
+                to <code>CalculateExchangeFragment</code>.
+                The code generated after making the connection should contain an action with id
+                <code>action_userMenuFragment_to_calculateExchangeFragment</code> and destination
+                <code>calculateExchangeFragment</code>;
+            </li>
+
+            <li>
+                After click on <code>userMenuExchangeCalculatorButton</code> display <code>CalculateExchangeFragment</code>.
+                Display on <code>calculateExchangeFromSpinner</code> dropdown menu currencies <code>eur</code>, <code>gbp</code>, <code>usd</code>.
+                Display on <code>calculateExchangeToSpinner</code> dropdown menu currencies <code>eur</code>, <code>gbp</code>, <code>usd</code>.
+                At the <code>calculateExchangeFromSpinner</code> and <code>calculateExchangeToSpinner</code> , user should be able to choose from which
+                currency and to which currency to convert to. Input amount to convert at the <code>calculateExchangeAmountEditText</code>,
+                and confirm conversion with button click <code>calculateExchangeButton</code>.
+            </li>
+               We will use fixed exchange rates that was actual at that time.
+                Conversion rates are :
+                <li>1 EUR = 0.87 GBP</li>
+                <li>1 EUR = 1.075 USD</li>
+                <li>1 GBP = 1.14 EUR</li>
+                <li>1 GBP = 1.14 USD</li>
+                <li>1 USD = 1.00 EUR</li>
+                <li>1 USD = 0.877 GBP</li>
+
+            <li>
+                If user selects at <code>calculateExchangeFromSpinner</code> same currency that is already selected at <code>calculateExchangeToSpinner</code>,
+                it should show a Toast message <code>Cannot convert to same currency</code> and replace currency at <code>calculateExchangeToSpinner</code> with the next available currency.
+            </li>
+            <li>
+                If no value is passed to <code>calculateExchangeAmountEditText</code> and button <code>calculateExchangeButton</code> is clicked it should show a
+                Toast message <code>Enter amount</code>.
+            </li>
+
+            <li>
+                While at <code>CalculateExchangeFragment</code> clicking on back button should redirect users back to
+                <code>UserMenuFragment</code>
+            </li>
+        </ul>
     </li>
-    <li>
-        Add an <code>TextView</code> to <code>ViewBalanceFragment</code> with
-        <code>id</code> <code>viewBalanceTextBalanceTextView</code>,
-        the text should be <code>"Balance:"</code>
-    </li>
-    <li>
-        Add an <code>TextView</code> to <code>ViewBalanceFragment</code> with
-        <code>id</code> <code>viewBalanceShowBalanceTextView</code>,
-        with hint <code>"0.0$"</code>. This TextView will be used to show account balance.
-    </li>
-    <li>
-        On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
-        to <code>ViewBalanceFragment</code>.
-        The code generated after making the connection should contain an action with id
-        <code>action_userMenuFragment_to_viewBalanceFragment</code> and destination
-        <code>viewBalanceFragment</code>
-    </li>
-    <li>
-        Add a Fragment named <code>TransferFundsFragment</code> to the navigation graph.
-    </li>
-    <li>
-        On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
-        to <code>TransferFundsFragment</code>. Code generated after making connection should have action with id
-        <code>action_userMenuFragment_to_transferFundsFragment</code> and destination id 					   <code>transferFundsFragment</code>
-    </li>
-    <li>
-        Add to FragmentLayout <code>TransferFundsFragment </code> at the left upper side of the Fragment layout  <code>TextView</code> with name <code>transferFundsFromAccountTextView</code> with text <code>Transfer from</code>.
-    </li>
-    <li>
-        add to FragmentLayout <code>TransferFundsFragment</code> to the right upper side of FragmentLayout this component:
-        <code>FrameLayout</code> with name <code>frameLayoutTop</code>
-        inside of frame of <code>frameLayoutTop</code> should be <code>CardView</code> with name
-        <code>TransferFundsOtherAccountCardView</code>
-    <li>
-        Inside of a CardView <code>TransferFundsOtherAccountCardView</code> add   <code>TextView</code> with name <code> transferFundsCardNameOtherAccountTextView </code>. This TextView will contain hint <code>"Card account name"
-    </code>. Below TextView and also inside of a CardView <code>TransferFundsOtherAccountCardView</code> put <code>TextView</code> with name <code>transferFundsCardAccountNumberOtherAccountTextView</code> with <code>hint <code>SI65463646432</code></code>.
-    </li>
-    <li>
-        Next component is of type <code>SwitchCompat</code>, with name <code>transferFundsSwitch</code>. You can add it below the FrameLayout <code>frameLayoutTop</code> in the <code>fragmentTransferFunds</code>. This switch we will later use for switching beetwen transfer accounts.
-    <li>
-        Next add at the left middle side of the <code>fragmentTransferFunds</code> below  textview Transfer from,  <code>TextView</code> with name <code>transferFundsToAccountTextView</code> with text <code>Transfer to</code>
-    </li>
-    <li>
-        On the right side of this Transfer to textview and bellow transferFundsSwitch add second <code>FrameLayout</code> named <code>frameLayoutBottom</code>.
-    </li>
-    <li>
-        Then create second <code>CardView</code> with name <code>TransferFundsUserAccountCardView</code> and inside it add <code>TextView</code> with name <code>transferFundsCardNameTextView</code> including <code>hint:<code>Card account name user</code></code>. Below it and also inside of this cardView add <code>TextView</code>  named <code>transferFundsCardAccountNumberTextView</code>  with <code>hint <code>SI45757699497</code></code>
-    </li>
-    <li>
-        Next add to <code>fragmentTransferFunds</code> below second TransferFundsUserAccountCardView, <code>EditText</code> with name <code>transferFundsEnterAmountEditText</code> and <code>hint <code> Enter amount</code></code>.
-    <li>
-        And last component to add to <code>fragmentTransferFunds</code> is of type <code>Button</code> with name <code>transferFundsButton</code>. Add it below transferFundsEnterAmountEditText.
-    </li>
-    <li>
-        After successful login, user with a click on a button named View Balance will
-        navigate user to View balance screen.
-        To make the navigation you can use
-        <code>findNavController().navigate(R.id.action_userMenuFragment_to_viewBalanceFragment)</code>.
-        It is also possible to pass a Bundle as second argument of navigate method
-        to pass arguments to viewBalanceFragment,
-        which you can later retrieve with <code>arguments?.getString(...)</code>
-    </li>
-    After successful login, user with a click on a button Transfer funds will navigate user to Transfer funds screen.
-    To make the navigation you can use
-    <code>findNavController().navigate(R.id.action_userMenuFragment_to_transferFundsFragment)</code>.
-    It is also possible to pass a Bundle as second argument of navigate method
-    to pass arguments to transferFundsFragment,
-    which you can later retrieve with <code>arguments?.getString(...)</code>
-    <li>
-        All requirements from stage1 and stage2 are still valid, including toast messages
-    </li>
+
+
+
+
 </ol>
+
+
