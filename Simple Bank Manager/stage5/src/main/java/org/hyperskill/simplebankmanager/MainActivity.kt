@@ -12,12 +12,14 @@ class MainActivity : AppCompatActivity(), BankManager {
     lateinit var username: String
     lateinit var password: String
     var balance: Double = 100.0
+    lateinit var billInfo: Triple<String, String, Double>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         username = intent.extras?.getString("username") ?: "Lara"
         password = intent.extras?.getString("password") ?: "1234"
         balance = intent.extras?.getDouble("balance") ?: 100.0
+
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
     }
@@ -47,4 +49,13 @@ class MainActivity : AppCompatActivity(), BankManager {
 //        //comment next line to test incorrect back button behaviour
 //        //super.onBackPressed()
 //    }
+
+    override fun getBillInfoByCode(code: String): Triple<String, String, Double>? {
+        val billInfo = mapOf(
+            "elec" to Triple("Electricity", "ELEC", 45.0),
+            "gas" to Triple("Gas", "GAS", 20.0),
+            "water" to Triple("Water", "WTR", 25.0)
+        )
+        return if (billInfo[code] != null) billInfo[code] else null
+    }
 }

@@ -3,7 +3,8 @@ package org.hyperskill.simplebankmanager
 interface BankManager : LoginValidator,
     BalanceSupplier,
     BalanceSetter,
-    AccountNumberValidator
+    AccountNumberValidator,
+    BillInfoSupplier
 
 interface LoginValidator {
     fun isValidLogin(username: String, password: String): Boolean
@@ -20,4 +21,8 @@ interface BalanceSetter {
 
 interface AccountNumberValidator {
     fun isValidAccount(account: String): Boolean
+}
+
+interface BillInfoSupplier {
+    fun getBillInfoByCode(code: String): Triple<String, String, Double>?
 }
