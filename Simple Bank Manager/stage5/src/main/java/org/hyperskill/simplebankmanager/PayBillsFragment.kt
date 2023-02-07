@@ -80,6 +80,11 @@ class PayBillsFragment : Fragment() {
             .setNegativeButton("Cancel") { _, _ -> }
             .create()
             .show()
+        Toast.makeText(
+            context,
+            "Payment for bill $billName, was successful",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun showErrorDialog(message: String) {
