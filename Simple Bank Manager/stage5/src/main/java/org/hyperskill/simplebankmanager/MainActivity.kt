@@ -52,9 +52,9 @@ class MainActivity : AppCompatActivity(), BankManager {
 
     override fun getBillInfoByCode(code: String): Triple<String, String, Double>? {
         val billInfo = mapOf(
-            "elec" to Triple("Electricity", "ELEC", 45.0),
-            "gas" to Triple("Gas", "GAS", 20.0),
-            "water" to Triple("Water", "WTR", 25.0)
+            "ELEC" to Triple("Electricity", "ELEC", 45.0),
+            "GAS" to Triple("Gas", "GAS", 20.0),
+            "WTR" to Triple("Water", "WTR", 25.0)
         )
         return if (billInfo[code] != null) billInfo[code] else null
     }

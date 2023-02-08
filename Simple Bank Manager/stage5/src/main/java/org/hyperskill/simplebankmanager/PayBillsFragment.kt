@@ -32,7 +32,7 @@ class PayBillsFragment : Fragment() {
         showBillInfoButton = binding.showBillInfoButton
 
         showBillInfoButton.setOnClickListener {
-            val codeInput: String = codeInputEditText.text.toString().lowercase()
+            val codeInput: String = codeInputEditText.text.toString()
             openDialog(codeInput)
         }
         return binding.root
@@ -55,7 +55,7 @@ class PayBillsFragment : Fragment() {
 
     private fun showConfirmBillInfoDialog(billName: String, billCode: String, billAmount: Double) {
         AlertDialog.Builder(context)
-            .setTitle("Bill Info")
+            .setTitle("Bill info")
             .setMessage("Name: $billName\n BillCode: $billCode\n Amount: $billAmount")
             .setPositiveButton("Confirm") { _, _ ->
                 if (balanceSetter!!.hasFunds(billAmount)) {
