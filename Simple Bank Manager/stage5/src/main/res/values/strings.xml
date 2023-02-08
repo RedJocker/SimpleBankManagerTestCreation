@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Simple Bank Manager</string>
+    <string name="balance">Balance:</string>
+    <string name="_0_0">0.0$</string>
+    <string name="transfer_funds_to_account">Transfer funds to account</string>
+    <string name="transfer_funds_from_account">Transfer funds from account</string>
+    <string name="add">add</string>
+    <string name="transfer_from">Transfer from</string>
+    <string name="transfer">Transfer</string>
+    <string name="transfer_to">Transfer to</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="replace">Replace</string>
+    <string name="card_account_name_user">Card account name user</string>
+    <string name="card_account_number">SI65463646432</string>
+    <string name="card_account_name">Card account name</string>
+    <string name="log_in">log in</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="card_account_number2">SI45757699497</string>
+    <string name="calculate">calculate</string>
+    <string name="convert_from">convert from</string>
+    <string name="convert_to">convert to</string>
+    <string name="pay_bill">Pay Bill</string>
+    <string name="search_for_file">Search for File</string>
+    <string name="open_file">open file</string>
+    <string name="enter_code">Enter code</string>
+    <string name="show_bill_info">Show Bill Info</string>
+</resources>
