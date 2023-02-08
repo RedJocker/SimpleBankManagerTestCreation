@@ -5,8 +5,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.core.view.iterator
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.robolectric.shadows.ShadowAlertDialog
 
 open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUnitTest<T>(clazz) {
 
@@ -15,26 +16,44 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         assertEquals("Wrong text on $idString", expectedText, actualText)
     }
 
-    fun EditText.assertHintEditText(idString: String, expectedHint: String, ignoreCase: Boolean = true) {
-        val actualHint = if(ignoreCase) this.hint.toString().lowercase() else this.hint.toString()
+    fun EditText.assertHintEditText(
+        idString: String,
+        expectedHint: String,
+        ignoreCase: Boolean = true
+    ) {
+        val actualHint = if (ignoreCase) this.hint.toString().lowercase() else this.hint.toString()
         assertEquals("Wrong hint on $idString", expectedHint, actualHint)
     }
+
     fun TextView.assertText(idString: String, expectedText: String, ignoreCase: Boolean = true) {
-        val actualText = if(ignoreCase) this.text.toString().lowercase() else this.text.toString()
+        val actualText = if (ignoreCase) this.text.toString().lowercase() else this.text.toString()
         assertEquals("Wrong text on $idString", expectedText, actualText)
     }
 
-    fun TextView.assertTextWithCustomErrorMessage(errorMessage: String, expectedText: String, ignoreCase: Boolean = true) {
-        val actualText = if(ignoreCase) this.text.toString().lowercase() else this.text.toString()
+    fun TextView.assertTextWithCustomErrorMessage(
+        errorMessage: String,
+        expectedText: String,
+        ignoreCase: Boolean = true
+    ) {
+        val actualText = if (ignoreCase) this.text.toString().lowercase() else this.text.toString()
         assertEquals(errorMessage, expectedText, actualText)
     }
 
-    fun EditText.assertEditText(idString: String, expectedHint: String, expectedType: Int, typeString: String) {
+    fun EditText.assertEditText(
+        idString: String,
+        expectedHint: String,
+        expectedType: Int,
+        typeString: String
+    ) {
         val actualHint = this.hint.toString()
         assertEquals("Wrong hint on $idString", expectedHint, actualHint)
 
         val actualInputType = this.inputType
-        assertEquals("Wrong inputType on $idString should be $typeString", expectedType, actualInputType)
+        assertEquals(
+            "Wrong inputType on $idString should be $typeString",
+            expectedType,
+            actualInputType
+        )
     }
 
     fun EditText.assertErrorText(errorMessage: String, expectedErrorText: String) {
@@ -42,13 +61,34 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         assertEquals(errorMessage, expectedErrorText, actualErrorText)
     }
 
-    fun Spinner.assertSpinnerText(idString: String, expectedDropdownText: ArrayList<String>, ignoreCase: Boolean = true) {
+    fun Spinner.assertSpinnerText(
+        idString: String,
+        expectedDropdownText: ArrayList<String>,
+        ignoreCase: Boolean = true
+    ) {
         val items = ArrayList<String>()
         for (i in 0 until this.adapter.count) {
             items.add(this.adapter.getItem(i).toString())
         }
-        val actualText = if(ignoreCase) items.toString().lowercase() else items.toString()
-        assertEquals("Wrong text on $idString",  expectedDropdownText.toString(), actualText)
+        val actualText = if (ignoreCase) items.toString().lowercase() else items.toString()
+        assertEquals("Wrong text on $idString", expectedDropdownText.toString(), actualText)
+    }
+    fun ShadowAlertDialog.assertShadowDialogTitle(expectedTitle: String, lowerCase: Boolean) {
+        if(lowerCase) {
+            var expectedTitle = expectedTitle.lowercase()
+            var actualTitle = this.title.toString().lowercase()
+            assertEquals("Wrong AlertDialog title", expectedTitle, actualTitle)
+        }
+    }
+    fun ShadowAlertDialog.assertShadowDialogMessage(expectedMessage: String, lowerCase: Boolean) {
+        if(lowerCase) {
+            var expectedMessage = expectedMessage.lowercase()
+            var actualMessage = this.message.toString().lowercase()
+            assertEquals("Wrong AlertDialog message", expectedMessage, actualMessage)
+        }
+    }
+    fun ShadowAlertDialog.assertShadowDialogVisible(isDialogVisible: Boolean, expectedVisible: Boolean) {
+        assertEquals("Dialog should not be visible",isDialogVisible, expectedVisible)
 
     }
 }

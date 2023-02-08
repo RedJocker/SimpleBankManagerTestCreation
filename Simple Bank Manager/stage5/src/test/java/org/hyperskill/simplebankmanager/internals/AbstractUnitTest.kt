@@ -30,7 +30,7 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
      *
      * It is the @RealObject of the shadowActivity
      */
-    val activity : Activity by lazy {
+    val activity: Activity by lazy {
         activityController.get()
     }
 
@@ -69,9 +69,13 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
      *
      * returns a value for convenience use, like in tests that involve navigation between Activities
      */
-    fun <ReturnValue> testActivity(arguments: Intent = Intent(), savedInstanceState: Bundle = Bundle(), testCodeBlock: (Activity) -> ReturnValue): ReturnValue {
+    fun <ReturnValue> testActivity(
+        arguments: Intent = Intent(),
+        savedInstanceState: Bundle = Bundle(),
+        testCodeBlock: (Activity) -> ReturnValue
+    ): ReturnValue {
         try {
-            activity.intent =  arguments
+            activity.intent = arguments
             activityController.setup(savedInstanceState)
         } catch (ex: Exception) {
             throw AssertionError("Exception, test failed on activity creation with $ex\n${ex.stackTraceToString()}")
@@ -114,7 +118,7 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
      *
      * Internally it calls performClick() and shadowLooper.idleFor(millis)
      */
-    fun View.clickAndRun(millis: Long = 500){
+    fun View.clickAndRun(millis: Long = 500) {
         this.performClick()
         shadowLooper.idleFor(Duration.ofMillis(millis))
     }
@@ -173,8 +177,9 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
      * Asserts that the last message toasted is the expectedMessage.
      * Assertion fails if no toast is shown with null actualLastMessage value.
      */
-    fun assertLastToastMessageEquals(errorMessage: String, expectedMessage: String,) {
+    fun assertLastToastMessageEquals(errorMessage: String, expectedMessage: String) {
         val actualLastMessage: String? = ShadowToast.getTextOfLatestToast()
         assertEquals(errorMessage, expectedMessage, actualLastMessage)
     }
+
 }

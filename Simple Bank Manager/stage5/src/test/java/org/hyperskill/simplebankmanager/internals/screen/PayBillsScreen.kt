@@ -2,25 +2,15 @@ package org.hyperskill.simplebankmanager.internals.screen
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
-import android.os.Handler
-import android.os.Looper
-import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
-import org.junit.Assert
-import org.robolectric.Shadows
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowAlertDialog
-import org.robolectric.shadows.ShadowDialog
-import org.robolectric.shadows.ShadowToast
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
+import java.util.*
+
 
 class PayBillsScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T>) {
-
     val payBillsCodeInputEditText = with(test) {
         val idString = "codeInputEditText"
         val expectedHint = "enter code"
@@ -36,17 +26,38 @@ class PayBillsScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T
         }
     }
 
-
-
-
-    fun confirmInputCode(input: String) {
-        payBillsCodeInputEditText.setText(input.toLowerCase())
-        payBillsShowBillInfoButton.performClick()
-        val payBillsDialog: AlertDialog = ShadowAlertDialog.getLatestAlertDialog()
-        Assert.assertEquals("Bill info", payBillsDialog)
+    fun confirmInputCode(input: String, dialogTitle: String, dialogMessage: String) = with(test) {
+        payBillsCodeInputEditText.setText(input)
+        payBillsShowBillInfoButton.clickAndRun().apply {
+            val dialog = getLatestDialog()
+            val shadowDialog: ShadowAlertDialog = shadowOf(dialog)
+            shadowDialog.assertShadowDialogTitle(dialogTitle, lowerCase = true)
+            shadowDialog.assertShadowDialogMessage(dialogMessage, lowerCase = true)
         }
+    }
+
+    fun acceptBillPayment(billName: String) = with(test) {
+        val dialog = getLatestDialog()
+        val shadowDialog: ShadowAlertDialog = shadowOf(dialog)
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).clickAndRun()
+        shadowDialog.assertShadowDialogVisible(dialog.isShowing, expectedVisible = false)
+
+        assertLastToastMessageEquals(
+            "Wrong Toast message for successful bill payment",
+            "Payment for bill $billName, was successful"
+        )
+    }
+    fun declineBillPayment(billName: String) = with(test) {
+        val dialog = getLatestDialog()
+        val shadowDialog: ShadowAlertDialog = shadowOf(dialog)
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).clickAndRun()
+        shadowDialog.assertShadowDialogVisible(dialog.isShowing, expectedVisible = false)
 
     }
+
+}
+
+
 
 
 
