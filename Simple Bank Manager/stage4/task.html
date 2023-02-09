@@ -2,9 +2,11 @@
 <h2>Description</h2>
 
 <p>
-    At this stage we will implement a feature to calculate one currency to another.
-    When user successfully login, user should be able to go to Calculate exchange screen,
-    user can select the currencies to convert from and to, enter an amount to convert and trigger the conversion by clicking a button.
+    At this stage we will implement a feature to calculate
+    the exchange from one currency to another.
+    When user successfully login, user should be able to go to Calculate Exchange screen,
+    user can select the currencies to convert from and to,
+    enter an amount to convert and trigger the conversion by clicking a button.
     The converted amount will be displayed in a text view.
 </p>
 
@@ -25,76 +27,103 @@
             <li>
                 Add an <code>TextView</code> to <code>CalculateExchangeFragment</code> with
                 <code>id</code> <code>calculateExchangeLabelToTextView</code>,
-               the text should be <code>convert to</code>
+               the text should be <code>convert to</code>;
             </li>
             <li>
                 Add an <code>Spinner</code> to <code>CalculateExchangeFragment</code> with
                 <code>id</code> <code>calculateExchangeFromSpinner</code>,
-               the spinner should contain this text in dropdown <code>eur</code>, <code>gbp</code>, <code>usd</code>.
+               the spinner should contain this text in dropdown
+                <code>EUR</code>, <code>GBP</code>, <code>USD</code>;
             </li>
             <li>
                 Add an <code>Spinner</code> to <code>CalculateExchangeFragment</code> with
                 <code>id</code> <code>calculateExchangeToSpinner</code>,
-                the spinner should contain this text in dropdown <code>eur</code>, <code>gbp</code>, <code>usd</code>.
+                the spinner should contain this text in dropdown
+                <code>EUR</code>, <code>GBP</code>, <code>USD</code>;
             </li>
             <li>
                 Add an <code>TextView</code> to <code>CalculateExchangeFragment</code> with
                 <code>id</code> <code>calculateExchangeDisplayTextView</code>,
-                this textView will be used to show calculated amount to 2 decimal points.
+                this textView will be used to show calculated amount to 2 decimal points;
             </li>
             <li>
                 Add an <code>EditText</code> to <code>CalculateExchangeFragment</code> with
                 <code>id</code> <code>calculateExchangeAmountEditText</code>.
-                It should accept input type <code>numberDecimal</code> and have a hint <code>Enter amount</code>.
+                It should accept input type <code>numberDecimal</code>
+                and have a hint <code>Enter amount</code>;
             </li>
             <li>
                 Add an <code>Button</code> to <code>CalculateExchangeFragment</code> with
-                <code>id</code> <code>calculateExchangeButton</code> and with a text <code>calculate</code>.
-            </li>
-            <li>
-                On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
-                to <code>CalculateExchangeFragment</code>.
-                The code generated after making the connection should contain an action with id
-                <code>action_userMenuFragment_to_calculateExchangeFragment</code> and destination
-                <code>calculateExchangeFragment</code>;
-            </li>
-
-            <li>
-                After click on <code>userMenuExchangeCalculatorButton</code> display <code>CalculateExchangeFragment</code>.
-                Display on <code>calculateExchangeFromSpinner</code> dropdown menu currencies <code>eur</code>, <code>gbp</code>, <code>usd</code>.
-                Display on <code>calculateExchangeToSpinner</code> dropdown menu currencies <code>eur</code>, <code>gbp</code>, <code>usd</code>.
-                At the <code>calculateExchangeFromSpinner</code> and <code>calculateExchangeToSpinner</code> , user should be able to choose from which
-                currency and to which currency to convert to. Input amount to convert at the <code>calculateExchangeAmountEditText</code>,
-                and confirm conversion with button click <code>calculateExchangeButton</code>.
-            </li>
-               We will use fixed exchange rates that was actual at that time.
-                Conversion rates are :
-                <li>1 EUR = 0.87 GBP</li>
-                <li>1 EUR = 1.075 USD</li>
-                <li>1 GBP = 1.14 EUR</li>
-                <li>1 GBP = 1.14 USD</li>
-                <li>1 USD = 1.00 EUR</li>
-                <li>1 USD = 0.877 GBP</li>
-
-            <li>
-                If user selects at <code>calculateExchangeFromSpinner</code> same currency that is already selected at <code>calculateExchangeToSpinner</code>,
-                it should show a Toast message <code>Cannot convert to same currency</code> and replace currency at <code>calculateExchangeToSpinner</code> with the next available currency.
-            </li>
-            <li>
-                If no value is passed to <code>calculateExchangeAmountEditText</code> and button <code>calculateExchangeButton</code> is clicked it should show a
-                Toast message <code>Enter amount</code>.
-            </li>
-
-            <li>
-                While at <code>CalculateExchangeFragment</code> clicking on back button should redirect users back to
-                <code>UserMenuFragment</code>
+                <code>id</code> <code>calculateExchangeButton</code>
+                and with a text <code>calculate</code>;
             </li>
         </ul>
+
+    <li>
+        On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
+        to <code>CalculateExchangeFragment</code>.
+        The code generated after making the connection should contain an action with id
+        <code>action_userMenuFragment_to_calculateExchangeFragment</code> and destination
+        <code>calculateExchangeFragment</code>;
     </li>
 
+    <li>
+        After click on <code>userMenuExchangeCalculatorButton</code>
+        display <code>CalculateExchangeFragment</code>.
+        Users should be able to choose from which currency and to which currency to convert to
+        using <code>calculateExchangeFromSpinner</code> and <code>calculateExchangeToSpinner</code>.
+        Input amount to convert at <code>calculateExchangeAmountEditText</code>,
+        and confirm conversion with button click <code>calculateExchangeButton</code>;
+    </li>
+    <li>
+        Test may pass the exchangeMap as a <code>Serializable</code> to <code>MainActivity</code>
+        through <code>intent.extras</code>.
+        Retrieve that balance, using the key <code>"exchangeMap"</code>. You will want to cast
+        it back to a map to be able to use it as a map. The type signature of exchangeMap is
+        <code>Map&lt;String, Map&lt;String, Double&gt;&gt;</code>.
 
+        In case no exchangeMap is passed use <br><br>
+        <pre><code>
+val defaultMap = mapOf(
+    "EUR" to mapOf(
+        "GBP" to 0.5,
+        "USD" to 2.0
+    ),
+    "GBP" to mapOf(
+        "EUR" to 2.0,
+        "USD" to 4.0
+    ),
+    "USD" to mapOf(
+        "EUR" to 0.5,
+        "GBP" to 0.25
+    )
+)
+        </code></pre>
+        as default value for exchangeMap.
+        The outer key of exchangeMap is the source currency from which we are converting
+        and the inner key is the target currency to convert to;
 
+    </li>
 
+    <li>
+        If user selects same currency on both <code>calculateExchangeFromSpinner</code>
+        and <code>calculateExchangeToSpinner</code>,
+        then show a Toast message
+        <code>Cannot convert to same currency</code>
+        and replace currency at <code>calculateExchangeToSpinner</code>
+        with the next available currency;
+    </li>
+    <li>
+        If no value is passed to <code>calculateExchangeAmountEditText</code>
+        and button <code>calculateExchangeButton</code> is clicked it should show a
+        Toast message <code>Enter amount</code>;
+    </li>
+
+    <li>
+        While at <code>CalculateExchangeFragment</code>
+        clicking on back button should redirect users back to
+        <code>UserMenuFragment</code>;
+    </li>
 </ol>
 
 
