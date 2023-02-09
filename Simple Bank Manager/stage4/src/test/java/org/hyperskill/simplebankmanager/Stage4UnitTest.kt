@@ -46,11 +46,13 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
+                val amountToConvert = 5067.0
+                val expectedConvertedAmount = amountToConvert * defaultMap["EUR"]!!["GBP"]!!
                 assertDisplayConvertedAmount(
-                    5067.0,
+                    amountToConvert,
                     "eur",
                     "gbp",
-                    4408.29
+                    expectedConvertedAmount
                 ) // conversion is set to 2 decimal points
             }
         }
@@ -68,11 +70,13 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
+                val amountToConvert = 3424.0
+                val expectedConvertedAmount = amountToConvert * defaultMap["USD"]!!["EUR"]!!
                 assertDisplayConvertedAmount(
-                    3424.0,
+                    amountToConvert,
                     "usd",
                     "eur",
-                    3424.00
+                    expectedConvertedAmount
                 ) // conversion is set to 2 decimal points
             }
         }
@@ -90,11 +94,13 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
+                val amountToConvert = 345.0
+                val expectedConvertedAmount = amountToConvert * defaultMap["GBP"]!!["EUR"]!!
                 assertDisplayConvertedAmount(
-                    345.0,
+                    amountToConvert,
                     "gbp",
                     "eur",
-                    393.30
+                    expectedConvertedAmount
                 ) // conversion is set to 2 decimal points
             }
         }
@@ -157,20 +163,54 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
     }
 
     @Test
-    fun test07_convertCustomMap() {
+    fun test07_convertAllDefaultMap() {
+
+
+        testActivity {
+            LoginScreen(this).apply {
+                assertLogin(
+                    caseDescription = "default values"
+                )
+            }
+            UserMenuScreen(this).apply {
+                userMenuExchangeCalculatorButton.clickAndRun()
+            }
+
+            CalculateExchangeScreen(this).apply {
+                for (from in defaultMap.keys) {
+                    val fromMap = defaultMap[from]!!
+                    for (to in fromMap.keys) {
+                        val rate = fromMap[to]!!
+                        val amountToConvert = 100.0
+                        val expectedConvertedAmount = amountToConvert * rate
+
+                        assertDisplayConvertedAmount(
+                            amountToConvert,
+                            from,
+                            to,
+                            expectedConvertedAmount
+                        ) // conversion is set to 2 decimal points
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun test08_convertAllCustomMap() {
 
         val exchangeMap: Map<String, Map<String, Double>> = mapOf(
             "EUR" to mapOf(
-                "GBP" to 0.5,
-                "USD" to 2.0
+                "GBP" to 0.886,
+                "USD" to 1.074
             ),
             "GBP" to mapOf(
-                "EUR" to 2.0,
-                "USD" to 4.0
+                "EUR" to 1.128,
+                "USD" to 1.212
             ),
             "USD" to mapOf(
-                "EUR" to 0.5,
-                "GBP" to 0.25
+                "EUR" to 0.913,
+                "GBP" to 0.825
             )
         )
 

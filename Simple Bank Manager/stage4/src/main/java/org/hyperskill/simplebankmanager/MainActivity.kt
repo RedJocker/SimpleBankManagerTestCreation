@@ -20,18 +20,18 @@ class MainActivity : AppCompatActivity(), BankManager {
         password = intent.extras?.getString("password") ?: "1234"
         balance = intent.extras?.getDouble("balance") ?: 100.0
 
-        val defaultMap = mapOf(
+        val defaultMap: Map<String, Map<String, Double>> = mapOf(
             "EUR" to mapOf(
-                "GBP" to 0.87,
-                "USD" to 1.075
+                "GBP" to 0.5,
+                "USD" to 2.0
             ),
             "GBP" to mapOf(
-                "EUR" to 1.14,
-                "USD" to 1.14
+                "EUR" to 2.0,
+                "USD" to 4.0
             ),
             "USD" to mapOf(
-                "EUR" to 1.00,
-                "GBP" to 0.877
+                "EUR" to 0.5,
+                "GBP" to 0.25
             )
         )
 

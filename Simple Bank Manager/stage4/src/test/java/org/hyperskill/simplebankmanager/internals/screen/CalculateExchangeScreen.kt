@@ -8,12 +8,29 @@ import android.widget.Spinner
 import android.widget.TextView
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.robolectric.shadows.ShadowToast
 
 class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
     companion object {
         val expectedDropdownText = arrayListOf("eur", "gbp", "usd")
     }
+
+    val defaultMap: Map<String, Map<String, Double>> = mapOf(
+        "EUR" to mapOf(
+            "GBP" to 0.5,
+            "USD" to 2.0
+        ),
+        "GBP" to mapOf(
+            "EUR" to 2.0,
+            "USD" to 4.0
+        ),
+        "USD" to mapOf(
+            "EUR" to 0.5,
+            "GBP" to 0.25
+        )
+    )
 
     val calculateExchangeLabelFromTextView = with(test) {
         val idString = "calculateExchangeLabelFromTextView"
@@ -102,17 +119,37 @@ class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerU
                 "Wrong Toast message for empty EditText at CalculateExchange",
                 expectedToastMessage
             )
+            ShadowToast.reset()
         }
         if (isSameCurrencySelected) {
-            calculateExchangeConvertFromSpinner.setSelection(0)
-            calculateExchangeConvertToSpinner.setSelection(0)
-            calculateExchangeAmountEditText.setText("321")
-            calculateExchangeButton.clickAndRun()
-            val expectedToastMessage = "Cannot convert to same currency"
-            assertLastToastMessageEquals(
-                "Wrong Toast message for same currency selected at CalculateExchange",
-                expectedToastMessage
-            )
+
+            val countFrom = calculateExchangeConvertFromSpinner.adapter.count
+            val countTo = calculateExchangeConvertToSpinner.adapter.count
+
+            assertTrue("Both spinners at CalculateExchange should have same length", countFrom == countTo)
+
+            for (i in 0 until countFrom) {
+                calculateExchangeConvertFromSpinner.setSelection(i)
+                calculateExchangeConvertToSpinner.setSelection(i)
+                calculateExchangeAmountEditText.setText("321")
+
+                try {
+                    calculateExchangeButton.clickAndRun()
+                } catch (e : Exception) {
+                    throw AssertionError(
+                        "Exception, when same currency selected at CalculateExchange " +
+                                "test failed on activity execution with $e", e
+                    )
+                }
+
+                val expectedToastMessage = "Cannot convert to same currency"
+
+                assertLastToastMessageEquals(
+                    "Wrong Toast message for same currency selected at CalculateExchange",
+                    expectedToastMessage
+                )
+                ShadowToast.reset()
+            }
         }
     }
 
