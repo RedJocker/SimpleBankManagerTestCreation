@@ -4,6 +4,7 @@ interface BankManager : LoginValidator,
     BalanceSupplier,
     BalanceSetter,
     AccountNumberValidator,
+    ExchangeCalculator,
     BillInfoSupplier
 
 interface LoginValidator {
@@ -21,6 +22,11 @@ interface BalanceSetter {
 
 interface AccountNumberValidator {
     fun isValidAccount(account: String): Boolean
+}
+
+interface ExchangeCalculator {
+
+    fun calculateExchange(from: String, to: String, amount: Double): Double
 }
 
 interface BillInfoSupplier {

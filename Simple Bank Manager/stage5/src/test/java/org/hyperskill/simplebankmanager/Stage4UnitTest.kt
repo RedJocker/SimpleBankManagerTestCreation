@@ -1,11 +1,13 @@
 package org.hyperskill.simplebankmanager
 
+import android.content.Intent
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
-import org.hyperskill.simplebankmanager.internals.screen.*
+import org.hyperskill.simplebankmanager.internals.screen.CalculateExchangeScreen
+import org.hyperskill.simplebankmanager.internals.screen.LoginScreen
+import org.hyperskill.simplebankmanager.internals.screen.UserMenuScreen
 import org.junit.Assert
 import org.junit.FixMethodOrder
 import org.junit.Test
-import org.junit.internal.runners.statements.Fail
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.robolectric.RobolectricTestRunner
@@ -44,11 +46,13 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                calculateExchangeShowConvertedAmount(
-                    "5067.0",
+                val amountToConvert = 5067.0
+                val expectedConvertedAmount = amountToConvert * defaultMap["EUR"]!!["GBP"]!!
+                assertDisplayConvertedAmount(
+                    amountToConvert,
                     "eur",
                     "gbp",
-                    "4408.29"
+                    expectedConvertedAmount
                 ) // conversion is set to 2 decimal points
             }
         }
@@ -66,11 +70,13 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                calculateExchangeShowConvertedAmount(
-                    "3424.0",
+                val amountToConvert = 3424.0
+                val expectedConvertedAmount = amountToConvert * defaultMap["USD"]!!["EUR"]!!
+                assertDisplayConvertedAmount(
+                    amountToConvert,
                     "usd",
                     "eur",
-                    "3424.00"
+                    expectedConvertedAmount
                 ) // conversion is set to 2 decimal points
             }
         }
@@ -88,11 +94,13 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                calculateExchangeShowConvertedAmount(
-                    "345.0",
+                val amountToConvert = 345.0
+                val expectedConvertedAmount = amountToConvert * defaultMap["GBP"]!!["EUR"]!!
+                assertDisplayConvertedAmount(
+                    amountToConvert,
                     "gbp",
                     "eur",
-                    "393.30"
+                    expectedConvertedAmount
                 ) // conversion is set to 2 decimal points
             }
         }
@@ -110,7 +118,7 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                checkForErrorMessages(isEmptyAmount = true, isSameCurrencySelected = false)
+                checkForErrorMessages(isEmptyAmount = true)
             }
         }
     }
@@ -127,7 +135,7 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                checkForErrorMessages(isEmptyAmount = false, isSameCurrencySelected = true)
+                checkForErrorMessages(isSameCurrencySelected = true)
             }
         }
     }
@@ -145,16 +153,101 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
             CalculateExchangeScreen(this).apply {
                 setSpinnerCurrencySelection("USD", "USD")
-                val convertFrom = calculateExchangeDropdownConvertFromSpinner.selectedItem
-                val convertTo = calculateExchangeDropdownConvertToSpinner.selectedItem
-                    Assert.assertNotEquals("Currencies for" + "\"convert from\"" + " and " +"\"convert to\""
-                    + "should not be selected as equal"
-                        ,convertFrom,convertTo)
-                }
+                val convertFrom = calculateExchangeConvertFromSpinner.selectedItem
+                val convertTo = calculateExchangeConvertToSpinner.selectedItem
+                Assert.assertNotEquals("Currencies for" + "\"convert from\"" + " and " +"\"convert to\""
+                        + "should not be selected as equal"
+                    ,convertFrom,convertTo)
             }
-
         }
     }
+
+    @Test
+    fun test07_convertAllDefaultMap() {
+
+
+        testActivity {
+            LoginScreen(this).apply {
+                assertLogin(
+                    caseDescription = "default values"
+                )
+            }
+            UserMenuScreen(this).apply {
+                userMenuExchangeCalculatorButton.clickAndRun()
+            }
+
+            CalculateExchangeScreen(this).apply {
+                for (from in defaultMap.keys) {
+                    val fromMap = defaultMap[from]!!
+                    for (to in fromMap.keys) {
+                        val rate = fromMap[to]!!
+                        val amountToConvert = 100.0
+                        val expectedConvertedAmount = amountToConvert * rate
+
+                        assertDisplayConvertedAmount(
+                            amountToConvert,
+                            from,
+                            to,
+                            expectedConvertedAmount
+                        ) // conversion is set to 2 decimal points
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun test08_convertAllCustomMap() {
+
+        val exchangeMap: Map<String, Map<String, Double>> = mapOf(
+            "EUR" to mapOf(
+                "GBP" to 0.886,
+                "USD" to 1.074
+            ),
+            "GBP" to mapOf(
+                "EUR" to 1.128,
+                "USD" to 1.212
+            ),
+            "USD" to mapOf(
+                "EUR" to 0.913,
+                "GBP" to 0.825
+            )
+        )
+
+        val args = Intent().apply {
+            putExtra("exchangeMap", exchangeMap as java.io.Serializable)
+        }
+
+        testActivity(arguments = args) {
+            LoginScreen(this).apply {
+                assertLogin(
+                    caseDescription = "default values"
+                )
+            }
+            UserMenuScreen(this).apply {
+                userMenuExchangeCalculatorButton.clickAndRun()
+            }
+
+            CalculateExchangeScreen(this).apply {
+                for (from in exchangeMap.keys) {
+                    val fromMap = exchangeMap[from]!!
+                    for (to in fromMap.keys) {
+                        val rate = fromMap[to]!!
+                        val amountToConvert = 100.0
+                        val expectedConvertedAmount = amountToConvert * rate
+
+                        assertDisplayConvertedAmount(
+                            amountToConvert,
+                            from,
+                            to,
+                            expectedConvertedAmount
+                        ) // conversion is set to 2 decimal points
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 

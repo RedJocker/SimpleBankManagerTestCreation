@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity(), BankManager {
     lateinit var username: String
     lateinit var password: String
     var balance: Double = 100.0
+    lateinit var exchangeMap: Map<String, Map<String, Double>>
     lateinit var billInfo: Triple<String, String, Double>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +20,25 @@ class MainActivity : AppCompatActivity(), BankManager {
         username = intent.extras?.getString("username") ?: "Lara"
         password = intent.extras?.getString("password") ?: "1234"
         balance = intent.extras?.getDouble("balance") ?: 100.0
+
+        val defaultMap: Map<String, Map<String, Double>> = mapOf(
+            "EUR" to mapOf(
+                "GBP" to 0.5,
+                "USD" to 2.0
+            ),
+            "GBP" to mapOf(
+                "EUR" to 2.0,
+                "USD" to 4.0
+            ),
+            "USD" to mapOf(
+                "EUR" to 0.5,
+                "GBP" to 0.25
+            )
+        )
+
+        exchangeMap = intent.extras
+            ?.getSerializable("exchangeMap") as? Map<String, Map<String, Double>>
+            ?: defaultMap
 
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
@@ -45,10 +65,9 @@ class MainActivity : AppCompatActivity(), BankManager {
         return "^[sc]a\\d{4}$".toRegex().matches(account)
     }
 
-//    override fun onBackPressed() {
-//        //comment next line to test incorrect back button behaviour
-//        //super.onBackPressed()
-//    }
+    override fun calculateExchange(from: String, to: String, amount: Double): Double {
+        return amount * exchangeMap[from]!![to]!!
+    }
 
     override fun getBillInfoByCode(code: String): Triple<String, String, Double>? {
         val billInfo = mapOf(
@@ -58,4 +77,9 @@ class MainActivity : AppCompatActivity(), BankManager {
         )
         return if (billInfo[code] != null) billInfo[code] else null
     }
+
+    //    override fun onBackPressed() {
+//        //comment next line to test incorrect back button behaviour
+//        //super.onBackPressed()
+//    }
 }

@@ -7,54 +7,77 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.robolectric.shadows.ShadowToast
 
 class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
-    val calculateExchangeConvertFromTextView = with(test) {
-        val idString = "convertFromTextView"
+    companion object {
+        val expectedDropdownText = arrayListOf("eur", "gbp", "usd")
+    }
+
+    val defaultMap: Map<String, Map<String, Double>> = mapOf(
+        "EUR" to mapOf(
+            "GBP" to 0.5,
+            "USD" to 2.0
+        ),
+        "GBP" to mapOf(
+            "EUR" to 2.0,
+            "USD" to 4.0
+        ),
+        "USD" to mapOf(
+            "EUR" to 0.5,
+            "GBP" to 0.25
+        )
+    )
+
+    val calculateExchangeLabelFromTextView = with(test) {
+        val idString = "calculateExchangeLabelFromTextView"
         val expectedText = "convert from"
         activity.findViewByString<TextView>(idString).apply {
             assertText(idString, expectedText)
         }
     }
 
-    val calculateExchangeConvertToTextView = with(test) {
-        val idString = "convertToTextView"
+    val calculateExchangeLabelToTextView = with(test) {
+        val idString = "calculateExchangeLabelToTextView"
         val expectedText = "convert to"
         activity.findViewByString<TextView>(idString).apply {
             assertText(idString, expectedText)
         }
     }
 
-    val calculateExchangeDropdownConvertFromSpinner = with(test) {
-        val idString = "spinnerConvertFrom"
-        val expectedDropdownText = arrayListOf<String>("usd", "eur", "gbp")
+    val calculateExchangeConvertFromSpinner = with(test) {
+        val idString = "calculateExchangeFromSpinner"
         activity.findViewByString<Spinner>(idString).apply {
             assertSpinnerText(idString, expectedDropdownText)
         }
     }
 
-    val calculateExchangeDropdownConvertToSpinner = with(test) {
-        val idString = "spinnerConvertTo"
-        val expectedDropdownText = arrayListOf<String>("usd", "eur", "gbp")
+    val calculateExchangeConvertToSpinner = with(test) {
+        val idString = "calculateExchangeToSpinner"
         activity.findViewByString<Spinner>(idString).apply {
             assertSpinnerText(idString, expectedDropdownText)
         }
     }
 
-    val calculateExchangeEnterAmountEditText = with(test) {
-        val idString = "inputFundsToConvertEditText"
+    val calculateExchangeDisplayTextView = with(test) {
+        val idString = "calculateExchangeDisplayTextView"
+        activity.findViewByString<TextView>(idString)
+    }
+
+    val calculateExchangeAmountEditText = with(test) {
+        val idString = "calculateExchangeAmountEditText"
         val expectedType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         val typeString = "numberDecimal"
         activity.findViewByString<EditText>(idString).apply {
-
             assertEditText(idString, "Enter amount", expectedType, typeString)
         }
     }
 
-    val calculateExchangeCalculateButton = with(test) {
-        val idString = "buttonConvertFunds"
+    val calculateExchangeButton = with(test) {
+        val idString = "calculateExchangeButton"
         val expectedText = "calculate"
         activity.findViewByString<Button>(idString).apply {
             assertText(idString, expectedText)
@@ -62,75 +85,92 @@ class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerU
     }
 
 
-    fun calculateExchangeShowConvertedAmount(
-        amountToConvert: String,
+    fun assertDisplayConvertedAmount(
+        amountToConvert: Double,
         convertFromText: String,
         convertToText: String,
-        expectedConvertedAmount: String
+        expectedConvertedAmount: Double
     ) = with(test) {
+
         setSpinnerCurrencySelection(convertFromText,convertToText)
+        calculateExchangeAmountEditText.setText(amountToConvert.toString())
 
-        calculateExchangeEnterAmountEditText.append(amountToConvert)
+        calculateExchangeButton.clickAndRun()
 
-        calculateExchangeCalculateButton.clickAndRun().also {
-            val idString = "calculateExchangeShowConvertedAmountTextView"
-            activity.findViewByString<TextView>(idString).apply {
-                val expectedText =
-                    "$amountToConvert $convertFromText" + " = " + "$expectedConvertedAmount $convertToText"
-                val actualText = this.text.toString().lowercase()
-                Assert.assertEquals(idString, expectedText, actualText)
-            }
+        calculateExchangeDisplayTextView.apply {
+            val expectedText =
+                "%.2f ${convertFromText.uppercase()} = %.2f ${convertToText.uppercase()}"
+                    .format(amountToConvert, expectedConvertedAmount)
+
+            val actualText = this.text.toString().uppercase()
+            val messageDisplayError = "calculateExchangeDisplayTextView has wrong text " +
+                    "on conversion from $convertFromText to $convertToText,"
+            assertEquals(messageDisplayError, expectedText, actualText)
         }
     }
 
-    fun checkForErrorMessages(isEmptyAmount: Boolean, isSameCurrencySelected: Boolean) =
-        with(test) {
+    fun checkForErrorMessages(
+        isEmptyAmount: Boolean = false, isSameCurrencySelected: Boolean = false) = with(test) {
 
-            if (isEmptyAmount) {
-                calculateExchangeCalculateButton.clickAndRun()
-                val expectedToastMessage = "Enter amount"
-                assertLastToastMessageEquals(
-                    "Wrong Toast message for empty EditText at CalculateExchange",
-                    expectedToastMessage
-                )
-            }
-            if (isSameCurrencySelected) {
-                calculateExchangeDropdownConvertFromSpinner.setSelection(0)
-                calculateExchangeDropdownConvertToSpinner.setSelection(0)
-                calculateExchangeEnterAmountEditText.setText("321")
-                calculateExchangeCalculateButton.clickAndRun()
+        if (isEmptyAmount) {
+            calculateExchangeButton.clickAndRun()
+            val expectedToastMessage = "Enter amount"
+            assertLastToastMessageEquals(
+                "Wrong Toast message for empty EditText at CalculateExchange",
+                expectedToastMessage
+            )
+            ShadowToast.reset()
+        }
+        if (isSameCurrencySelected) {
+
+            val countFrom = calculateExchangeConvertFromSpinner.adapter.count
+            val countTo = calculateExchangeConvertToSpinner.adapter.count
+
+            assertTrue("Both spinners at CalculateExchange should have same length", countFrom == countTo)
+
+            for (i in 0 until countFrom) {
+                calculateExchangeConvertFromSpinner.setSelection(i)
+                calculateExchangeConvertToSpinner.setSelection(i)
+                calculateExchangeAmountEditText.setText("321")
+
+                try {
+                    calculateExchangeButton.clickAndRun()
+                } catch (e : Exception) {
+                    throw AssertionError(
+                        "Exception, when same currency selected at CalculateExchange " +
+                                "test failed on activity execution with $e", e
+                    )
+                }
+
                 val expectedToastMessage = "Cannot convert to same currency"
+
                 assertLastToastMessageEquals(
                     "Wrong Toast message for same currency selected at CalculateExchange",
                     expectedToastMessage
                 )
-
+                ShadowToast.reset()
             }
-
         }
+    }
 
     fun setSpinnerCurrencySelection(convertFromText: String, convertToText: String) {
 
-            var convertFrom = when (convertFromText.lowercase()) {
-                "usd" -> 0
-                "eur" -> 1
-                "gbp" -> 2
-                else -> {
-                    throw Exception("Wrong currency selected or not found")
-                }
-            }
-            calculateExchangeDropdownConvertFromSpinner.setSelection(convertFrom)
+        val convertFrom = when (convertFromText.lowercase()) {
+            "eur" -> 0
+            "gbp" -> 1
+            "usd" -> 2
+            else -> throw Exception("Wrong currency selected or not found")
+        }
 
-            var convertTo = when (convertToText.lowercase()) {
-                "usd" -> 0
-                "eur" -> 1
-                "gbp" -> 2
-                else -> {
-                    throw Exception("Wrong currency selected or not found")
-                }
-            }
-            calculateExchangeDropdownConvertToSpinner.setSelection(convertTo)
+        calculateExchangeConvertFromSpinner.setSelection(convertFrom)
 
+        val convertTo = when (convertToText.lowercase()) {
+            "eur" -> 0
+            "gbp" -> 1
+            "usd" -> 2
+            else -> throw Exception("Wrong currency selected or not found")
+        }
+        calculateExchangeConvertToSpinner.setSelection(convertTo)
     }
 }
 

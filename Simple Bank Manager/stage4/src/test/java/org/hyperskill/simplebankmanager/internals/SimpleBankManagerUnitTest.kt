@@ -1,11 +1,13 @@
 package org.hyperskill.simplebankmanager.internals
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import org.junit.Assert.assertEquals
+import org.robolectric.Shadows.shadowOf
 
 open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUnitTest<T>(clazz) {
 
@@ -48,5 +50,30 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         }
         val actualText = if(ignoreCase) items.toString().lowercase() else items.toString()
         assertEquals("Wrong text on $idString",  expectedDropdownText.toString(), actualText)
+    }
+
+    fun AlertDialog.assertShadowDialogTitle(expectedTitle: String, ignoreCase: Boolean = false) {
+        val shadowAlertDialog = shadowOf(this)
+        val expectedTitleNorm = if(ignoreCase) expectedTitle.lowercase() else expectedTitle
+        val actualTitle = shadowAlertDialog.title.toString().lowercase()
+        val actualTitleNorm = if(ignoreCase) actualTitle.lowercase() else actualTitle
+
+        assertEquals("Wrong AlertDialog title", expectedTitleNorm, actualTitleNorm)
+    }
+    fun AlertDialog.assertShadowDialogMessage(expectedMessage: String, ignoreCase: Boolean = false) {
+        val shadowAlertDialog = shadowOf(this)
+        val expectedMessageNorm = if(ignoreCase) expectedMessage.lowercase() else expectedMessage
+        val actualMessage = shadowAlertDialog.message.toString()
+        val actualMessageNorm = if(ignoreCase) actualMessage.lowercase() else actualMessage
+
+        assertEquals("Wrong AlertDialog message", expectedMessageNorm, actualMessageNorm)
+    }
+    fun AlertDialog.assertShadowDialogVisible(caseDescription: String, expectedVisible: Boolean) {
+        val isDialogVisible = this.isShowing
+        val messageError = "Dialog should %s be visible %s".format(
+            if(expectedVisible) "" else "not",
+            caseDescription
+        )
+        assertEquals(messageError,isDialogVisible, expectedVisible)
     }
 }
