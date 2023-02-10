@@ -13,15 +13,16 @@ class MainActivity : AppCompatActivity(), BankManager {
     lateinit var password: String
     var balance: Double = 100.0
     lateinit var exchangeMap: Map<String, Map<String, Double>>
-    lateinit var billInfo: Triple<String, String, Double>
+    lateinit var billInfo: Map<String, Triple<String, String, Double>>
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         username = intent.extras?.getString("username") ?: "Lara"
         password = intent.extras?.getString("password") ?: "1234"
         balance = intent.extras?.getDouble("balance") ?: 100.0
 
-        val defaultMap: Map<String, Map<String, Double>> = mapOf(
+        val defaultExchangeMap: Map<String, Map<String, Double>> = mapOf(
             "EUR" to mapOf(
                 "GBP" to 0.5,
                 "USD" to 2.0
@@ -36,9 +37,21 @@ class MainActivity : AppCompatActivity(), BankManager {
             )
         )
 
+
         exchangeMap = intent.extras
             ?.getSerializable("exchangeMap") as? Map<String, Map<String, Double>>
-            ?: defaultMap
+            ?: defaultExchangeMap
+
+        val defaultBillInfoMap =
+            mapOf(
+                "ELEC" to Triple("Electricity", "ELEC", 45.0),
+                "GAS" to Triple("Gas", "GAS", 20.0),
+                "WTR" to Triple("Water", "WTR", 25.0)
+            )
+
+        billInfo = intent.extras
+            ?.getSerializable("billInfo") as? Map<String, Triple<String, String, Double>>
+            ?: defaultBillInfoMap
 
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
@@ -70,11 +83,7 @@ class MainActivity : AppCompatActivity(), BankManager {
     }
 
     override fun getBillInfoByCode(code: String): Triple<String, String, Double>? {
-        val billInfo = mapOf(
-            "ELEC" to Triple("Electricity", "ELEC", 45.0),
-            "GAS" to Triple("Gas", "GAS", 20.0),
-            "WTR" to Triple("Water", "WTR", 25.0)
-        )
+
         return if (billInfo[code] != null) billInfo[code] else null
     }
 
