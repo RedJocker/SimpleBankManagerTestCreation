@@ -5,9 +5,7 @@ import android.app.AlertDialog
 import android.widget.Button
 import android.widget.EditText
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
-import org.robolectric.Shadows.shadowOf
-import org.robolectric.shadows.ShadowAlertDialog
-import java.util.*
+import org.robolectric.shadows.ShadowToast
 
 
 class PayBillsScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T>) {
@@ -30,31 +28,33 @@ class PayBillsScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T
         payBillsCodeInputEditText.setText(input)
         payBillsShowBillInfoButton.clickAndRun().apply {
             val dialog = getLatestDialog()
-            val shadowDialog: ShadowAlertDialog = shadowOf(dialog)
-            shadowDialog.assertShadowDialogTitle(dialogTitle, lowerCase = true)
-            shadowDialog.assertShadowDialogMessage(dialogMessage, lowerCase = true)
+            dialog.assertShadowDialogTitle(dialogTitle, ignoreCase = true)
+            dialog.assertShadowDialogMessage(dialogMessage, ignoreCase = true)
         }
     }
 
     fun acceptBillPayment(billName: String) = with(test) {
         val dialog = getLatestDialog()
-        val shadowDialog: ShadowAlertDialog = shadowOf(dialog)
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).clickAndRun()
-        shadowDialog.assertShadowDialogVisible(dialog.isShowing, expectedVisible = false)
+        dialog.assertShadowDialogVisible(
+            caseDescription = "after clicking OK on dialog to accept bill payment",
+            expectedVisible = false
+        )
 
         assertLastToastMessageEquals(
             "Wrong Toast message for successful bill payment",
             "Payment for bill $billName, was successful"
         )
+        ShadowToast.reset()
     }
     fun declineBillPayment(billName: String) = with(test) {
         val dialog = getLatestDialog()
-        val shadowDialog: ShadowAlertDialog = shadowOf(dialog)
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).clickAndRun()
-        shadowDialog.assertShadowDialogVisible(dialog.isShowing, expectedVisible = false)
-
+        dialog.assertShadowDialogVisible(
+            caseDescription = "after clicking CANCEL on dialog to accept bill payment",
+            expectedVisible = false
+        )
     }
-
 }
 
 
