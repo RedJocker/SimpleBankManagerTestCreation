@@ -28,8 +28,8 @@ class PayBillsFragment : Fragment() {
     ): View {
         binding = FragmentPayBillsBinding.inflate(layoutInflater, container, false)
 
-        codeInputEditText = binding.PayBillsCodeInputEditText
-        showBillInfoButton = binding.PayBillsShowBillInfoButton
+        codeInputEditText = binding.payBillsCodeInputEditText
+        showBillInfoButton = binding.payBillsShowBillInfoButton
 
         showBillInfoButton.setOnClickListener {
             val codeInput: String = codeInputEditText.text.toString()

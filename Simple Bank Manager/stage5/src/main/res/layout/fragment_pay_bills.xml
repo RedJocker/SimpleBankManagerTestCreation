@@ -9,20 +9,20 @@
 
 
     <EditText
-        android:id="@+id/PayBillsCodeInputEditText"
+        android:id="@+id/payBillsCodeInputEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/enter_code"
-        app:layout_constraintBottom_toTopOf="@+id/PayBillsShowBillInfoButton"
+        app:layout_constraintBottom_toTopOf="@+id/payBillsShowBillInfoButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.902" />
 
     <Button
-        android:id="@+id/PayBillsShowBillInfoButton"
+        android:id="@+id/payBillsShowBillInfoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

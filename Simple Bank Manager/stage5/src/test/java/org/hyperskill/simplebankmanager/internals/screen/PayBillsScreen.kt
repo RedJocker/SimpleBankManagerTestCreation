@@ -10,14 +10,14 @@ import org.robolectric.shadows.ShadowToast
 
 class PayBillsScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T>) {
     val payBillsCodeInputEditText = with(test) {
-        val idString = "PayBillsCodeInputEditText"
+        val idString = "payBillsCodeInputEditText"
         val expectedHint = "enter code"
         activity.findViewByString<EditText>(idString).apply {
             assertHintEditText(idString, expectedHint, true)
         }
     }
     val payBillsShowBillInfoButton: Button = with(test) {
-        val idString = "PayBillsShowBillInfoButton"
+        val idString = "payBillsShowBillInfoButton"
         val expectedText = "show bill info"
         activity.findViewByString<Button>(idString).apply {
             assertButtonText(idString, expectedText)
