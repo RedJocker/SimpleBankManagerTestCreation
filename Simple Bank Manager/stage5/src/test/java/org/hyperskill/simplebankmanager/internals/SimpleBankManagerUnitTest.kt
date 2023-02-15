@@ -52,7 +52,7 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         assertEquals("Wrong text on $idString",  expectedDropdownText.toString(), actualText)
     }
 
-    fun AlertDialog.assertShadowDialogTitle(expectedTitle: String, ignoreCase: Boolean = false) {
+    fun AlertDialog.assertDialogTitle(expectedTitle: String, ignoreCase: Boolean = false) {
         val shadowAlertDialog = shadowOf(this)
         val expectedTitleNorm = if(ignoreCase) expectedTitle.lowercase() else expectedTitle
         val actualTitle = shadowAlertDialog.title.toString().lowercase()
@@ -60,7 +60,7 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
 
         assertEquals("Wrong AlertDialog title", expectedTitleNorm, actualTitleNorm)
     }
-    fun AlertDialog.assertShadowDialogMessage(expectedMessage: String, ignoreCase: Boolean = false) {
+    fun AlertDialog.assertDialogMessage(expectedMessage: String, ignoreCase: Boolean = false) {
         val shadowAlertDialog = shadowOf(this)
         val expectedMessageNorm = if(ignoreCase) expectedMessage.lowercase() else expectedMessage
         val actualMessage = shadowAlertDialog.message.toString()
@@ -68,7 +68,7 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
 
         assertEquals("Wrong AlertDialog message", expectedMessageNorm, actualMessageNorm)
     }
-    fun AlertDialog.assertShadowDialogVisible(caseDescription: String, expectedVisible: Boolean) {
+    fun AlertDialog.assertDialogVisibility(caseDescription: String, expectedVisible: Boolean) {
         val isDialogVisible = this.isShowing
         val messageError = "Dialog should %s be visible %s".format(
             if(expectedVisible) "" else "not",
