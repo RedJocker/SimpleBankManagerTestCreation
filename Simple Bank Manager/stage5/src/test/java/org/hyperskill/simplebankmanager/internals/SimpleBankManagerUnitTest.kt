@@ -11,31 +11,37 @@ import org.robolectric.Shadows.shadowOf
 
 open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUnitTest<T>(clazz) {
 
-    fun Button.assertButtonText(idString: String, expectedText: String) {
-        val actualText = this.text.toString().lowercase()
-        assertEquals("Wrong text on $idString", expectedText, actualText)
+    fun Button.assertButtonText(idString: String, expectedText: String, ignoreCase: Boolean = true) {
+        assertTextEquals("Wrong text on $idString", expectedText, text, ignoreCase)
     }
 
     fun EditText.assertHintEditText(idString: String, expectedHint: String, ignoreCase: Boolean = true) {
-        val actualHint = if(ignoreCase) this.hint.toString().lowercase() else this.hint.toString()
-        assertEquals("Wrong hint on $idString", expectedHint, actualHint)
+        assertTextEquals("Wrong hint on $idString", expectedHint, this.hint, ignoreCase)
     }
     fun TextView.assertText(idString: String, expectedText: String, ignoreCase: Boolean = true) {
-        val actualText = if(ignoreCase) this.text.toString().lowercase() else this.text.toString()
-        assertEquals("Wrong text on $idString", expectedText, actualText)
+        assertTextEquals("Wrong text on $idString", expectedText, this.text, ignoreCase)
     }
 
-    fun TextView.assertTextWithCustomErrorMessage(errorMessage: String, expectedText: String, ignoreCase: Boolean = true) {
-        val actualText = if(ignoreCase) this.text.toString().lowercase() else this.text.toString()
-        assertEquals(errorMessage, expectedText, actualText)
+    fun TextView.assertTextWithCustomErrorMessage(
+        errorMessage: String, expectedText: String, ignoreCase: Boolean = true) {
+
+        assertTextEquals(errorMessage, expectedText, this.text, ignoreCase)
     }
 
-    fun EditText.assertEditText(idString: String, expectedHint: String, expectedType: Int, typeString: String) {
-        val actualHint = this.hint.toString()
-        assertEquals("Wrong hint on $idString", expectedHint, actualHint)
+    fun EditText.assertEditText(
+        idString: String,
+        expectedHint: String,
+        expectedType: Int,
+        typeString: String,
+        ignoreCase: Boolean = true) {
 
+        this.assertHintEditText(idString, expectedHint, ignoreCase)
         val actualInputType = this.inputType
-        assertEquals("Wrong inputType on $idString should be $typeString", expectedType, actualInputType)
+        assertEquals(
+            "Wrong inputType on $idString should be $typeString",
+            expectedType,
+            actualInputType
+        )
     }
 
     fun EditText.assertErrorText(errorMessage: String, expectedErrorText: String) {
@@ -54,19 +60,16 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
 
     fun AlertDialog.assertDialogTitle(expectedTitle: String, ignoreCase: Boolean = false) {
         val shadowAlertDialog = shadowOf(this)
-        val expectedTitleNorm = if(ignoreCase) expectedTitle.lowercase() else expectedTitle
-        val actualTitle = shadowAlertDialog.title.toString().lowercase()
-        val actualTitleNorm = if(ignoreCase) actualTitle.lowercase() else actualTitle
+        val actualTitle = shadowAlertDialog.title
 
-        assertEquals("Wrong AlertDialog title", expectedTitleNorm, actualTitleNorm)
+        assertTextEquals(
+            "Wrong AlertDialog title", expectedTitle, actualTitle, ignoreCase
+        )
     }
     fun AlertDialog.assertDialogMessage(expectedMessage: String, ignoreCase: Boolean = false) {
         val shadowAlertDialog = shadowOf(this)
-        val expectedMessageNorm = if(ignoreCase) expectedMessage.lowercase() else expectedMessage
-        val actualMessage = shadowAlertDialog.message.toString()
-        val actualMessageNorm = if(ignoreCase) actualMessage.lowercase() else actualMessage
-
-        assertEquals("Wrong AlertDialog message", expectedMessageNorm, actualMessageNorm)
+        val actualMessage = shadowAlertDialog.message
+        assertTextEquals("Wrong AlertDialog message", expectedMessage, actualMessage)
     }
     fun AlertDialog.assertDialogVisibility(caseDescription: String, expectedVisible: Boolean) {
         val isDialogVisible = this.isShowing
@@ -75,5 +78,28 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
             caseDescription
         )
         assertEquals(messageError,isDialogVisible, expectedVisible)
+    }
+
+    private fun String.normalizeCase(ignoreCase: Boolean): String {
+        return if (ignoreCase) this.lowercase() else this
+    }
+
+    private fun CharSequence.normalizeCase(ignoreCase: Boolean): String {
+        return this.toString().normalizeCase(ignoreCase)
+    }
+
+    private fun <T, R>Pair<T, T>.map(transform: (T) -> R): Pair<R, R> {
+        return transform(first) to transform(second)
+    }
+
+    private fun assertTextEquals(
+        errorMessage: String,
+        expectedText: CharSequence,
+        actualText: CharSequence,
+        ignoreCase: Boolean = true
+    )  {
+        val (expectedTextNorm, actualTextNorm) = (expectedText to actualText)
+            .map { it.normalizeCase(ignoreCase) }
+        assertEquals(errorMessage, expectedTextNorm, actualTextNorm)
     }
 }
