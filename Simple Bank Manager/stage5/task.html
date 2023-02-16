@@ -2,11 +2,18 @@
 <h2>Description</h2>
 
 <p>
-    At last stage we will implement a feature to pay bills with our bank manager application.
-    After user logs in and goes to pay bills screen, there user should input bill code and with correct
-    code, information about bill will be shown in dialog. User should have option to choose if
-    confirms bill payment and if has enough balance in account, balance should be subtracted
-    from current balance and bill should be successfully paid.
+    Now on our last stage we will implement a feature to pay bills
+    using our bank manager application.
+</p>
+<p>
+    After clicking on Pay Bills button on User Menu
+    users should be redirected to Pay Bills screen.
+    There user can input a bill code
+    and with correct code bill's information will be shown in a dialog.
+    User should have option to confirm bill payment or not.
+    Validation should also be done to see if the user has enough balance in account to pay the bill.
+    If the validation is succeeded
+    then user's balance should be subtracted to account for the bill payment.
 </p>
 
 <br>
@@ -14,9 +21,8 @@
 <h2>Objectives</h2>
 
 <ol>
-
     <li>
-        Add a Fragment named <code>PayBillsFragment</code> to the navigation graph;
+        Add a Fragment named <code>PayBillsFragment</code> to the navigation graph
         <ul>
             <li>
                 Add an <code>EditText</code> to <code>PayBillsFragment</code> with
@@ -31,48 +37,77 @@
         </ul>
 
     <li>
-        On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
+        On the design tab of <code>nav_graph</code>
+        make a connection from <code>UserMenuFragment</code>
         to <code>PayBillsFragment</code>.
-        The code generated after making the connection should contain an action with id
-        <code>action_userMenuFragment_to_payBillsFragment</code> and destination
-        <code>payBillsFragment</code>;
+        The code generated after making the connection should contain
+        an action with id <code>action_userMenuFragment_to_payBillsFragment</code>
+        and destination <code>payBillsFragment</code>;
     </li>
 
     <li>
         After click on <code>userMenuPayBillsButton</code> button, display <code>PayBillsFragment</code>.
-        There user should input bill code and click on <code>PayBillsShowBillInfoButton</code>,
-        dialog should appear. If user enters correct bill code dialog of type <code>AlertDialog</code>
-        with title <code>Bill info</code>,and message(each bill info in new line) :
-        <code>Name:(bill name)</code>
-        <code>BillCode:(bill code)</code>
-        <code>Amount:(bill amount)</code>
-        and after info two buttons with text <code>Confirm</code> and <code>Cancel</code>.
-        if user click on <code>Confirm</code> button and there is enough balance in account, bill amount
-        should be subtracted from this account balance and Toast message appears with text
-        <code>"Payment for bill "bill name", was successful"</code> and then dialog should close.
-        If user clicks on <code>Confirm</code> button and there is not enough balance in account,
-        then dialog will appear of type <code>AlertDialog</code> with title <code>Error</code> ,
-        message <code>Not enough funds</code> and button with text <code>Ok</code>.
-        If wrong code was entered than
-        dialog of type <code>AlertDialog</code> with title <code>Error</code>,
-        message <code>Wrong code</code> and button text with <code>Ok</code> should appear.
+    </li>
+
+    <li>
+        On <code>PayBillsFragment</code>
+        users should be able to input bill code on <code>payBillsCodeInputEditText</code>
     </li>
     <li>
-        Test may pass the defaultBillInfoMap as a <code>Serializable</code> to <code>MainActivity</code>
-        through <code>intent.extras</code>.
-        Retrieve that defaultBillInfoMap, using the key <code>"billInfo"</code>. You will want to cast
-        it back to a map to be able to use it as a map. The type signature of defaultBillInfoMap is
+        after click on <code>PayBillsShowBillInfoButton</code>, a dialog should appear.
+        <ul>
+            <li>
+                If bill code is not found on billInfoMap then
+                show an <code>AlertDialog</code> with
+                title <code>Error</code>,
+                message <code>Wrong code</code>
+                and a positive button with text <code>Ok</code>;
+            </li>
+            <li>
+                If bill code is not found on billInfoMap then
+                show an <code>AlertDialog</code> with
+                title <code>Bill info</code>,
+                positive button with text <code>Confirm</code>,
+                negative button with text <code>Cancel</code>,
+                and a message with the following scheme(including new lines):
+                <br><br>
+                <pre><code>
+Name:(bill name)
+BillCode:(bill code)
+Amount:(bill amount)
+                </code></pre>
+                if user click on <code>Confirm</code> button
+                and there is enough balance in account
+                then bill amount should be subtracted from this account balance
+                and Toast message appears with text
+                <code>"Payment for bill "bill name", was successful"</code>.
+                If user clicks on <code>Confirm</code> button
+                and there is not enough balance in account
+                then close the current dialog and display a new <code>AlertDialog</code> with
+                title <code>Error</code>,
+                message <code>Not enough funds</code>
+                and positive button with text <code>Ok</code>.
+                Clicking Ok should just close the dialog
+            </li>
+        </ul>
+    </li>
+    <li>
+        Test may pass the defaultBillInfoMap as a <code>Serializable</code>
+        to <code>MainActivity</code> through <code>intent.extras</code>.
+        Retrieve that defaultBillInfoMap, using the key <code>"billInfo"</code>.
+        You will want to cast it back to a map to be able to use it as a map.
+        The type signature of defaultBillInfoMap is
         <code>Map&lt;String, Triple&lt;String, String, Double&gt;&gt;</code>.
 
         In case no defaultBillInfoMap is passed use <br><br>
+
         <pre><code>
-             val defaultBillInfoMap =
-            mapOf(
-                "ELEC" to Triple("Electricity", "ELEC", 45.0),
-                "GAS" to Triple("Gas", "GAS", 20.0),
-                "WTR" to Triple("Water", "WTR", 25.0)
-            )
-        </code></pre>
+val defaultBillInfoMap = mapOf(
+    "ELEC" to Triple("Electricity", "ELEC", 45.0),
+    "GAS" to Triple("Gas", "GAS", 20.0),
+    "WTR" to Triple("Water", "WTR", 25.0)
+)</code></pre><br>
+
         as default value for defaultBillInfoMap.
         The keys are "ELEC", "GAS", and "WTR", and the values are instances of the class Triple.
         The Triple class is a simple data class that has three
