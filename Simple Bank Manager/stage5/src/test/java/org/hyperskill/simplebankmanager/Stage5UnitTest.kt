@@ -17,9 +17,9 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
     private val DIALOG_BILL_MESSAGE_ERROR: String = "Wrong code"
 
     private val DIALOG_BILL_MESSAGE_ELECTRICITY: String =
-        "Name: Electricity\n billcode: ELEC\n amount: 45.0"
-    private val DIALOG_BILL_MESSAGE_WATER: String = "Name: Water\n billcode: WTR\n amount: 25.0"
-    private val DIALOG_BILL_MESSAGE_GAS: String = "Name: Gas\n billcode: GAS\n amount: 20.0"
+        "Name: Electricity\nBillCode: ELEC\nAmount: 45.0"
+    private val DIALOG_BILL_MESSAGE_WATER: String = "Name: Water\nBillCode: WTR\nAmount: 25.0"
+    private val DIALOG_BILL_MESSAGE_GAS: String = "Name: Gas\nBillCode: GAS\nAmount: 20.0"
 
     private val BILL_CODE_ELECTRICITY: String = "ELEC"
     private val BILL_CODE_WATER: String = "WTR"
