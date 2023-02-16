@@ -38,9 +38,9 @@ class PayBillsFragment : Fragment() {
         return binding.root
     }
 
-    private fun openDialog(billCode: String) {
+    private fun openDialog(billCodeString: String) {
         val billInfo =
-            billInfoSupplier?.getBillInfoByCode(billCode)
+            billInfoSupplier?.getBillInfoByCode(billCodeString)
 
         if (billInfo != null) {
             val billName = billInfo.first

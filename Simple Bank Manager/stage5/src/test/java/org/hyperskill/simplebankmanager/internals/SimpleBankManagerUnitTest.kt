@@ -69,7 +69,7 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
     fun AlertDialog.assertDialogMessage(expectedMessage: String, ignoreCase: Boolean = false) {
         val shadowAlertDialog = shadowOf(this)
         val actualMessage = shadowAlertDialog.message
-        assertTextEquals("Wrong AlertDialog message", expectedMessage, actualMessage)
+        assertTextEquals("Wrong AlertDialog message", expectedMessage, actualMessage, ignoreCase)
     }
     fun AlertDialog.assertDialogVisibility(caseDescription: String, expectedVisible: Boolean) {
         val isDialogVisible = this.isShowing
@@ -88,17 +88,13 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         return this.toString().normalizeCase(ignoreCase)
     }
 
-    private fun <T, R>Pair<T, T>.map(transform: (T) -> R): Pair<R, R> {
-        return transform(first) to transform(second)
-    }
-
     private fun assertTextEquals(
         errorMessage: String,
         expectedText: CharSequence,
         actualText: CharSequence,
         ignoreCase: Boolean = true
     )  {
-        val (expectedTextNorm, actualTextNorm) = (expectedText to actualText)
+        val (expectedTextNorm, actualTextNorm) = listOf(expectedText, actualText)
             .map { it.normalizeCase(ignoreCase) }
         assertEquals(errorMessage, expectedTextNorm, actualTextNorm)
     }

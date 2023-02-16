@@ -14,11 +14,13 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
 
     private val DIALOG_BILL_TITLE_SUCCESS: String = "Bill info"
     private val DIALOG_BILL_TITLE_ERROR: String = "Error"
+    private val DIALOG_BILL_MESSAGE_ERROR: String = "Wrong code"
+
     private val DIALOG_BILL_MESSAGE_ELECTRICITY: String =
         "Name: Electricity\n billcode: ELEC\n amount: 45.0"
     private val DIALOG_BILL_MESSAGE_WATER: String = "Name: Water\n billcode: WTR\n amount: 25.0"
     private val DIALOG_BILL_MESSAGE_GAS: String = "Name: Gas\n billcode: GAS\n amount: 20.0"
-    private val DIALOG_BILL_MESSAGE_ERROR: String = "Wrong code"
+
     private val BILL_CODE_ELECTRICITY: String = "ELEC"
     private val BILL_CODE_WATER: String = "WTR"
     private val BILL_CODE_GAS: String = "GAS"
@@ -52,13 +54,12 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
 
             PayBillsScreen(this).apply {
-                confirmInputCode(
-                    BILL_CODE_ELECTRICITY,
-                    DIALOG_BILL_TITLE_SUCCESS,
-                    DIALOG_BILL_MESSAGE_ELECTRICITY
+                inputBillCodeAndClickShowBillInfoButton(
+                    billCode = BILL_CODE_ELECTRICITY,
+                    expectedDialogTitle = DIALOG_BILL_TITLE_SUCCESS,
+                    expectedDialogMessage = DIALOG_BILL_MESSAGE_ELECTRICITY
                 )
             }
-
         }
     }
 
@@ -75,9 +76,12 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
 
             PayBillsScreen(this).apply {
-                confirmInputCode("phone", DIALOG_BILL_TITLE_ERROR, DIALOG_BILL_MESSAGE_ERROR)
+                inputBillCodeAndClickShowBillInfoButton(
+                    billCode = "phone",
+                    expectedDialogTitle = DIALOG_BILL_TITLE_ERROR,
+                    expectedDialogMessage = DIALOG_BILL_MESSAGE_ERROR
+                )
             }
-
         }
     }
 
@@ -104,13 +108,13 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
 
             PayBillsScreen(this).apply {
-                confirmInputCode(
-                    BILL_CODE_WATER,
-                    DIALOG_BILL_TITLE_SUCCESS,
-                    DIALOG_BILL_MESSAGE_WATER
-                ).also {
-                    acceptBillPayment("Water")
-                }
+
+                inputBillCodeAndClickShowBillInfoButton(
+                    billCode = BILL_CODE_WATER,
+                    expectedDialogTitle = DIALOG_BILL_TITLE_SUCCESS,
+                    expectedDialogMessage = DIALOG_BILL_MESSAGE_WATER
+                ).acceptBillPayment("Water")
+
             }
             activity.clickBackAndRun()
             UserMenuScreen(this).apply {
@@ -122,7 +126,6 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     caseDescription = "after payment of bill water"
                 )
             }
-
         }
     }
 
@@ -139,12 +142,21 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
 
             PayBillsScreen(this).apply {
-                confirmInputCode("phone", DIALOG_BILL_TITLE_ERROR, DIALOG_BILL_MESSAGE_ERROR)
-                declineBillPayment(BILL_CODE_GAS)
+                inputBillCodeAndClickShowBillInfoButton(
+                    billCode = "phone",
+                    expectedDialogTitle = DIALOG_BILL_TITLE_ERROR,
+                    expectedDialogMessage = DIALOG_BILL_MESSAGE_ERROR
+                ).declineBillPayment()
             }
-
         }
     }
+
+    //TODO
+    // 1. test insufficient funds after big transaction
+    //    // make sure that after confirm with insufficient funds old dialog is closed and a new one is opened
+    // 2. test insufficient funds with custom balance
+    // 3. test valid payment with custom bill
+    // 4. test insufficient funds with custom bill
 }
 
 
