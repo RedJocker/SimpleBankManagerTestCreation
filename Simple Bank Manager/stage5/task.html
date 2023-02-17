@@ -94,14 +94,14 @@ Amount: $billAmount
         </ul>
     </li>
     <li>
-        Test may pass the defaultBillInfoMap as a <code>Serializable</code>
+        Test may pass the billInfoMap as a <code>Serializable</code>
         to <code>MainActivity</code> through <code>intent.extras</code>.
-        Retrieve that defaultBillInfoMap, using the key <code>"billInfo"</code>.
+        Retrieve that billInfoMap, using the key <code>"billInfo"</code>.
         You will want to cast it back to a map to be able to use it as a map.
-        The type signature of defaultBillInfoMap is
+        The type signature of billInfoMap is
         <code>Map&lt;String, Triple&lt;String, String, Double&gt;&gt;</code>.
 
-        In case no defaultBillInfoMap is passed use <br><br>
+        In case no billInfoMap is passed use <br><br>
 
         <pre><code>
 val defaultBillInfoMap = mapOf(
@@ -110,11 +110,11 @@ val defaultBillInfoMap = mapOf(
     "WTR" to Triple("Water", "WTR", 25.0)
 )</code></pre><br>
 
-        as default value for defaultBillInfoMap.
-        The keys are "ELEC", "GAS", and "WTR", and the values are instances of the class Triple.
-        The Triple class is a simple data class that has three
-        properties: a string for the billName, a string for the billCode, and a double for the billAmount.
-
+        as default value for billInfoMap.
+        The keys are strings, and the values are instances of the class Triple&lt;String, String, Double&gt;&gt;.
+        The first sting on this Triple will be used for the billName,
+        the second string will be used for the billCode,
+        and the double will be used for the billAmount.
     </li>
     <li>
         While at <code>PayBillsFragment</code>
