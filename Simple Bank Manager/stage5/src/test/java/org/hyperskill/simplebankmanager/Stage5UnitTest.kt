@@ -13,10 +13,10 @@ import org.robolectric.RobolectricTestRunner
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::class.java) {
 
-    private val DIALOG_BILL_TITLE_SUCCESS: String = "Bill info"
-    private val DIALOG_BILL_TITLE_ERROR: String = "Error"
+    private val DIALOG_BILL_PAYMENT_TITLE: String = "Bill info"
+    private val DIALOG_ERROR_TITLE: String = "Error"
     private val DIALOG_BILL_MESSAGE_ERROR_WRONG_CODE: String = "Wrong code"
-    private val DIALOG_BILL_MESSAGE_ERROR_NOT_ENOUGH_FUNDS: String = "Not enough funds"
+    private val DIALOG_ERROR_MESSAGE_NOT_ENOUGH_FUNDS: String = "Not enough funds"
 
     private val DIALOG_BILL_MESSAGE_ELECTRICITY: String =
         "Name: Electricity\nBillCode: ELEC\nAmount: 45.0"
@@ -58,7 +58,7 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             PayBillsScreen(this).apply {
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = BILL_CODE_ELECTRICITY,
-                    expectedDialogTitle = DIALOG_BILL_TITLE_SUCCESS,
+                    expectedDialogTitle = DIALOG_BILL_PAYMENT_TITLE,
                     expectedDialogMessage = DIALOG_BILL_MESSAGE_ELECTRICITY
                 )
             }
@@ -80,7 +80,7 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             PayBillsScreen(this).apply {
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = "phone",
-                    expectedDialogTitle = DIALOG_BILL_TITLE_ERROR,
+                    expectedDialogTitle = DIALOG_ERROR_TITLE,
                     expectedDialogMessage = DIALOG_BILL_MESSAGE_ERROR_WRONG_CODE
                 )
             }
@@ -113,13 +113,9 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
 
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = BILL_CODE_WATER,
-                    expectedDialogTitle = DIALOG_BILL_TITLE_SUCCESS,
+                    expectedDialogTitle = DIALOG_BILL_PAYMENT_TITLE,
                     expectedDialogMessage = DIALOG_BILL_MESSAGE_WATER
-                ).acceptBillPayment(
-                    "Water", true,
-                    expectedDialogTitleDialogHidden = "", expectedDialogMessageDialogHidden = "",
-                    expectedDialogTitleDialogVisible = "", expectedDialogMessageDialogVisible = ""
-                )
+                ).acceptBillPaymentAssertSuccessMessage("Water")
 
             }
             activity.clickBackAndRun()
@@ -150,15 +146,13 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             PayBillsScreen(this).apply {
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = "phone",
-                    expectedDialogTitle = DIALOG_BILL_TITLE_ERROR,
+                    expectedDialogTitle = DIALOG_ERROR_TITLE,
                     expectedDialogMessage = DIALOG_BILL_MESSAGE_ERROR_WRONG_CODE
                 ).declineBillPayment()
             }
         }
     }
 
-    // 1. test insufficient funds after big transaction
-    //    // make sure that after confirm with insufficient funds old dialog is closed and a new one is opened
     @Test
     fun test05_afterTransactionBillPaymentInsufficientFunds() {
         testActivity {
@@ -181,23 +175,17 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             PayBillsScreen(this).apply {
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = BILL_CODE_ELECTRICITY,
-                    expectedDialogTitle = DIALOG_BILL_TITLE_SUCCESS,
+                    expectedDialogTitle = DIALOG_BILL_PAYMENT_TITLE,
                     expectedDialogMessage = DIALOG_BILL_MESSAGE_ELECTRICITY
-                ).acceptBillPayment(
-                    billName = "Electricity",
-                    successfulPayment = false,
-                    expectedDialogTitleDialogHidden = DIALOG_BILL_TITLE_SUCCESS,
-                    expectedDialogMessageDialogHidden = DIALOG_BILL_MESSAGE_ELECTRICITY,
-                    expectedDialogTitleDialogVisible = DIALOG_BILL_TITLE_ERROR,
-                    expectedDialogMessageDialogVisible = DIALOG_BILL_MESSAGE_ERROR_NOT_ENOUGH_FUNDS
+                ).acceptBillPaymentAssertFail(
+                    titleBillPaymentDialog = DIALOG_BILL_PAYMENT_TITLE,
+                    expectedTitleFailDialog = DIALOG_ERROR_TITLE,
+                    expectedMessageFailDialog = DIALOG_ERROR_MESSAGE_NOT_ENOUGH_FUNDS
                 )
-
             }
         }
     }
 
-    // 2. test insufficient funds with custom balance
-    // - first bill payment successful, second insufficient funds
     @Test
     fun test06_withCustomBalanceInsufficientFundsAfterSecondBillPayment() {
         val username = "Elaine"
@@ -221,38 +209,24 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
             PayBillsScreen(this).apply {
                 inputBillCodeAndClickShowBillInfoButton(
-                    billCode = BILL_CODE_WATER,
-                    expectedDialogTitle = DIALOG_BILL_TITLE_SUCCESS,
-                    expectedDialogMessage = DIALOG_BILL_MESSAGE_WATER
-                ).acceptBillPayment(
-                    billName = "Water",
-                    successfulPayment = true,
-                    expectedDialogTitleDialogHidden = "",
-                    expectedDialogMessageDialogHidden = "",
-                    expectedDialogTitleDialogVisible = "",
-                    expectedDialogMessageDialogVisible = ""
-                )
+                    billCode = BILL_CODE_GAS,
+                    expectedDialogTitle = DIALOG_BILL_PAYMENT_TITLE,
+                    expectedDialogMessage = DIALOG_BILL_MESSAGE_GAS
+                ).acceptBillPaymentAssertSuccessMessage(billName = "Gas")
 
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = BILL_CODE_ELECTRICITY,
-                    expectedDialogTitle = DIALOG_BILL_TITLE_SUCCESS,
+                    expectedDialogTitle = DIALOG_BILL_PAYMENT_TITLE,
                     expectedDialogMessage = DIALOG_BILL_MESSAGE_ELECTRICITY
-                ).acceptBillPayment(
-                    billName = "Electricity",
-                    successfulPayment = false,
-                    expectedDialogTitleDialogHidden = DIALOG_BILL_TITLE_SUCCESS,
-                    expectedDialogMessageDialogHidden = DIALOG_BILL_MESSAGE_ELECTRICITY,
-                    expectedDialogTitleDialogVisible = DIALOG_BILL_TITLE_ERROR,
-                    expectedDialogMessageDialogVisible = DIALOG_BILL_MESSAGE_ERROR_NOT_ENOUGH_FUNDS
+                ).acceptBillPaymentAssertFail(
+                    titleBillPaymentDialog = DIALOG_BILL_PAYMENT_TITLE,
+                    expectedTitleFailDialog = DIALOG_ERROR_TITLE,
+                    expectedMessageFailDialog = DIALOG_ERROR_MESSAGE_NOT_ENOUGH_FUNDS,
                 )
-
             }
-
         }
     }
 
-
-    // 3. test valid payment with custom bill
     @Test
     fun test07_customBillSuccessfulPayment() {
         val billInfoMap =
@@ -262,9 +236,7 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
 
         val args = Intent().apply {
             putExtra("billInfo", billInfoMap as java.io.Serializable)
-            // TODO default balance is 0.00 if not passed as Intent
             putExtra("balance", 100.00)
-
         }
 
         testActivity(arguments = args) {
@@ -289,22 +261,14 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             PayBillsScreen(this).apply {
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = "PHONE",
-                    expectedDialogTitle = DIALOG_BILL_TITLE_SUCCESS,
+                    expectedDialogTitle = DIALOG_BILL_PAYMENT_TITLE,
                     expectedDialogMessage = "Name: Mobile phone\nBillCode: PHONE\nAmount: 80.0"
-                ).acceptBillPayment(
-                    "Mobile phone",
-                    true,
-                    expectedDialogTitleDialogHidden = "", expectedDialogMessageDialogHidden = "",
-                    expectedDialogTitleDialogVisible = "", expectedDialogMessageDialogVisible = ""
-                )
-
+                ).acceptBillPaymentAssertSuccessMessage("Mobile phone")
             }
-
         }
 
     }
 
-    // 4. test insufficient funds with custom bill
     @Test
     fun test08_customBillInsufficientBalance() {
         val billInfoMap =
@@ -314,7 +278,6 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
 
         val args = Intent().apply {
             putExtra("billInfo", billInfoMap as java.io.Serializable)
-            // TODO default balance is 0.00 if not passed as Intent
             putExtra("balance", 100.00)
 
         }
@@ -340,21 +303,15 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             PayBillsScreen(this).apply {
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = "CARINSURANCE",
-                    expectedDialogTitle = DIALOG_BILL_TITLE_SUCCESS,
+                    expectedDialogTitle = DIALOG_BILL_PAYMENT_TITLE,
                     expectedDialogMessage = "Name: Car insurance\nBillCode: CARINSURANCE\nAmount: 120.0"
-                ).acceptBillPayment(
-                    "Car insurance",
-                    false,
-                    expectedDialogTitleDialogHidden = DIALOG_BILL_TITLE_SUCCESS,
-                    expectedDialogMessageDialogHidden = "Name: Car insurance\nBillCode: CARINSURANCE\nAmount: 120.0",
-                    expectedDialogTitleDialogVisible = DIALOG_BILL_TITLE_ERROR,
-                    expectedDialogMessageDialogVisible = DIALOG_BILL_MESSAGE_ERROR_NOT_ENOUGH_FUNDS
+                ).acceptBillPaymentAssertFail(
+                    titleBillPaymentDialog = DIALOG_BILL_PAYMENT_TITLE,
+                    expectedTitleFailDialog = DIALOG_ERROR_TITLE,
+                    expectedMessageFailDialog = DIALOG_ERROR_MESSAGE_NOT_ENOUGH_FUNDS
                 )
-
             }
-
         }
-
     }
 }
 
