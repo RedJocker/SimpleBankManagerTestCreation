@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), BankManager {
         super.onCreate(savedInstanceState)
         username = intent.extras?.getString("username") ?: "Lara"
         password = intent.extras?.getString("password") ?: "1234"
-        balance = intent.extras?.getDouble("balance") ?: 100.0
+        balance  = intent.extras?.getDouble("balance", 100.0) ?: 100.0
 
         val defaultMap: Map<String, Map<String, Double>> = mapOf(
             "EUR" to mapOf(
