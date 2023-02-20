@@ -30,38 +30,69 @@ class PayBillsScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T
     fun inputBillCodeAndClickShowBillInfoButton(
         billCode: String,
         expectedDialogTitle: String,
-        expectedDialogMessage: String): AlertDialog = with(test) {
+        expectedDialogMessage: String
+    ): AlertDialog = with(test) {
 
         payBillsCodeInputEditText.setText(billCode)
         payBillsShowBillInfoButton.clickAndRun()
 
         return getLatestDialog().apply {
             assertDialogVisibility(
-            caseDescription = "After clicking payBillsShowBillInfoButton",
-            expectedVisible = true
+                caseDescription = "After clicking payBillsShowBillInfoButton",
+                expectedVisible = true
             )
             assertDialogTitle(expectedDialogTitle, ignoreCase = true)
             assertDialogMessage(expectedDialogMessage, ignoreCase = true)
         }
     }
 
-    fun AlertDialog.acceptBillPayment(billName: String) = with(test) {
-
+    fun AlertDialog.acceptBillPayment(
+        billName: String,
+        successfulPayment: Boolean,
+        expectedDialogTitleDialogHidden: String,
+        expectedDialogMessageDialogHidden: String,
+        expectedDialogTitleDialogVisible: String,
+        expectedDialogMessageDialogVisible: String
+    ) = with(test) {
+        val oldDialog: AlertDialog = getLatestDialog()
         val button = getButton(AlertDialog.BUTTON_POSITIVE)
             ?: throw AssertionError("Expected positive button on AlertDialog")
         button.clickAndRun()
 
-        assertDialogVisibility(
-            caseDescription = "after clicking OK on dialog to accept bill payment",
-            expectedVisible = false
-        )
-
-        assertLastToastMessageEquals(
-            "Wrong Toast message for successful bill payment",
-            "Payment for bill $billName, was successful"
-        )
+        if (successfulPayment) {
+            assertDialogVisibility(
+                caseDescription = "after clicking OK on dialog to accept bill payment",
+                expectedVisible = false
+            )
+            assertLastToastMessageEquals(
+                errorMessage = "Wrong Toast message for successful bill payment",
+                expectedMessage = "Payment for bill $billName, was successful"
+            )
+        } else {
+            if (oldDialog.isShowing) {
+                getLatestDialog().apply {
+                    assertDialogVisibility(
+                        caseDescription = "After clicking confirm button, dialog $expectedDialogTitleDialogHidden" +
+                                " should not be visible",
+                        expectedVisible = false
+                    )
+                    assertDialogTitle(expectedDialogTitleDialogHidden, ignoreCase = true)
+                    assertDialogMessage(expectedDialogMessageDialogHidden, ignoreCase = true)
+                }
+            } else {
+                getLatestDialog().apply {
+                    assertDialogVisibility(
+                        caseDescription = "After clicking confirm button $expectedDialogTitleDialogVisible should be visible ",
+                        expectedVisible = true
+                    )
+                    assertDialogTitle(expectedDialogTitleDialogVisible, ignoreCase = true)
+                    assertDialogMessage(expectedDialogMessageDialogVisible, ignoreCase = true)
+                }
+            }
+        }
         ShadowToast.reset()
     }
+
     fun AlertDialog.declineBillPayment() = with(test) {
 
         val button = getButton(AlertDialog.BUTTON_NEGATIVE) ?: throw AssertionError(
