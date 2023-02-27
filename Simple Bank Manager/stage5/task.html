@@ -75,9 +75,10 @@
                 <pre><code>
 Name: $billName
 BillCode: $billCode
-Amount: $billAmount
+Amount: $billAmount$
                 </code></pre>
-                where $billName, $billCode and $billAmount are placeholders.
+                where $billName, $billCode and $billAmount are placeholders
+                and $billAmount is formatted always with two decimals.
                 If users click on <code>Confirm</code> button
                 and there is enough balance in account
                 then bill amount should be subtracted from this account balance
@@ -107,7 +108,7 @@ Amount: $billAmount
 val defaultBillInfoMap = mapOf(
     "ELEC" to Triple("Electricity", "ELEC", 45.0),
     "GAS" to Triple("Gas", "GAS", 20.0),
-    "WTR" to Triple("Water", "WTR", 25.0)
+    "WTR" to Triple("Water", "WTR", 25.5)
 )</code></pre><br>
 
         as default value for billInfoMap.

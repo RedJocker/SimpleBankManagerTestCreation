@@ -19,9 +19,9 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
     private val DIALOG_ERROR_MESSAGE_NOT_ENOUGH_FUNDS: String = "Not enough funds"
 
     private val DIALOG_BILL_MESSAGE_ELECTRICITY: String =
-        "Name: Electricity\nBillCode: ELEC\nAmount: 45.0"
-    private val DIALOG_BILL_MESSAGE_WATER: String = "Name: Water\nBillCode: WTR\nAmount: 25.0"
-    private val DIALOG_BILL_MESSAGE_GAS: String = "Name: Gas\nBillCode: GAS\nAmount: 20.0"
+        "Name: Electricity\nBillCode: ELEC\nAmount: 45.00$"
+    private val DIALOG_BILL_MESSAGE_WATER: String = "Name: Water\nBillCode: WTR\nAmount: 25.50$"
+    private val DIALOG_BILL_MESSAGE_GAS: String = "Name: Gas\nBillCode: GAS\nAmount: 20.00$"
 
     private val BILL_CODE_ELECTRICITY: String = "ELEC"
     private val BILL_CODE_WATER: String = "WTR"
@@ -124,7 +124,7 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
             ViewBalanceScreen(this).apply {
                 assertBalanceAmountDisplay(
-                    expectedBalance = "75.00\$",
+                    expectedBalance = "74.50\$",
                     caseDescription = "after payment of bill water"
                 )
             }
@@ -262,7 +262,7 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = "PHONE",
                     expectedDialogTitle = DIALOG_BILL_PAYMENT_TITLE,
-                    expectedDialogMessage = "Name: Mobile phone\nBillCode: PHONE\nAmount: 80.0"
+                    expectedDialogMessage = "Name: Mobile phone\nBillCode: PHONE\nAmount: 80.00$"
                 ).acceptBillPaymentAssertSuccessMessage("Mobile phone")
             }
         }
@@ -304,7 +304,7 @@ class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 inputBillCodeAndClickShowBillInfoButton(
                     billCode = "CARINSURANCE",
                     expectedDialogTitle = DIALOG_BILL_PAYMENT_TITLE,
-                    expectedDialogMessage = "Name: Car insurance\nBillCode: CARINSURANCE\nAmount: 120.0"
+                    expectedDialogMessage = "Name: Car insurance\nBillCode: CARINSURANCE\nAmount: 120.00$"
                 ).acceptBillPaymentAssertFail(
                     titleBillPaymentDialog = DIALOG_BILL_PAYMENT_TITLE,
                     expectedTitleFailDialog = DIALOG_ERROR_TITLE,
