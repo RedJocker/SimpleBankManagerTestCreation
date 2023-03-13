@@ -1,154 +1,53 @@
-
 <h2>Description</h2>
 
-<p>
-    Now on our last stage we will implement a feature to pay bills
-    using our bank manager application.
-</p>
-<p>
-    After clicking on Pay Bills button on User Menu
-    users should be redirected to Pay Bills screen.
-    There user can input a bill code
-    and with correct code bill's information will be shown in a dialog.
-    User should have option to confirm bill payment or not.
-    Validation should also be done to see if the user has enough balance in account to pay the bill.
-    If the validation is succeeded
-    then user's balance should be subtracted to account for the bill payment.
-</p>
+<p>In the last stage, let's implement the feature to pay bills using our bank manager application.</p>
 
-<br>
+<p>After clicking on the <code>Pay Bills</code> button in the <code>User Menu</code>, redirect users to the <code>Pay Bills</code> screen. There, users can input a billing code and correct it, if necessary, in a dialog. Users should have the option to confirm bill payments. Don't forget to add the validation to see if the user has enough money. If the validation is successful, subtract the money from the user's account.</p>
 
 <h2>Objectives</h2>
 
+<p> </p>
+
 <ol>
-    <li>
-        Add a Fragment named <code>PayBillsFragment</code> to the navigation graph
+    <li>Add a fragment named <code>PayBillsFragment</code> to the navigation graph:
+
         <ul>
-            <li>
-                Add an <code>EditText</code> to <code>PayBillsFragment</code> with
-                <code>id</code> <code>PayBillsCodeInputEditText</code>,
-                the hint should be <code>Enter code</code>
-                and inputType <code>text</code>;
-            </li>
-            <li>
-                Add an <code>Button</code> to <code>PayBillsFragment</code> with
-                <code>id</code> <code>PayBillsShowBillInfoButton</code>
-                and with a text <code>Show bill info</code>;
-            </li>
+            <li>Add an <code>EditText</code> to <code>PayBillsFragment</code> with the ID of <code>PayBillsCodeInputEditText</code>, the hint should be <code>Enter code</code> and <code>inputType</code> is <code>text</code>;</li>
+            <li>Add a <code>Button</code> to <code>PayBillsFragment</code> with the ID of <code>PayBillsShowBillInfoButton</code> with the text <code>Show bill info</code>;</li>
         </ul>
-
-    <li>
-        On the design tab of <code>nav_graph</code>
-        make a connection from <code>UserMenuFragment</code>
-        to <code>PayBillsFragment</code>.
-        The code generated after making the connection should contain
-        an action with id <code>action_userMenuFragment_to_payBillsFragment</code>
-        and destination <code>payBillsFragment</code>;
     </li>
-
-    <li>
-        After click on <code>userMenuPayBillsButton</code> button, display <code>PayBillsFragment</code>.
-    </li>
-
-    <li>
-        On <code>PayBillsFragment</code>
-        users should be able to input bill code on <code>payBillsCodeInputEditText</code>
-    </li>
-    <li>
-        after click on <code>PayBillsShowBillInfoButton</code>, a dialog should appear.
+    <li>On the design tab of <code>nav_graph</code>, make a connection from <code>UserMenuFragment</code> to <code>PayBillsFragment</code>. The generated code should contain the action with the ID of <code>action_userMenuFragment_to_payBillsFragment</code> and the destination <code>payBillsFragment</code>;</li>
+    <li>Display <code>PayBillsFragment</code> after a click on the <code>userMenuPayBillsButton</code> button;</li>
+    <li>On <code>PayBillsFragment</code> users should be able to input a billing code on <code>payBillsCodeInputEditText</code></li>
+    <li>After click on <code>PayBillsShowBillInfoButton</code>, a dialog should appear:
         <ul>
-            <li>
-                If bill code is not found on billInfoMap then
-                show an <code>AlertDialog</code> with
-                title <code>Error</code>,
-                message <code>Wrong code</code>
-                and a positive button with text <code>Ok</code>;
-            </li>
-            <li>
-                If bill code is not found on billInfoMap then
-                show an <code>AlertDialog</code> with
-                title <code>Bill info</code>,
-                positive button with text <code>Confirm</code>,
-                negative button with text <code>Cancel</code>,
-                and a message with the following scheme(including new lines):
-                <br><br>
-                <pre><code>
+            <li>If the billing code is not found in <code>billInfoMap</code>, show an <code>AlertDialog</code> with the title <code>Error</code> and the message <code>Wrong code</code> with a positive button with the text <code>Ok</code>;</li>
+            <li>If the billing code is not found in <code>billInfoMap</code>, show an <code>AlertDialog</code> with the title <code>Bill info</code>, a positive button with the text <code>Confirm</code>, a negative button with the text <code>Cancel</code>, and a message with the following scheme (including newlines):
+                <pre><code class="language-no-highlight">
 Name: $billName
 BillCode: $billCode
 Amount: $billAmount$
                 </code></pre>
-                where $billName, $billCode and $billAmount are placeholders
-                and $billAmount is formatted always with two decimals.
-                If users click on <code>Confirm</code> button
-                and there is enough balance in account
-                then bill amount should be subtracted from this account balance
-                and Toast message appears with text
-                <code>"Payment for bill "bill name", was successful"</code>.
-                If user clicks on <code>Confirm</code> button
-                and there is not enough balance in account
-                then close the current dialog and display a new <code>AlertDialog</code> with
-                title <code>Error</code>,
-                message <code>Not enough funds</code>
-                and positive button with text <code>Ok</code>.
-                Clicking Ok should just close the dialog
-            </li>
+                where <code>$billName</code>, <code>$billCode</code>, and <code>$billAmount</code> are placeholders; <code>$billAmount</code> comes always with two decimals. If users click on the <code>Confirm</code> button, and there is enough balance in the account, then subtract the billing amount from this account balance and show the toast message appears with text <code>Payment for bill "bill name", was successful</code>. If a user clicks on the <code>Confirm</code> button, and there is not enough balance, close the current dialog and display a new <code>AlertDialog</code> with the title <code>Error</code>, the message <code>Not enough funds</code> and a positive button with the text <code>Ok</code>, which closes the dialog.</li>
         </ul>
     </li>
-    <li>
-        Test may pass the billInfoMap as a <code>Serializable</code>
-        to <code>MainActivity</code> through <code>intent.extras</code>.
-        Retrieve that billInfoMap, using the key <code>"billInfo"</code>.
-        You will want to cast it back to a map to be able to use it as a map.
-        The type signature of billInfoMap is
-        <code>Map&lt;String, Triple&lt;String, String, Double&gt;&gt;</code>.
-
-        In case no billInfoMap is passed use <br><br>
-
+    <li>Tests may pass <code>billInfoMap</code> as <code>Serializable</code> to <code>MainActivity</code> through <code>intent.extras</code>. Retrieve that <code>billInfoMap</code>, using the key <code>"billInfo"</code>. You will want to cast it back to a map to use it as a map. The type signature of <code>billInfoMap</code> is <code>Map&lt;String, Triple&lt;String, String, Double&gt;&gt;</code>. In case of no <code>billInfoMap</code>, use the following as the default value:<br>
+         
         <pre><code>
 val defaultBillInfoMap = mapOf(
     "ELEC" to Triple("Electricity", "ELEC", 45.0),
     "GAS" to Triple("Gas", "GAS", 20.0),
     "WTR" to Triple("Water", "WTR", 25.5)
-)</code></pre><br>
-
-        as default value for billInfoMap.
-        The keys are strings, and the values are instances of the class Triple&lt;String, String, Double&gt;&gt;.
-        The first sting on this Triple will be used for the billName,
-        the second string will be used for the billCode,
-        and the double will be used for the billAmount.
-    </li>
-    <li>
-        While at <code>PayBillsFragment</code>
-        clicking on back button should redirect users back to
-        <code>UserMenuFragment</code>;
-    </li>
+)</code></pre>
+        The keys are strings, and the values are instances of the <code>Triple&lt;String, String, Double&gt;&gt;</code> class. The first sting in this triple is for <code>billName</code>, the second string is for <code>billCode</code>, and the double is for <code>billAmount</code>;</li>
+    <li>If users are on <code>PayBillsFragment</code>, a click on the <code>back</code> button should redirect users to <code>UserMenuFragment</code>.</li>
 </ol>
 
-<h2>Example</h2>
-
-<br>
-
-<img height="600" width="340"
-     name="simpleBankManager_stage5a.gif"
-     alt="Implemented features"
-     src="https://ucarecdn.com/99c7eac9-d580-4847-951a-4b3da3c90adc/" >
-
-<br>
-<br>
-<br>
-
-<img height="600" width="340"
-     name="simpleBankManager_stage5b.gif"
-     alt="Bill payment with funds"
-     src="https://ucarecdn.com/2f0cf36d-c58d-43a7-8b03-fa7ad74b597d/" >
-
-<br>
-<br>
-<br>
-
-<img height="600" width="340"
-     name="simpleBankManager_stage5c.gif"
-     alt="Bill payment without funds"
-     src="https://ucarecdn.com/6fe47653-ff7d-4419-a99e-a6d318599798/" >
-
-
+<h2>Example<br>
+    <img alt="Implemented features" height="600" name="simpleBankManager_stage5a.gif" src="https://ucarecdn.com/99c7eac9-d580-4847-951a-4b3da3c90adc/" width="340"><br>
+    <br>
+    <br>
+    <img alt="Bill payment with funds" height="600" name="simpleBankManager_stage5b.gif" src="https://ucarecdn.com/2f0cf36d-c58d-43a7-8b03-fa7ad74b597d/" width="340"><br>
+    <br>
+    <br>
+    <img alt="Bill payment without funds" height="600" name="simpleBankManager_stage5c.gif" src="https://ucarecdn.com/6fe47653-ff7d-4419-a99e-a6d318599798/" width="340"></h2>

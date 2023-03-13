@@ -1,88 +1,25 @@
-
 <h2>Description</h2>
 
-<p>
-    At this stage we will implement a feature to calculate
-    the exchange from one currency to another.
-    When user successfully login, user should be able to go to Calculate Exchange screen,
-    user can select the currencies to convert from and to,
-    enter an amount to convert and trigger the conversion by clicking a button.
-    The converted amount will be displayed in a text view.
-</p>
-
-<br>
+<p>In this stage, we will implement a feature to calculate the exchange rate. When a user successfully logins, they should be able to go to the <em>Calculate Exchange</em> screen, where they can select the currencies, enter an amount to convert, and start the conversion by clicking a button. The converted amount will be displayed in a text view.</p>
 
 <h2>Objectives</h2>
 
 <ol>
+    <li>Add a Fragment named <code>CalculateExchangeFragment</code> to the navigation graph:
 
-    <li>
-        Add a Fragment named <code>CalculateExchangeFragment</code> to the navigation graph;
         <ul>
-            <li>
-                Add an <code>TextView</code> to <code>CalculateExchangeFragment</code> with
-                <code>id</code> <code>calculateExchangeLabelFromTextView</code>,
-                the text should be <code>convert from</code>;
-            </li>
-            <li>
-                Add an <code>TextView</code> to <code>CalculateExchangeFragment</code> with
-                <code>id</code> <code>calculateExchangeLabelToTextView</code>,
-               the text should be <code>convert to</code>;
-            </li>
-            <li>
-                Add an <code>Spinner</code> to <code>CalculateExchangeFragment</code> with
-                <code>id</code> <code>calculateExchangeFromSpinner</code>,
-               the spinner should contain this text in dropdown
-                <code>EUR</code>, <code>GBP</code>, <code>USD</code>;
-            </li>
-            <li>
-                Add an <code>Spinner</code> to <code>CalculateExchangeFragment</code> with
-                <code>id</code> <code>calculateExchangeToSpinner</code>,
-                the spinner should contain this text in dropdown
-                <code>EUR</code>, <code>GBP</code>, <code>USD</code>;
-            </li>
-            <li>
-                Add an <code>TextView</code> to <code>CalculateExchangeFragment</code> with
-                <code>id</code> <code>calculateExchangeDisplayTextView</code>,
-                this textView will be used to show calculated amount to 2 decimal points;
-            </li>
-            <li>
-                Add an <code>EditText</code> to <code>CalculateExchangeFragment</code> with
-                <code>id</code> <code>calculateExchangeAmountEditText</code>.
-                It should accept input type <code>numberDecimal</code>
-                and have a hint <code>Enter amount</code>;
-            </li>
-            <li>
-                Add an <code>Button</code> to <code>CalculateExchangeFragment</code> with
-                <code>id</code> <code>calculateExchangeButton</code>
-                and with a text <code>calculate</code>;
-            </li>
+            <li>Add a <code>TextView</code> to <code>CalculateExchangeFragment</code> with the ID of <code>calculateExchangeLabelFromTextView</code>, the text should be <code>convert from</code>;</li>
+            <li>Add a <code>TextView</code> to <code>CalculateExchangeFragment</code> with the ID of <code>calculateExchangeLabelToTextView</code>, the text should be <code>convert to</code>;</li>
+            <li>Add a <code>Spinner</code> to <code>CalculateExchangeFragment</code> with the ID of <code>calculateExchangeFromSpinner</code>, the spinner should contain this text in the dropdown: <code>EUR</code>, <code>GBP</code>, <code>USD</code>;</li>
+            <li>Add a <code>Spinner</code> to <code>CalculateExchangeFragment</code> with the ID of <code>calculateExchangeToSpinner</code>, the spinner should contain this text in the dropdown: <code>EUR</code>, <code>GBP</code>, <code>USD</code>;</li>
+            <li>Add a <code>TextView</code> to <code>CalculateExchangeFragment</code> with the ID of <code>calculateExchangeDisplayTextView</code>, this <code>textView</code> will be used to show the calculated amount to two decimal points;</li>
+            <li>Add an <code>EditText</code> to <code>CalculateExchangeFragment</code> with the ID of <code>calculateExchangeAmountEditText</code>. It should accept the <code>numberDecimal</code>input type and have the following hint: <code>Enter amount</code>;</li>
+            <li>Add a <code>Button</code> to <code>CalculateExchangeFragment</code> with the ID of <code>calculateExchangeButton</code> and with the text <code>calculate</code>;</li>
         </ul>
-
-    <li>
-        On the design tab of <code>nav_graph</code> make a connection from <code>UserMenuFragment</code>
-        to <code>CalculateExchangeFragment</code>.
-        The code generated after making the connection should contain an action with id
-        <code>action_userMenuFragment_to_calculateExchangeFragment</code> and destination
-        <code>calculateExchangeFragment</code>;
     </li>
-
-    <li>
-        After click on <code>userMenuExchangeCalculatorButton</code>
-        display <code>CalculateExchangeFragment</code>.
-        Users should be able to choose from which currency and to which currency to convert to
-        using <code>calculateExchangeFromSpinner</code> and <code>calculateExchangeToSpinner</code>.
-        Input amount to convert at <code>calculateExchangeAmountEditText</code>,
-        and confirm conversion with button click <code>calculateExchangeButton</code>;
-    </li>
-    <li>
-        Test may pass the exchangeMap as a <code>Serializable</code> to <code>MainActivity</code>
-        through <code>intent.extras</code>.
-        Retrieve that exchangeMap, using the key <code>"exchangeMap"</code>. You will want to cast
-        it back to a map to be able to use it as a map. The type signature of exchangeMap is
-        <code>Map&lt;String, Map&lt;String, Double&gt;&gt;</code>.
-
-        In case no exchangeMap is passed use <br><br>
+    <li>On the design tab of <code>nav_graph</code>, make a connection from <code>UserMenuFragment</code> to <code>CalculateExchangeFragment</code>. The generated code after making the connection should contain the action with the ID <code>action_userMenuFragment_to_calculateExchangeFragment</code> and the destination <code>calculateExchangeFragment</code>;</li>
+    <li>After clicking on <code>userMenuExchangeCalculatorButton</code>, display <code>CalculateExchangeFragment</code>. Users should be able to choose the currency using <code>calculateExchangeFromSpinner</code> and <code>calculateExchangeToSpinner</code>. Input the amount to convert at <code>calculateExchangeAmountEditText</code>, and confirm conversion with the button <code>calculateExchangeButton</code>;</li>
+    <li>Tests may pass the <code>exchangeMap</code> as <code>Serializable</code> to <code>MainActivity</code> through <code>intent.extras</code>. Retrieve that <code>exchangeMap</code>, using the key <code>"exchangeMap"</code>. Cast it back to a map to be able to use it as a map. The type signature of <code>exchangeMap</code> is <code>Map&lt;String, Map&lt;String, Double&gt;&gt;</code>. In case no <code>exchangeMap</code> is passed, use the following as the default value:
         <pre><code>
 val defaultMap = mapOf(
     "EUR" to mapOf(
@@ -99,58 +36,17 @@ val defaultMap = mapOf(
     )
 )
         </code></pre>
-        as default value for exchangeMap.
-        The outer key of exchangeMap is the source currency from which we are converting
-        and the inner key is the target currency to convert to;
-
-    </li>
-
-    <li>
-        If user selects same currency on both <code>calculateExchangeFromSpinner</code>
-        and <code>calculateExchangeToSpinner</code>,
-        then show a Toast message
-        <code>Cannot convert to same currency</code>
-        and replace currency at <code>calculateExchangeToSpinner</code>
-        with the next available currency;
-    </li>
-    <li>
-        If no value is passed to <code>calculateExchangeAmountEditText</code>
-        and button <code>calculateExchangeButton</code> is clicked it should show a
-        Toast message <code>Enter amount</code>;
-    </li>
-
-    <li>
-        While at <code>CalculateExchangeFragment</code>
-        clicking on back button should redirect users back to
-        <code>UserMenuFragment</code>;
-    </li>
+        The outer key of exchangeMap is the source currency from which we are converting and the inner key is the target currency to convert to;</li>
+    <li>If users select the same currency on both <code>calculateExchangeFromSpinner</code> and <code>calculateExchangeToSpinner</code>, show the toast message <code>Cannot convert to same currency</code> and replace currency at <code>calculateExchangeToSpinner</code> with the next available currency;</li>
+    <li>If no value is passed to <code>calculateExchangeAmountEditText</code> and the button <code>calculateExchangeButton</code> is clicked, show the toast message <code>Enter amount</code>;</li>
+    <li>If users click on the <code>back</code> button at <code>CalculateExchangeFragment</code>, redirect users to <code>UserMenuFragment</code>;</li>
 </ol>
 
-<h2>Example</h2>
-
-<br>
-
-<img height="600" width="340"
-     name="simpleBankManager_stage4a.gif"
-     alt="Implemented features"
-     src="https://ucarecdn.com/8ff69d61-8602-46fd-bcf3-88cdbe044d3e/" >
-
-<br>
-<br>
-<br>
-
-<img height="600" width="340"
-     name="simpleBankManager_stage4b.gif"
-     alt="Selecting same currency"
-     src="https://ucarecdn.com/12e96184-79fd-4633-b120-f883e1d2f1ca/" >
-
-<br>
-<br>
-<br>
-
-<img height="600" width="340"
-     name="simpleBankManager_stage4c.gif"
-     alt="Calculating exchange"
-     src="https://ucarecdn.com/7357c268-497a-4c44-a371-bff1ba4a0873/" >
-
-
+<h2>Example<br>
+    <img alt="Implemented features" height="600" name="simpleBankManager_stage4a.gif" src="https://ucarecdn.com/8ff69d61-8602-46fd-bcf3-88cdbe044d3e/" width="340"><br>
+    <br>
+    <br>
+    <img alt="Selecting same currency" height="600" name="simpleBankManager_stage4b.gif" src="https://ucarecdn.com/12e96184-79fd-4633-b120-f883e1d2f1ca/" width="340"><br>
+    <br>
+    <br>
+    <img alt="Calculating exchange" height="600" name="simpleBankManager_stage4c.gif" src="https://ucarecdn.com/7357c268-497a-4c44-a371-bff1ba4a0873/" width="340"></h2>

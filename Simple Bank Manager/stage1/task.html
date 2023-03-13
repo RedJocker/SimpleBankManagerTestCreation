@@ -1,70 +1,37 @@
 <h2>Introduction and basic setup</h2>
 
-<p>
-    A bank app is a really common kind of app that most of us use or have used to manage our
-    bank account and pay bills. On this project we will make a simplified version of that kind
-    of application.
-</p>
+<p>The bank app is a widespread kind of app that most of us utilize to manage our bank accounts and pay bills. In this project, we will make a simplified version of that application.</p>
 
-<p>
-    This project will have multiple views and we are going to use
-    a single activity pattern, in which the activity will act essentially
-    as a fragments holder and fragments will be responsible for
-    creating screens for users to interact with.
-</p>
+<p>This project will have multiple views, and we will use a single activity pattern, where an activity will act essentially as a fragment holder; the fragments will be responsible for creating screens for users to interact with.</p>
 
-<p>
-    To help us with that we will use <code>androidx.navigation</code> libraries, that will
-    allow us to manage views through a navigation graph.
-</p>
+<p>To help us with that, we will use the&nbsp;<code>androidx.navigation</code> libraries that allow us to manage views through a navigation graph.</p>
 
-<p>
-    To use <code>androidx.navigation</code> libraries you have to include them
-    on the build.gradle using:
-</p>
+<p>To use the&nbsp;<code>androidx.navigation</code> libraries, include them to the <code>build.gradle</code> with</p>
 
-<p><pre><code>
+<pre>
+<code>
     def navigationVersion = '2.4.2'  // or another version number
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-</code></pre></p>
+</code></pre>
 
-<p>
-    But we have already included them, so you should not need to change build.gradle
-</p>
+<p>We have already included them, so there&#39;s no need to change <code>build.gradle</code>.</p>
 
-<p>
-    Setting up a navigation graph is pretty simple using Android Studio.
-    Right click over the res folder and choose New -> Android Resource File.
-    Then name the file, the conventional name is <code>nav_graph</code>, and set
-    <code>Resource Type</code> to <code>Navigation</code>
-</p>
+<p>Setting up a navigation graph is pretty simple with Android Studio. Right-click over the <em>res</em> folder and choose <em>New</em> &rarr; <em>Android Resource File</em>. Then name the file (the conventional name is <code>nav_graph</code>)&nbsp;and set <code>Resource Type</code> to <code>Navigation</code>:</p>
 
-<img height="330" width="630"
-     name="nav_graph_creation_example.gif"
-     src="https://ucarecdn.com/51539fa5-042e-4d40-ae1d-63da1ac67a4e/"
-     alt="example creating a navigation graph">
+<p><img alt="example creating a navigation graph" height="330" name="nav_graph_creation_example.gif" src="https://ucarecdn.com/51539fa5-042e-4d40-ae1d-63da1ac67a4e/" width="630" /></p>
 
-<p>
-    Adding fragments is also very simple using a navigation graph.
-    Go to the design tab on the nav_graph.xml file, click on <code>New Destination</code>
-    button and then click on <code>Create New Destination</code>.
-    A wizard for creating a new fragment should appear and work as usual.
-</p>
+<p>Adding fragments is also easy with a navigation graph. Go to the <em>design tab</em>&nbsp;in the <em>nav_graph.xml</em> file, click on the&nbsp;<code>New Destination</code> button, and then click on <code>Create New Destination</code>. You&#39;ll see the wizard.</p>
 
-<img height="330" width="630"
-     name="add_fragment_nav_graph.gif"
-     src="https://ucarecdn.com/0f6cae94-846e-4cdc-836f-4c7ec7fa192c/"
-     alt="example adding fragment to navigation graph">
-
+<p><img alt="example adding fragment to navigation graph" height="330" name="add_fragment_nav_graph.gif" src="https://ucarecdn.com/0f6cae94-846e-4cdc-836f-4c7ec7fa192c/" width="630" /></p>
 
 <h2>Objectives</h2>
 
 <ol>
-    <li>
-        Setup <code>activity_main.xml</code> to hold a <code>NavHostFragment</code>.
-        Use can something like this:
-        <pre><code>&lt;androidx.fragment.app.FragmentContainerView
+    <li>Setup <em>activity_main.xml</em> to hold&nbsp;<code>NavHostFragment</code>. Use something like this:
+
+        <pre>
+<code>&lt;androidx.fragment.app.FragmentContainerView
     android:id="@+id/nav_host_fragment"
     android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
@@ -73,66 +40,18 @@
     app:navGraph="@navigation/nav_graph" /&gt;
         </code></pre>
     </li>
-
-    <li>
-        Add a Fragment named <code>LoginFragment</code> to the navigation graph and set it as home
-    </li>
-    <li>
-        Add an <code>EditText</code> to <code>LoginFragment</code> with
-        <code>id</code> <code>loginUsername</code>,
-        <code>inputType</code> <code>textPersonName</code>, and
-        <code>hint</code> <code>username</code>
-    </li>
-    <li>
-        Add an <code>EditText</code> to <code>LoginFragment</code> with
-        <code>id</code> <code>loginPassword</code>,
-        <code>inputType</code> <code>numberPassword</code>, and
-        <code>hint</code> <code>password</code>
-    </li>
-    <li>
-        Add a <code>Button</code> to <code>LoginFragment</code> with
-        <code>id</code> <code>loginButton</code> and
-        <code>text</code> <code>log in</code>
-    </li>
-    <li>
-        Test may pass a username to <code>MainActivity</code> through the
-        extras <code>Bundle</code> in the <code>Intent</code>, which can be retrieved with
-        <code>intent.extras?.getString("username")</code>.
-        Retrieve that username, using the key <code>username</code>, and use it to validate login.
-        In case no username is passed use <code>"Lara"</code> as default value for username.
-    </li>
-    <li>
-        Test may pass a password to <code>MainActivity</code> through the same extras
-        <code>Bundle</code>.
-        Retrieve that password, using the key <code>password</code> and use it to validate login.
-        In case no password is passed use <code>"1234"</code> as default value for password.
-    </li>
-    <li>
-        Add a listener to <code>loginButton</code>, when clicked it should do
-        the validation of credentials (username, password) using the values required above
-    </li>
-    <li>
-        If the validation of credential is successful show a toast with message <code>logged in</code>
-    </li>
-    <li>
-        If the validation of credential is not successful show a toast with message <code>invalid credentials</code>
-    </li>
-    <li>
-        Don't use "static" variables to make communication between MainActivity and LoginFragment.
-        Consider "static" variables to be any variable that is either on global scope
-        or inside any singleton object (including companion objects).
-        Besides being a bad pattern tests will also not guarantee to work properly since it uses Junit
-        and Junit does not re-instantiate static variables between test cases as tests expects.
-        You can refer to <a href="https://hyperskill.org/learn/step/21929#communicating-to-activity">Communicating to activity</a>
-        item on 'Fragment communication and lifecycle' topic as a possible way to handle this communication
-    </li>
+    <li>Add a fragment&nbsp;named <code>LoginFragment</code> to the navigation graph and set it as home;</li>
+    <li>Add&nbsp;<code>EditText</code> to <code>LoginFragment</code> with the&nbsp;ID of <code>loginUsername</code>, <code>inputType</code> <code>textPersonName</code>, and <code>hint</code> <code>username</code></li>
+    <li>Add an <code>EditText</code> to <code>LoginFragment</code> with the ID of <code>loginPassword</code>, <code>inputType</code> <code>numberPassword</code>, and <code>hint</code> <code>password</code></li>
+    <li>Add <code>Button</code> to <code>LoginFragment</code> with the ID of <code>loginButton</code> and <code>text</code> <code>log in</code></li>
+    <li>Tests may pass a username to <code>MainActivity</code> through the extra&nbsp;<code>Bundle</code> in the <code>Intent</code>, which can be retrieved with <code>intent.extras?.getString(&quot;username&quot;)</code>. Retrieve that username&nbsp;using the <code>username</code> key, and use it to validate the login. In case no username is passed, use <code>&quot;Lara&quot;</code> as the default value for the username;</li>
+    <li>Tests may pass a password to <code>MainActivity</code> through the same extras <code>Bundle</code>. Retrieve that password, using the&nbsp;<code>password</code> key&nbsp;and use it to validate login. In case no password is passed use <code>&quot;1234&quot;</code> as the default value for the password;</li>
+    <li>Add a listener to <code>loginButton</code>; when clicked, it should validate credentials (username, password) using the values required above</li>
+    <li>If the validation of credentials is successful, show a toast with the message <code>logged in</code></li>
+    <li>If the validation of credentials is not successful, show a toast with the message <code>invalid credentials</code></li>
 </ol>
 
-<h2>Example</h2>
+<p>Don&#39;t use static&nbsp;variables to make communication between <code>MainActivity</code> and <code>LoginFragment</code>. Consider static variables as any variables that are either on the global scope or inside any singleton object (including companion objects). Besides being a lousy pattern, tests are not guaranteed to work properly since it uses Junit, and Junit does not re-instantiate static variables between test cases as tests expect.</p>
 
-<br>
-
-<img height="600" width="340"
-     name="simpleBankManager_stage1.gif"
-     alt="Login fragment"
-     src="https://ucarecdn.com/713bf92d-3df8-44a2-8765-5e4d5bc9f1fd/" >
+<h2>Example<br />
+    <img alt="Login fragment" height="600" name="simpleBankManager_stage1.gif" src="https://ucarecdn.com/713bf92d-3df8-44a2-8765-5e4d5bc9f1fd/" width="340" /></h2>
