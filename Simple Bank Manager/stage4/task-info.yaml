@@ -1,4 +1,24 @@
 type: edu
 files:
-- name: build.gradle
-  visible: true
+- name: src/test/java/org/hyperskill/simplebankmanager/Stage1UnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/AbstractUnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/SimpleBankManagerUnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/screen/UserMenuScreen.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/screen/LoginScreen.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/Stage2UnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/Stage3UnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/screen/TransferFundsScreen.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/screen/ViewBalanceScreen.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/Stage4UnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/screen/CalculateExchangeScreen.kt
+  visible: false
