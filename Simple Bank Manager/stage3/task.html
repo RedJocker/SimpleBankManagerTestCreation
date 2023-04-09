@@ -18,8 +18,8 @@
     <li>Add a Fragment named <code>TransferFundsFragment</code> to the navigation graph:
         <ul>
             <li>On <code>nav_graph</code>, make a connection from <code>UserMenuFragment</code> to <code>TransferFundsFragment</code>. The generated code should have the action with the id of <code>action_userMenuFragment_to_transferFundsFragment</code> and the destination ID of <code>transferFundsFragment</code></li>
-            <li>Add an <code>EditText</code> to <code>TransferFundsFragment</code> with the ID of <code>transferFundsAccountEditText</code>. This view will be used to input the account to transfer funds;</li>
-            <li>Add an <code>EditText</code> to <code>TransferFundsFragment</code> with the ID of <code>transferFundsAmountEditText</code>. This view will be used to input the funds to transfer;</li>
+            <li>Add an <code>EditText</code> to <code>TransferFundsFragment</code> with the ID of <code>transferFundsAccountEditText</code>, a hint <code>Account number</code> and input type of <code>text</code>. This view will be used to input the account to transfer funds;</li>
+            <li>Add an <code>EditText</code> to <code>TransferFundsFragment</code> with the ID of <code>transferFundsAmountEditText</code>, a hint <code>Enter amount</code> and input type of <code>numberDecimal</code>. This view will be used to input the funds to transfer;</li>
             <li>Add a <code>Button</code> to <code>TransferFundsFragment</code> with the ID of <code>transferFundsButton</code>. If clicked, first validate the input:
                 <ul>
                     <li>Consider accounts valid only if they start with either <code>sa</code> or <code>ca</code> followed by four digits. <code>sa</code> stands for a savings account, and <code>ca</code> is for a checking account;</li>
