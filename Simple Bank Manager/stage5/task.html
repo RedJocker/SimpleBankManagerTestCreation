@@ -12,23 +12,23 @@
     <li>Add a fragment named <code>PayBillsFragment</code> to the navigation graph:
 
         <ul>
-            <li>Add an <code>EditText</code> to <code>PayBillsFragment</code> with the ID of <code>PayBillsCodeInputEditText</code>, the hint should be <code>Enter code</code> and <code>inputType</code> is <code>text</code>;</li>
-            <li>Add a <code>Button</code> to <code>PayBillsFragment</code> with the ID of <code>PayBillsShowBillInfoButton</code> with the text <code>Show bill info</code>;</li>
+            <li>Add an <code>EditText</code> to <code>PayBillsFragment</code> with the ID of <code>payBillsCodeInputEditText</code>, the hint should be <code>Enter code</code> and <code>inputType</code> is <code>text</code>;</li>
+            <li>Add a <code>Button</code> to <code>PayBillsFragment</code> with the ID of <code>payBillsShowBillInfoButton</code> with the text <code>Show bill info</code>;</li>
         </ul>
     </li>
     <li>On the design tab of <code>nav_graph</code>, make a connection from <code>UserMenuFragment</code> to <code>PayBillsFragment</code>. The generated code should contain the action with the ID of <code>action_userMenuFragment_to_payBillsFragment</code> and the destination <code>payBillsFragment</code>;</li>
     <li>Display <code>PayBillsFragment</code> after a click on the <code>userMenuPayBillsButton</code> button;</li>
     <li>On <code>PayBillsFragment</code> users should be able to input a billing code on <code>payBillsCodeInputEditText</code></li>
-    <li>After click on <code>PayBillsShowBillInfoButton</code>, a dialog should appear:
+    <li>After click on <code>payBillsShowBillInfoButton</code>, a dialog should appear:
         <ul>
             <li>If the billing code is not found in <code>billInfoMap</code>, show an <code>AlertDialog</code> with the title <code>Error</code> and the message <code>Wrong code</code> with a positive button with the text <code>Ok</code>;</li>
-            <li>If the billing code is not found in <code>billInfoMap</code>, show an <code>AlertDialog</code> with the title <code>Bill info</code>, a positive button with the text <code>Confirm</code>, a negative button with the text <code>Cancel</code>, and a message with the following scheme (including newlines):
+            <li>If the billing code is found in <code>billInfoMap</code>, show an <code>AlertDialog</code> with the title <code>Bill info</code>, a positive button with the text <code>Confirm</code>, a negative button with the text <code>Cancel</code>, and a message with the following scheme (including newlines):
                 <pre><code class="language-no-highlight">
 Name: $billName
 BillCode: $billCode
 Amount: $billAmount$
                 </code></pre>
-                where <code>$billName</code>, <code>$billCode</code>, and <code>$billAmount</code> are placeholders; <code>$billAmount</code> comes always with two decimals. If users click on the <code>Confirm</code> button, and there is enough balance in the account, then subtract the billing amount from this account balance and show the toast message appears with text <code>Payment for bill "bill name", was successful</code>. If a user clicks on the <code>Confirm</code> button, and there is not enough balance, close the current dialog and display a new <code>AlertDialog</code> with the title <code>Error</code>, the message <code>Not enough funds</code> and a positive button with the text <code>Ok</code>, which closes the dialog.</li>
+                where <code>$billName</code>, <code>$billCode</code>, and <code>$billAmount</code> are placeholders; <code>$billAmount</code> comes always with two decimals. If users click on the <code>Confirm</code> button, and there is enough balance in the account, then subtract the billing amount from this account balance and show the toast message appears with text <code>Payment for bill $billName, was successful</code>($billName is a variable name interpolated in this String message). If a user clicks on the <code>Confirm</code> button, and there is not enough balance, close the current dialog and display a new <code>AlertDialog</code> with the title <code>Error</code>, the message <code>Not enough funds</code> and a positive button with the text <code>Ok</code>, which closes the dialog.</li>
         </ul>
     </li>
     <li>Tests may pass <code>billInfoMap</code> as <code>Serializable</code> to <code>MainActivity</code> through <code>intent.extras</code>. Retrieve that <code>billInfoMap</code>, using the key <code>"billInfo"</code>. You will want to cast it back to a map to use it as a map. The type signature of <code>billInfoMap</code> is <code>Map&lt;String, Triple&lt;String, String, Double&gt;&gt;</code>. In case of no <code>billInfoMap</code>, use the following as the default value:<br>
