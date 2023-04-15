@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import org.hyperskill.simplebankmanager.internals.screen.UserMenuScreen
 import org.junit.Assert.assertEquals
 import org.robolectric.Shadows.shadowOf
 
@@ -26,7 +27,6 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
     ) {
         assertTextEquals("Wrong hint on $idString", expectedHint, this.hint, ignoreCase)
     }
-
     fun TextView.assertText(idString: String, expectedText: String, ignoreCase: Boolean = true) {
         assertTextEquals("Wrong text on $idString", expectedText, this.text, ignoreCase)
     }
@@ -34,7 +34,6 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
     fun TextView.assertTextWithCustomErrorMessage(
         errorMessage: String, expectedText: String, ignoreCase: Boolean = true
     ) {
-
         assertTextEquals(errorMessage, expectedText, this.text, ignoreCase)
     }
 
@@ -81,20 +80,30 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
             "Wrong AlertDialog title", expectedTitle, actualTitle, ignoreCase
         )
     }
-
     fun AlertDialog.assertDialogMessage(expectedMessage: String, ignoreCase: Boolean = false) {
         val shadowAlertDialog = shadowOf(this)
         val actualMessage = shadowAlertDialog.message
         assertTextEquals("Wrong AlertDialog message", expectedMessage, actualMessage, ignoreCase)
     }
-
     fun AlertDialog.assertDialogVisibility(caseDescription: String, expectedVisible: Boolean) {
         val isDialogVisible = this.isShowing
         val messageError = "Dialog should %s be visible %s".format(
-            if (expectedVisible) "" else "not",
+            if(expectedVisible) "" else "not",
             caseDescription
         )
-        assertEquals(messageError, expectedVisible, isDialogVisible)
+        assertEquals(messageError,isDialogVisible, expectedVisible)
+    }
+
+    fun clickBackButtonAssertNavigateToUserMenuScreen(originScreenName: String) {
+        activity.clickBackAndRun()
+        try {
+            UserMenuScreen(this)
+        } catch (error: AssertionError) {
+            throw AssertionError(
+                "After clicking back button on $originScreenName screen " +
+                        "UserMenu screen should be displayed"
+            )
+        }
     }
 
     private fun String.normalizeCase(ignoreCase: Boolean): String {
@@ -110,7 +119,7 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         expectedText: CharSequence,
         actualText: CharSequence,
         ignoreCase: Boolean = true
-    ) {
+    )  {
         val (expectedTextNorm, actualTextNorm) = listOf(expectedText, actualText)
             .map { it.normalizeCase(ignoreCase) }
         assertEquals(errorMessage, expectedTextNorm, actualTextNorm)

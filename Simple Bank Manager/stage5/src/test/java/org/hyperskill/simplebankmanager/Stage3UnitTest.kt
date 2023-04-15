@@ -30,7 +30,9 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuViewBalanceButton.clickAndRun()
             }
 
-            ViewBalanceScreen(this)
+            ViewBalanceScreen(this).apply {
+                clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "ViewBalance")
+            }
         }
     }
 
@@ -53,15 +55,6 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 )
                 activity.clickBackAndRun()
             }
-
-            try {
-                UserMenuScreen(this).apply {
-                    userMenuViewBalanceButton.clickAndRun()
-                }
-            } catch (error: AssertionError) {
-                throw AssertionError("After clicking back button on ViewBalance screen UserMenu screen should be displayed")
-            }
-
         }
     }
 
@@ -108,7 +101,9 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             UserMenuScreen(this).apply {
                 userMenuTransferFundsButton.clickAndRun()
             }
-            TransferFundsScreen(this)
+            TransferFundsScreen(this).apply {
+                clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "TransferFunds")
+            }
         }
     }
 
@@ -248,15 +243,11 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                         expectedMessage = "Not enough funds to transfer ${largeAmount}\$"
                     )
                 }
-                activity.clickBackAndRun()
+                clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "TransferFunds")
             }
 
-            try {
-                UserMenuScreen(this).apply {
-                    userMenuViewBalanceButton.clickAndRun()
-                }
-            } catch (error: AssertionError) {
-                throw AssertionError("After clicking back button on TransferFunds screen UserMenu screen should be displayed")
+            UserMenuScreen(this).apply {
+                userMenuViewBalanceButton.clickAndRun()
             }
 
             ViewBalanceScreen(this).apply {
@@ -312,15 +303,13 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                         expectedMessage = "Not enough funds to transfer ${largeAmount}\$"
                     )
                 }
-                activity.clickBackAndRun()
+                clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "TransferFunds")
             }
-            try {
-                UserMenuScreen(this).apply {
-                    userMenuViewBalanceButton.clickAndRun()
-                }
-            } catch (error: AssertionError) {
-                throw AssertionError("After clicking back button on TransferFunds screen UserMenu screen should be displayed")
+
+            UserMenuScreen(this).apply {
+                userMenuViewBalanceButton.clickAndRun()
             }
+
             ViewBalanceScreen(this).apply {
                 viewBalanceShowBalanceTextView.assertTextWithCustomErrorMessage(
                     errorMessage = "After unsuccessful transfer balance should not change on viewBalanceShowBalanceTextView",
@@ -351,12 +340,13 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     expectedMessage = "Transferred 50.10\$ to account ca3435"
                 )
             }
+
             try {
-                UserMenuScreen(this).apply {
-                    userMenuViewBalanceButton.clickAndRun()
-                }
+                UserMenuScreen(this)
             } catch (error: AssertionError) {
                 throw AssertionError("When transfer is successful user should be automatically redirected to UserMenu screen")
+            }.apply {
+                userMenuViewBalanceButton.clickAndRun()
             }
 
             ViewBalanceScreen(this).apply {
@@ -388,12 +378,13 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     expectedMessage = "Transferred 50.10\$ to account ca3435"
                 )
             }
+
             try {
-                UserMenuScreen(this).apply {
-                    userMenuTransferFundsButton.clickAndRun()
-                }
+                UserMenuScreen(this)
             } catch (error: AssertionError) {
                 throw AssertionError("When transfer is successful user should be automatically redirected to UserMenu screen")
+            }.apply {
+                userMenuTransferFundsButton.clickAndRun()
             }
 
             TransferFundsScreen(this).apply {
@@ -409,7 +400,3 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
         }
     }
 }
-
-
-
-

@@ -6,16 +6,25 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import org.hyperskill.simplebankmanager.internals.screen.UserMenuScreen
 import org.junit.Assert.assertEquals
 import org.robolectric.Shadows.shadowOf
 
 open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUnitTest<T>(clazz) {
 
-    fun Button.assertButtonText(idString: String, expectedText: String, ignoreCase: Boolean = true) {
+    fun Button.assertButtonText(
+        idString: String,
+        expectedText: String,
+        ignoreCase: Boolean = true
+    ) {
         assertTextEquals("Wrong text on $idString", expectedText, text, ignoreCase)
     }
 
-    fun EditText.assertHintEditText(idString: String, expectedHint: String, ignoreCase: Boolean = true) {
+    fun EditText.assertHintEditText(
+        idString: String,
+        expectedHint: String,
+        ignoreCase: Boolean = true
+    ) {
         assertTextEquals("Wrong hint on $idString", expectedHint, this.hint, ignoreCase)
     }
     fun TextView.assertText(idString: String, expectedText: String, ignoreCase: Boolean = true) {
@@ -23,8 +32,8 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
     }
 
     fun TextView.assertTextWithCustomErrorMessage(
-        errorMessage: String, expectedText: String, ignoreCase: Boolean = true) {
-
+        errorMessage: String, expectedText: String, ignoreCase: Boolean = true
+    ) {
         assertTextEquals(errorMessage, expectedText, this.text, ignoreCase)
     }
 
@@ -33,7 +42,8 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         expectedHint: String,
         expectedType: Int,
         typeString: String,
-        ignoreCase: Boolean = true) {
+        ignoreCase: Boolean = true
+    ) {
 
         this.assertHintEditText(idString, expectedHint, ignoreCase)
         val actualInputType = this.inputType
@@ -49,13 +59,17 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         assertEquals(errorMessage, expectedErrorText, actualErrorText)
     }
 
-    fun Spinner.assertSpinnerText(idString: String, expectedDropdownText: ArrayList<String>, ignoreCase: Boolean = true) {
+    fun Spinner.assertSpinnerText(
+        idString: String,
+        expectedDropdownText: ArrayList<String>,
+        ignoreCase: Boolean = true
+    ) {
         val items = ArrayList<String>()
         for (i in 0 until this.adapter.count) {
             items.add(this.adapter.getItem(i).toString())
         }
-        val actualText = if(ignoreCase) items.toString().lowercase() else items.toString()
-        assertEquals("Wrong text on $idString",  expectedDropdownText.toString(), actualText)
+        val actualText = if (ignoreCase) items.toString().lowercase() else items.toString()
+        assertEquals("Wrong text on $idString", expectedDropdownText.toString(), actualText)
     }
 
     fun AlertDialog.assertDialogTitle(expectedTitle: String, ignoreCase: Boolean = false) {
@@ -78,6 +92,18 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
             caseDescription
         )
         assertEquals(messageError,isDialogVisible, expectedVisible)
+    }
+
+    fun clickBackButtonAssertNavigateToUserMenuScreen(originScreenName: String) {
+        activity.clickBackAndRun()
+        try {
+            UserMenuScreen(this)
+        } catch (error: AssertionError) {
+            throw AssertionError(
+                "After clicking back button on $originScreenName screen " +
+                        "UserMenu screen should be displayed"
+            )
+        }
     }
 
     private fun String.normalizeCase(ignoreCase: Boolean): String {

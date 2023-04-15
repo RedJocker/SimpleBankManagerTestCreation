@@ -5,7 +5,7 @@ import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.hyperskill.simplebankmanager.internals.screen.CalculateExchangeScreen
 import org.hyperskill.simplebankmanager.internals.screen.LoginScreen
 import org.hyperskill.simplebankmanager.internals.screen.UserMenuScreen
-import org.junit.Assert
+import org.junit.Assert.assertNotEquals
 import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,7 +29,11 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
 
-            CalculateExchangeScreen(this)
+            CalculateExchangeScreen(this).apply {
+                clickBackButtonAssertNavigateToUserMenuScreen(
+                    originScreenName = "CalculateExchange"
+                )
+            }
         }
     }
 
@@ -155,9 +159,10 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 setSpinnerCurrencySelection("USD", "USD")
                 val convertFrom = calculateExchangeConvertFromSpinner.selectedItem
                 val convertTo = calculateExchangeConvertToSpinner.selectedItem
-                    Assert.assertNotEquals("Currencies for" + "\"convert from\"" + " and " +"\"convert to\""
-                    + "should not be selected as equal"
-                        ,convertFrom,convertTo)
+                assertNotEquals("Currencies for \"convert from\" and \"convert to\""
+                        + "should not be selected as equal",
+                    convertFrom, convertTo
+                )
             }
         }
     }
@@ -248,10 +253,3 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
         }
     }
 }
-
-
-
-
-
-
-
