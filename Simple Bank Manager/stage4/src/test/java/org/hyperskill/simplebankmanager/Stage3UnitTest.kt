@@ -50,7 +50,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
             ViewBalanceScreen(this).apply {
                 assertBalanceAmountDisplay(
-                    expectedBalance = "100.00\$",
+                    expectedBalance = "\$100.00",
                     caseDescription = "with default initial balance values"
                 )
                 activity.clickBackAndRun()
@@ -83,7 +83,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
             ViewBalanceScreen(this).apply {
                 assertBalanceAmountDisplay(
-                    expectedBalance = "30.00\$",
+                    expectedBalance = "\$30.00",
                     caseDescription = "with custom initial balance values"
                 )
             }
@@ -230,7 +230,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     transferFundsButton.clickAndRun()
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer ${largeAmount}.00\$"
+                        expectedMessage = "Not enough funds to transfer \$${largeAmount}.00"
                     )
                 }
                 val largeAmountsWithDecimals = listOf("100.10", "2000.05", "300.54", "200.00")
@@ -240,7 +240,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     transferFundsButton.clickAndRun()
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer ${largeAmount}\$"
+                        expectedMessage = "Not enough funds to transfer \$${largeAmount}"
                     )
                 }
                 clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "TransferFunds")
@@ -253,7 +253,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             ViewBalanceScreen(this).apply {
                 viewBalanceShowBalanceTextView.assertTextWithCustomErrorMessage(
                     errorMessage = "After unsuccessful transfer balance should not change on viewBalanceShowBalanceTextView",
-                    expectedText = "100.00\$"
+                    expectedText = "\$100.00"
                 )
             }
         }
@@ -290,7 +290,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     transferFundsButton.clickAndRun()
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer ${largeAmount}.00\$"
+                        expectedMessage = "Not enough funds to transfer \$${largeAmount}.00"
                     )
                 }
                 val largeAmountsWithDecimals = listOf("200.15", "2000.05", "300.54", "300.00")
@@ -300,7 +300,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     transferFundsButton.clickAndRun()
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer ${largeAmount}\$"
+                        expectedMessage = "Not enough funds to transfer \$${largeAmount}"
                     )
                 }
                 clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "TransferFunds")
@@ -313,7 +313,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             ViewBalanceScreen(this).apply {
                 viewBalanceShowBalanceTextView.assertTextWithCustomErrorMessage(
                     errorMessage = "After unsuccessful transfer balance should not change on viewBalanceShowBalanceTextView",
-                    expectedText = "200.12\$"
+                    expectedText = "\$200.12"
                 )
             }
         }
@@ -337,7 +337,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 transferFundsButton.clickAndRun()
                 assertLastToastMessageEquals(
                     errorMessage = "When transfer is successful a toast message is expected",
-                    expectedMessage = "Transferred 50.10\$ to account ca3435"
+                    expectedMessage = "Transferred \$50.10 to account ca3435"
                 )
             }
 
@@ -352,7 +352,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             ViewBalanceScreen(this).apply {
                 viewBalanceShowBalanceTextView.assertTextWithCustomErrorMessage(
                     errorMessage = "After successful transfer balance should change on viewBalanceShowBalanceTextView",
-                    expectedText = "49.90\$"
+                    expectedText = "\$49.90"
                 )
             }
         }
@@ -375,7 +375,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 transferFundsButton.clickAndRun()
                 assertLastToastMessageEquals(
                     errorMessage = "When transfer is successful a toast message is expected",
-                    expectedMessage = "Transferred 50.10\$ to account ca3435"
+                    expectedMessage = "Transferred \$50.10 to account ca3435"
                 )
             }
 
@@ -394,7 +394,7 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 transferFundsButton.clickAndRun()
                 assertLastToastMessageEquals(
                     errorMessage = "When transfer is successful a toast message is expected",
-                    expectedMessage = "Not enough funds to transfer 50.10\$"
+                    expectedMessage = "Not enough funds to transfer \$50.10"
                 )
             }
         }
