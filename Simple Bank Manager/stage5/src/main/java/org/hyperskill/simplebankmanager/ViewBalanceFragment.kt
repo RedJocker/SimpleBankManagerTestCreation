@@ -22,7 +22,7 @@ class ViewBalanceFragment : Fragment() {
         fragmentViewBalanceBinding = FragmentViewBalanceBinding.inflate(layoutInflater, container, false)
 
         val balance = balanceSupplier!!.currentBalance()
-        fragmentViewBalanceBinding.viewBalanceAmountTextView.text = "%.2f$".format(balance)
+        fragmentViewBalanceBinding.viewBalanceAmountTextView.text = "\$%.2f".format(balance)
 
         return fragmentViewBalanceBinding.root
     }
