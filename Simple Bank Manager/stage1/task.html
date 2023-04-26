@@ -49,7 +49,6 @@
     <li>Add a listener to <code>loginButton</code>; when clicked, it should validate credentials (username, password) using the values required above</li>
     <li>If the validation of credentials is successful, show a toast with the message <code>logged in</code></li>
     <li>If the validation of credentials is not successful, show a toast with the message <code>invalid credentials</code></li>
-    <li>If back button(left arrow) is clicked at the current screen, navigation should navigate back to previous screen.</li>
 </ol>
 
 <p>Don&#39;t use static&nbsp;variables to make communication between <code>MainActivity</code> and <code>LoginFragment</code>. Consider static variables as any variables that are either on the global scope or inside any singleton object (including companion objects). Besides being a lousy pattern, tests are not guaranteed to work properly since it uses Junit, and Junit does not re-instantiate static variables between test cases as tests expect.</p>

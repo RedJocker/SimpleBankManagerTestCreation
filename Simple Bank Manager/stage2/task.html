@@ -15,7 +15,6 @@
     <li>Add a <code>Button</code> to <code>UserMenuFragment</code> with the id of <code>userMenuPayBillsButton</code> and <code>text</code> <code>pay bills</code>;</li>
     <li>On the design tab of <code>nav_graph</code>, make a connection from <code>LoginFragment</code> to <code>UserMenuFragment</code>. The code generated after making the connection should contain an action with the id of <code>action_loginFragment_to_userMenuFragment</code> and destination <code>userMenuFragment</code></li>
     <li>After a successful login, users should be redirected to <code>UserMenuFragment</code>. To make the navigation, you can use <code>findNavController().navigate(R.id.action_loginFragment_to_userMenuFragment)</code>. It is also possible to pass a <code>Bundle</code> as the second argument of the navigate method to pass arguments to <code>userMenuFragment</code>, which you can later retrieve with <code>arguments?.getString(...)</code></li>
-    <li>If back button(left arrow) is clicked at the current screen, navigation should navigate back to the previous screen in the order of the appearance</li>
     <li>All requirements from the Stage1 are still valid, including toast messages</li>
 </ol>
 
