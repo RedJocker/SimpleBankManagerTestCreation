@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Simple Bank Manager</string>
     <string name="balance">Balance:</string>
-    <string name="_0_0">0.0$</string>
+    <string name="_0_0">$0.0</string>
     <string name="transfer_funds_to_account">Transfer funds to account</string>
     <string name="transfer_funds_from_account">Transfer funds from account</string>
     <string name="add">add</string>
