@@ -49,10 +49,10 @@ class TransferFundsFragment : Fragment() {
             val hasFunds = balanceSetter!!.hasFunds(amount!!)
             if(hasFunds) {
                 balanceSetter!!.subtractBalance(amount)
-                showToast("Transferred \$%.2f to account $account".format(amount))
+                showToast("Transferred %.2f$ to account $account".format(amount))
                 activity?.onBackPressed()
             } else {
-                showToast("Not enough funds to transfer \$%.2f".format(amount))
+                showToast("Not enough funds to transfer %.2f$".format(amount))
             }
         }
     }

@@ -56,7 +56,7 @@ class PayBillsFragment : Fragment() {
     private fun showConfirmBillInfoDialog(billName: String, billCode: String, billAmount: Double) {
         AlertDialog.Builder(context)
             .setTitle("Bill info")
-            .setMessage("Name: $billName\nBillCode: $billCode\nAmount: \$%.2f".format(billAmount))
+            .setMessage("Name: $billName\nBillCode: $billCode\nAmount: %.2f$".format(billAmount))
             .setPositiveButton("Confirm") { _, _ ->
                 if (balanceSetter!!.hasFunds(billAmount)) {
                     balanceSetter!!.subtractBalance(billAmount)
