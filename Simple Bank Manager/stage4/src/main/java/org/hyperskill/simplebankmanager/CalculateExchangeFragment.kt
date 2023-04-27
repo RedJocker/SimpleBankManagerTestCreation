@@ -10,6 +10,9 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import org.hyperskill.simplebankmanager.Extensions.showToast
 import org.hyperskill.simplebankmanager.databinding.FragmentCalculateExchangeBinding
+import java.text.NumberFormat
+import java.util.Currency
+import java.util.Locale
 
 
 class CalculateExchangeFragment : Fragment() {
@@ -19,7 +22,7 @@ class CalculateExchangeFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentCalculateExchangeBinding
-    private lateinit var spinnerAdapter : ArrayAdapter<String>
+    private lateinit var spinnerAdapter: ArrayAdapter<String>
     private lateinit var convertFromSpinner: Spinner
     private lateinit var convertToSpinner: Spinner
     private lateinit var fundsToConvertEt: EditText
@@ -101,9 +104,13 @@ class CalculateExchangeFragment : Fragment() {
             to = convertTo,
             amount = toConvertAmount
         )
+//        showConvertedAmountTextView.text =
+//            "%.2f $convertFrom = %.2f $convertTo".format(toConvertAmount, convertedAmount)
 
-        showConvertedAmountTextView.text =
-            "%.2f $convertFrom = %.2f $convertTo".format(toConvertAmount, convertedAmount)
+        val convertFromCurrency = selectFormatCurrencyToLocale(convertFrom, toConvertAmount)
+        val convertToCurrency = selectFormatCurrencyToLocale(convertTo, convertedAmount)
+        showConvertedAmountTextView.text = "$convertFromCurrency = $convertToCurrency"
+
         Log.d("amount", showConvertedAmountTextView.text.toString())
     }
 
@@ -118,5 +125,21 @@ class CalculateExchangeFragment : Fragment() {
         exchangeCalculator = null
         convertFromSpinner.onItemSelectedListener = null
         convertToSpinner.onItemSelectedListener = null
+    }
+
+    private fun selectFormatCurrencyToLocale(currency: String, amount: Double): String {
+        val currency = when (currency) {
+            "EUR" -> "EU"
+            "USD" -> "US"
+            "GBP" -> "GB"
+            else -> ""
+        }
+        if (currency == "EU") {  // problem with returning symbol "¤" ->  because the Euro is used in multiple countries with different currency symbols, the NumberFormat class may not be able to find a specific currency symbol for the Euro currency when using the Locale("en", "EU") parameter.
+            val euro = Currency.getInstance("EUR")
+            val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale("en", currency))
+            format.currency = euro
+            return format.format(amount)
+        }
+        return NumberFormat.getCurrencyInstance(Locale("en", currency)).format(amount)
     }
 }

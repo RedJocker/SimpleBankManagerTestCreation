@@ -1,6 +1,7 @@
 package org.hyperskill.simplebankmanager
 
 import android.content.Intent
+import org.hyperskill.simplebankmanager.internals.CurrencyFormatter
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.hyperskill.simplebankmanager.internals.screen.CalculateExchangeScreen
 import org.hyperskill.simplebankmanager.internals.screen.LoginScreen

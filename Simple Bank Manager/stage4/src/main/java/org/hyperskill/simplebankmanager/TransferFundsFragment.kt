@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.hyperskill.simplebankmanager.Extensions.showToast
 import org.hyperskill.simplebankmanager.databinding.FragmentTransferFundsBinding
+import java.text.NumberFormat
+import java.util.Locale
 
 
 class TransferFundsFragment : Fragment() {
@@ -47,12 +49,15 @@ class TransferFundsFragment : Fragment() {
 
         if(isValidInput) {
             val hasFunds = balanceSetter!!.hasFunds(amount!!)
+            val amountFormat: String
             if(hasFunds) {
                 balanceSetter!!.subtractBalance(amount)
-                showToast("Transferred \$%.2f to account $account".format(amount))
+                amountFormat = NumberFormat.getCurrencyInstance(Locale("en", "US")).format(amount)
+                showToast("Transferred $amountFormat to account $account")
                 activity?.onBackPressed()
             } else {
-                showToast("Not enough funds to transfer \$%.2f".format(amount))
+                amountFormat = NumberFormat.getCurrencyInstance(Locale("en", "US")).format(amount)
+                showToast("Not enough funds to transfer $amountFormat")
             }
         }
     }
