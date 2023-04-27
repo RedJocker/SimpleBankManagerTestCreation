@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.hyperskill.simplebankmanager.databinding.FragmentViewBalanceBinding
+import java.text.NumberFormat
+import java.util.Locale
 
 
 class ViewBalanceFragment : Fragment() {
@@ -22,7 +24,8 @@ class ViewBalanceFragment : Fragment() {
         fragmentViewBalanceBinding = FragmentViewBalanceBinding.inflate(layoutInflater, container, false)
 
         val balance = balanceSupplier!!.currentBalance()
-        fragmentViewBalanceBinding.viewBalanceAmountTextView.text = "%.2f$".format(balance)
+        val amountFormat = NumberFormat.getCurrencyInstance(Locale("en", "US")).format(balance)
+        fragmentViewBalanceBinding.viewBalanceAmountTextView.text = amountFormat
 
         return fragmentViewBalanceBinding.root
     }
