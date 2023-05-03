@@ -40,7 +40,7 @@ val defaultMap = mapOf(
     <li>If users select the same currency on both <code>calculateExchangeFromSpinner</code> and <code>calculateExchangeToSpinner</code>, show the toast message <code>Cannot convert to same currency</code> and replace currency at <code>calculateExchangeToSpinner</code> with the next available currency;</li>
     <li>If no value is passed to <code>calculateExchangeAmountEditText</code> and the button <code>calculateExchangeButton</code> is clicked, show the toast message <code>Enter amount</code>;</li>
     <li>If users click on the <code>back</code> button at <code>CalculateExchangeFragment</code>, redirect users to <code>UserMenuFragment</code>;</li>
-    <li>Amount should be formatted with 2 decimal places and a $ before amount, example: $10.50;</li>
+    <li>Amount should be formatted with 2 decimal places and a currency symbol of selected currency before amount, example: $10.50 = €5.25;</li>
 </ol>
 
 <h2>Example<br>
