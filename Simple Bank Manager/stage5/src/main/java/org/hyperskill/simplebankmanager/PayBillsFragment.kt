@@ -11,6 +11,8 @@ import org.hyperskill.simplebankmanager.databinding.FragmentPayBillsBinding
 import android.widget.EditText
 import android.widget.Button
 import android.widget.Toast
+import java.text.NumberFormat
+import java.util.Locale
 
 class PayBillsFragment : Fragment() {
 
@@ -54,9 +56,11 @@ class PayBillsFragment : Fragment() {
     }
 
     private fun showConfirmBillInfoDialog(billName: String, billCode: String, billAmount: Double) {
+        val formatBillAmount = NumberFormat.getCurrencyInstance(Locale("en","US")).format(billAmount)
+
         AlertDialog.Builder(context)
             .setTitle("Bill info")
-            .setMessage("Name: $billName\nBillCode: $billCode\nAmount: %.2f$".format(billAmount))
+            .setMessage("Name: $billName\nBillCode: $billCode\nAmount: $formatBillAmount")
             .setPositiveButton("Confirm") { _, _ ->
                 if (balanceSetter!!.hasFunds(billAmount)) {
                     balanceSetter!!.subtractBalance(billAmount)

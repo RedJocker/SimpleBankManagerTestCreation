@@ -1,6 +1,7 @@
 package org.hyperskill.simplebankmanager
 
 import android.content.Intent
+import org.hyperskill.simplebankmanager.internals.CurrencyFormatter
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.hyperskill.simplebankmanager.internals.screen.LoginScreen
 import org.hyperskill.simplebankmanager.internals.screen.TransferFundsScreen
@@ -228,9 +229,10 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     transferFundsAmountEditText.setText(largeAmount)
                     transferFundsAccountEditText.setText("ca1234")
                     transferFundsButton.clickAndRun()
+                   val formatAmount = CurrencyFormatter.formatCurrency(largeAmount.toDouble())
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer \$${largeAmount}.00"
+                        expectedMessage = "Not enough funds to transfer $formatAmount"
                     )
                 }
                 val largeAmountsWithDecimals = listOf("100.10", "2000.05", "300.54", "200.00")
@@ -238,9 +240,10 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     transferFundsAmountEditText.setText(largeAmount)
                     transferFundsAccountEditText.setText("sa9276")
                     transferFundsButton.clickAndRun()
+                    val formatAmount = CurrencyFormatter.formatCurrency(largeAmount.toDouble())
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer \$${largeAmount}"
+                        expectedMessage = "Not enough funds to transfer $formatAmount"
                     )
                 }
                 clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "TransferFunds")
@@ -288,9 +291,10 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     transferFundsAmountEditText.setText(largeAmount)
                     transferFundsAccountEditText.setText("ca1234")
                     transferFundsButton.clickAndRun()
+                    val formatAmount = CurrencyFormatter.formatCurrency(largeAmount.toDouble())
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer \$${largeAmount}.00"
+                        expectedMessage = "Not enough funds to transfer $formatAmount"
                     )
                 }
                 val largeAmountsWithDecimals = listOf("200.15", "2000.05", "300.54", "300.00")
@@ -298,9 +302,10 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                     transferFundsAmountEditText.setText(largeAmount)
                     transferFundsAccountEditText.setText("sa9276")
                     transferFundsButton.clickAndRun()
+                    val formatAmount = CurrencyFormatter.formatCurrency(largeAmount.toDouble())
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer \$${largeAmount}"
+                        expectedMessage = "Not enough funds to transfer $formatAmount"
                     )
                 }
                 clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "TransferFunds")
