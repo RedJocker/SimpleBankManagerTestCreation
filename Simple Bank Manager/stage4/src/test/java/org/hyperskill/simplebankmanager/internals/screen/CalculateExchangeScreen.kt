@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import org.hyperskill.simplebankmanager.internals.CurrencyFormatter
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -98,8 +97,11 @@ class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerU
 
         calculateExchangeButton.clickAndRun()
 
-        val expectedAmountToConvertFormat = CurrencyFormatter.formatCurrencySpinner(convertFromText, amountToConvert)
-        val expectedConvertedAmountFormat = CurrencyFormatter.formatCurrencySpinner(convertToText, expectedConvertedAmount)
+        val fromCurrencySymbol = currencySymbol(convertFromText)
+        val toCurrencySymbol = currencySymbol(convertToText)
+
+        val expectedAmountToConvertFormat = amountToConvert.asCurrencyFormat(fromCurrencySymbol)
+        val expectedConvertedAmountFormat = expectedConvertedAmount.asCurrencyFormat(toCurrencySymbol)
 
         calculateExchangeDisplayTextView.apply {
             val expectedText =

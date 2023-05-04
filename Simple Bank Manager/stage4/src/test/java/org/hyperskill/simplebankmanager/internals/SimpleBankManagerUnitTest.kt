@@ -124,4 +124,23 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
             .map { it.normalizeCase(ignoreCase) }
         assertEquals(errorMessage, expectedTextNorm, actualTextNorm)
     }
+
+    fun String.numberAsCurrencyFormat(currencySymbol: String = "$"): String {
+        return this.toDouble().asCurrencyFormat(currencySymbol)
+    }
+
+    fun Double.asCurrencyFormat(currencySymbol: String = "$"): String {
+        return "$currencySymbol%.2f".format(this)
+    }
+
+    fun currencySymbol(countryCode: String): String {
+        return when(countryCode) {
+            "EUR" -> "€"
+            "GBP" -> "£"
+            "USD" -> "$"
+            else -> throw IllegalArgumentException(
+                "only EUR, GBP and USD are accepted as countryCode, but was $countryCode"
+            )
+        }
+    }
 }

@@ -223,24 +223,26 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuTransferFundsButton.clickAndRun()
             }
             TransferFundsScreen(this).apply {
-                val largeAmountsWithoutDecimals = listOf("101", "1000", "54345")
+                val largeAmountsWithoutDecimals = listOf("101", "200", "999")
                 largeAmountsWithoutDecimals.forEach { largeAmount ->
                     transferFundsAmountEditText.setText(largeAmount)
                     transferFundsAccountEditText.setText("ca1234")
                     transferFundsButton.clickAndRun()
+                    val formatAmount = largeAmount.numberAsCurrencyFormat()
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer \$${largeAmount}.00"
+                        expectedMessage = "Not enough funds to transfer $formatAmount"
                     )
                 }
-                val largeAmountsWithDecimals = listOf("100.10", "2000.05", "300.54", "200.00")
+                val largeAmountsWithDecimals = listOf("100.10", "200.05", "300.54", "900.00")
                 largeAmountsWithDecimals.forEach { largeAmount ->
                     transferFundsAmountEditText.setText(largeAmount)
                     transferFundsAccountEditText.setText("sa9276")
                     transferFundsButton.clickAndRun()
+                    val formatAmount = largeAmount.numberAsCurrencyFormat()
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer \$${largeAmount}"
+                        expectedMessage = "Not enough funds to transfer $formatAmount"
                     )
                 }
                 clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "TransferFunds")
@@ -283,24 +285,26 @@ class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuTransferFundsButton.clickAndRun()
             }
             TransferFundsScreen(this).apply {
-                val largeAmountsWithoutDecimals = listOf("201", "1000", "54345")
+                val largeAmountsWithoutDecimals = listOf("201", "500", "860")
                 largeAmountsWithoutDecimals.forEach { largeAmount ->
                     transferFundsAmountEditText.setText(largeAmount)
                     transferFundsAccountEditText.setText("ca1234")
                     transferFundsButton.clickAndRun()
+                    val formatAmount = largeAmount.numberAsCurrencyFormat()
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer \$${largeAmount}.00"
+                        expectedMessage = "Not enough funds to transfer $formatAmount"
                     )
                 }
-                val largeAmountsWithDecimals = listOf("200.15", "2000.05", "300.54", "300.00")
+                val largeAmountsWithDecimals = listOf("200.15", "900.05", "300.54", "300.00")
                 largeAmountsWithDecimals.forEach { largeAmount ->
                     transferFundsAmountEditText.setText(largeAmount)
                     transferFundsAccountEditText.setText("sa9276")
                     transferFundsButton.clickAndRun()
+                    val formatAmount = largeAmount.numberAsCurrencyFormat()
                     assertLastToastMessageEquals(
                         errorMessage = "When the account does not have sufficient funds a toast message is expected",
-                        expectedMessage = "Not enough funds to transfer \$${largeAmount}"
+                        expectedMessage = "Not enough funds to transfer $formatAmount"
                     )
                 }
                 clickBackButtonAssertNavigateToUserMenuScreen(originScreenName = "TransferFunds")
