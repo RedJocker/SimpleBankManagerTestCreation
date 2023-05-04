@@ -61,15 +61,18 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
 
     fun Spinner.assertSpinnerText(
         idString: String,
-        expectedDropdownText: ArrayList<String>,
+        expectedDropdown: ArrayList<String>,
         ignoreCase: Boolean = true
     ) {
         val items = ArrayList<String>()
         for (i in 0 until this.adapter.count) {
             items.add(this.adapter.getItem(i).toString())
         }
-        val actualText = if (ignoreCase) items.toString().lowercase() else items.toString()
-        assertEquals("Wrong text on $idString", expectedDropdownText.toString(), actualText)
+        val actualDropdownString =
+            if (ignoreCase) items.toString().uppercase() else items.toString()
+        val expectedDropdownString =
+            if(ignoreCase) expectedDropdown.toString().uppercase() else expectedDropdown.toString()
+        assertEquals("Wrong text on $idString", expectedDropdownString, actualDropdownString)
     }
 
     fun AlertDialog.assertDialogTitle(expectedTitle: String, ignoreCase: Boolean = false) {
@@ -123,5 +126,13 @@ open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUn
         val (expectedTextNorm, actualTextNorm) = listOf(expectedText, actualText)
             .map { it.normalizeCase(ignoreCase) }
         assertEquals(errorMessage, expectedTextNorm, actualTextNorm)
+    }
+
+    fun String.numberAsCurrencyFormat(currencySymbol: String = "$"): String {
+        return this.toDouble().asCurrencyFormat(currencySymbol)
+    }
+
+    fun Double.asCurrencyFormat(currencySymbol: String = "$"): String {
+        return "$currencySymbol%.2f".format(this)
     }
 }

@@ -181,5 +181,4 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
         val actualLastMessage: String? = ShadowToast.getTextOfLatestToast()
         assertEquals(errorMessage, expectedMessage, actualLastMessage)
     }
-
 }
