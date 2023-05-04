@@ -14,21 +14,24 @@ import org.robolectric.shadows.ShadowToast
 class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
     companion object {
-        val expectedDropdownText = arrayListOf("eur", "gbp", "usd")
+        const val EUR = "EUR"
+        const val GBP = "GBP"
+        const val USD = "USD"
+        val expectedDropdownText = arrayListOf(EUR, GBP, USD)
     }
 
     val defaultMap: Map<String, Map<String, Double>> = mapOf(
-        "EUR" to mapOf(
-            "GBP" to 0.5,
-            "USD" to 2.0
+        EUR to mapOf(
+            GBP to 0.5,
+            USD to 2.0
         ),
-        "GBP" to mapOf(
-            "EUR" to 2.0,
-            "USD" to 4.0
+        GBP to mapOf(
+            EUR to 2.0,
+            USD to 4.0
         ),
-        "USD" to mapOf(
-            "EUR" to 0.5,
-            "GBP" to 0.25
+        USD to mapOf(
+            EUR to 0.5,
+            GBP to 0.25
         )
     )
 
@@ -160,23 +163,32 @@ class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerU
 
     fun setSpinnerCurrencySelection(convertFromText: String, convertToText: String) {
 
-        val convertFrom = when (convertFromText.lowercase()) {
-            "eur" -> 0
-            "gbp" -> 1
-            "usd" -> 2
+        val convertFrom = when (convertFromText.uppercase()) {
+            EUR -> 0
+            GBP -> 1
+            USD -> 2
             else -> throw Exception("Wrong currency selected or not found")
         }
 
         calculateExchangeConvertFromSpinner.setSelection(convertFrom)
 
-        val convertTo = when (convertToText.lowercase()) {
-            "eur" -> 0
-            "gbp" -> 1
-            "usd" -> 2
+        val convertTo = when (convertToText.uppercase()) {
+            EUR -> 0
+            GBP -> 1
+            USD -> 2
             else -> throw Exception("Wrong currency selected or not found")
         }
         calculateExchangeConvertToSpinner.setSelection(convertTo)
     }
+
+    fun currencySymbol(countryCode: String): String {
+        return when(countryCode) {
+            "EUR" -> "€"
+            "GBP" -> "£"
+            "USD" -> "$"
+            else -> throw IllegalArgumentException(
+                "only EUR, GBP and USD are accepted as countryCode, but was $countryCode"
+            )
+        }
+    }
 }
-
-

@@ -3,6 +3,9 @@ package org.hyperskill.simplebankmanager
 import android.content.Intent
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.hyperskill.simplebankmanager.internals.screen.CalculateExchangeScreen
+import org.hyperskill.simplebankmanager.internals.screen.CalculateExchangeScreen.Companion.EUR
+import org.hyperskill.simplebankmanager.internals.screen.CalculateExchangeScreen.Companion.GBP
+import org.hyperskill.simplebankmanager.internals.screen.CalculateExchangeScreen.Companion.USD
 import org.hyperskill.simplebankmanager.internals.screen.LoginScreen
 import org.hyperskill.simplebankmanager.internals.screen.UserMenuScreen
 import org.junit.Assert.assertNotEquals
@@ -51,11 +54,11 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
             CalculateExchangeScreen(this).apply {
                 val amountToConvert = 350.0
-                val expectedConvertedAmount = amountToConvert * defaultMap["EUR"]!!["GBP"]!!
+                val expectedConvertedAmount = amountToConvert * defaultMap[EUR]!![GBP]!!
                 assertDisplayConvertedAmount(
                     amountToConvert,
-                    "EUR",
-                    "GBP",
+                    EUR,
+                    GBP,
                     expectedConvertedAmount
                 ) // conversion is set to 2 decimal points
             }
@@ -75,11 +78,11 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
             CalculateExchangeScreen(this).apply {
                 val amountToConvert = 100.0
-                val expectedConvertedAmount = amountToConvert * defaultMap["USD"]!!["EUR"]!!
+                val expectedConvertedAmount = amountToConvert * defaultMap[USD]!![EUR]!!
                 assertDisplayConvertedAmount(
                     amountToConvert,
-                    "USD",
-                    "EUR",
+                    USD,
+                    EUR,
                     expectedConvertedAmount
                 ) // conversion is set to 2 decimal points
             }
@@ -99,11 +102,11 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
             }
             CalculateExchangeScreen(this).apply {
                 val amountToConvert = 345.0
-                val expectedConvertedAmount = amountToConvert * defaultMap["GBP"]!!["EUR"]!!
+                val expectedConvertedAmount = amountToConvert * defaultMap[GBP]!![EUR]!!
                 assertDisplayConvertedAmount(
                     amountToConvert,
-                    "GBP",
-                    "EUR",
+                    GBP,
+                    EUR,
                     expectedConvertedAmount
                 ) // conversion is set to 2 decimal points
             }
@@ -156,7 +159,7 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
                 userMenuExchangeCalculatorButton.clickAndRun()
             }
             CalculateExchangeScreen(this).apply {
-                setSpinnerCurrencySelection("USD", "USD")
+                setSpinnerCurrencySelection(USD, USD)
                 val convertFrom = calculateExchangeConvertFromSpinner.selectedItem
                 val convertTo = calculateExchangeConvertToSpinner.selectedItem
                 assertNotEquals("Currencies for \"convert from\" and \"convert to\""
@@ -205,17 +208,17 @@ class Stage4UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::cla
     fun test08_convertAllCustomMap() {
 
         val exchangeMap: Map<String, Map<String, Double>> = mapOf(
-            "EUR" to mapOf(
-                "GBP" to 0.886,
-                "USD" to 1.074
+            EUR to mapOf(
+                GBP to 0.886,
+                USD to 1.074
             ),
-            "GBP" to mapOf(
-                "EUR" to 1.128,
-                "USD" to 1.212
+            GBP to mapOf(
+                EUR to 1.128,
+                USD to 1.212
             ),
-            "USD" to mapOf(
-                "EUR" to 0.913,
-                "GBP" to 0.825
+            USD to mapOf(
+                EUR to 0.913,
+                GBP to 0.825
             )
         )
 
