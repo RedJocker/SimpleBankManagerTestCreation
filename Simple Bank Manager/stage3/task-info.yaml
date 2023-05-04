@@ -2,3 +2,5 @@ type: edu
 files:
 - name: build.gradle
   visible: true
+- name: src/test/java/org/hyperskill/simplebankmanager/internals/CurrencyFormatter.kt
+  visible: false
