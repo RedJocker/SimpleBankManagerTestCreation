@@ -97,10 +97,15 @@ class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerU
 
         calculateExchangeButton.clickAndRun()
 
+        val fromCurrencySymbol = currencySymbol(convertFromText)
+        val toCurrencySymbol = currencySymbol(convertToText)
+
+        val expectedAmountToConvertFormat = amountToConvert.asCurrencyFormat(fromCurrencySymbol)
+        val expectedConvertedAmountFormat = expectedConvertedAmount.asCurrencyFormat(toCurrencySymbol)
+
         calculateExchangeDisplayTextView.apply {
             val expectedText =
-                "%.2f ${convertFromText.uppercase()} = %.2f ${convertToText.uppercase()}"
-                    .format(amountToConvert, expectedConvertedAmount)
+                "$expectedAmountToConvertFormat = $expectedConvertedAmountFormat"
 
             val actualText = this.text.toString().uppercase()
             val messageDisplayError = "calculateExchangeDisplayTextView has wrong text " +
