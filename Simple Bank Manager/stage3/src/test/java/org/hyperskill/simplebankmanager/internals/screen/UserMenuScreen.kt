@@ -6,6 +6,7 @@ import android.widget.TextView
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.junit.Assert.assertEquals
 
+// version 1.2
 class UserMenuScreen<T: Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
     val userMenuWelcomeTextView : TextView = with(test) {

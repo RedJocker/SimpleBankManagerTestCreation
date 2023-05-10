@@ -11,6 +11,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.robolectric.shadows.ShadowToast
 
+// version 1.2
 class CalculateExchangeScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
     companion object {

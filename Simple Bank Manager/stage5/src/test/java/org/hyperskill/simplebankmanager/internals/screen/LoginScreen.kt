@@ -10,6 +10,7 @@ import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.junit.Assert.assertNull
 import org.robolectric.shadows.ShadowToast
 
+// version 1.2
 class LoginScreen<T: Activity>(private val test: SimpleBankManagerUnitTest<T>) {
 
     val loginUsername : EditText = with(test) {

@@ -9,7 +9,7 @@ import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowToast
 
-
+// version 1.2
 class PayBillsScreen<T : Activity>(private val test: SimpleBankManagerUnitTest<T>) {
     val payBillsCodeInputEditText = with(test) {
         val idString = "payBillsCodeInputEditText"

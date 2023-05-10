@@ -10,6 +10,7 @@ import org.hyperskill.simplebankmanager.internals.screen.UserMenuScreen
 import org.junit.Assert.assertEquals
 import org.robolectric.Shadows.shadowOf
 
+// version 1.2
 open class SimpleBankManagerUnitTest<T : Activity>(clazz: Class<T>) : AbstractUnitTest<T>(clazz) {
 
     fun Button.assertButtonText(

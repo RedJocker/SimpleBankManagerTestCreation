@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import org.hyperskill.simplebankmanager.internals.SimpleBankManagerUnitTest
 
+// version 1.2
 class TransferFundsScreen<T : Activity>(private val test : SimpleBankManagerUnitTest<T>) {
 
     val transferFundsAccountEditText = with(test) {

@@ -9,6 +9,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.robolectric.RobolectricTestRunner
 
+// version 1.2
 @RunWith(RobolectricTestRunner::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class Stage5UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::class.java) {

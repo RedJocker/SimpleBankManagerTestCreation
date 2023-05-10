@@ -13,6 +13,7 @@ import org.junit.runners.MethodSorters
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
 
+// version 1.2
 @RunWith(RobolectricTestRunner::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class Stage3UnitTest : SimpleBankManagerUnitTest<MainActivity>(MainActivity::class.java) {
